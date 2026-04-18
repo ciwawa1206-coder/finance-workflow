@@ -9182,7 +9182,7 @@ function solarToLunar(date) {
     // 基准日期：1900年1月31日为农历1900年正月初一
     const baseDate = new Date(1900, 0, 31);
     const targetDate = new Date(year, month - 1, day);
-    const diffDays = Math.floor((targetDate - baseDate) / (24 * 60 * 60 * 1000));
+    let diffDays = Math.floor((targetDate - baseDate) / (24 * 60 * 60 * 1000));
     
     // 简化的农历数据（1900-2050年）
     // 每个元素表示该年的信息：高12位表示闰月，低12位表示每月天数（大月30天，小月29天）
