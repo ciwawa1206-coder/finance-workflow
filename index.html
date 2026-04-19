@@ -9194,21 +9194,20 @@ function solarToLunar(date) {
         2030: { month: 2, day: 3 }
     };
     
-    // 农历月份天数（2020-2030年）
-    // 格式：[正月, 二月, 三月, 四月, 五月, 六月, 七月, 八月, 九月, 十月, 冬月, 腊月, 闰月天数]
-    // 闰月位置：0=无闰月, 1=闰正月, 2=闰二月, ...
+    // 农历每月天数和闰月信息（2020-2030年）
+    // 格式：每月天数数组 + 闰月信息 {leapMonth: 闰几月(0=无), leapDays: 闰月天数}
     const lunarYearData = {
-        2020: { months: [29, 30, 29, 30, 29, 30, 29, 30, 30, 29, 30, 29], leapMonth: 4, leapDays: 29 }, // 闰四月小
+        2020: { months: [29, 30, 29, 30, 29, 30, 29, 30, 30, 29, 30, 29], leapMonth: 4, leapDays: 29 },
         2021: { months: [30, 29, 30, 29, 30, 29, 30, 29, 30, 30, 29, 30], leapMonth: 0, leapDays: 0 },
-        2022: { months: [29, 30, 29, 30, 29, 30, 29, 30, 29, 30, 29, 30], leapMonth: 2, leapDays: 29 }, // 闰二月小
-        2023: { months: [29, 30, 29, 30, 29, 30, 29, 30, 29, 30, 30, 29], leapMonth: 2, leapDays: 30 }, // 闰二月大
-        2024: { months: [30, 29, 30, 29, 30, 29, 30, 29, 30, 29, 30, 29], leapMonth: 6, leapDays: 30 }, // 闰六月大
+        2022: { months: [29, 30, 29, 30, 29, 30, 29, 30, 29, 30, 29, 30], leapMonth: 2, leapDays: 29 },
+        2023: { months: [29, 30, 29, 30, 29, 30, 29, 30, 29, 30, 30, 29], leapMonth: 2, leapDays: 30 },
+        2024: { months: [30, 29, 30, 29, 30, 29, 30, 29, 30, 29, 30, 29], leapMonth: 6, leapDays: 30 },
         2025: { months: [30, 29, 30, 29, 30, 29, 30, 29, 30, 29, 30, 30], leapMonth: 0, leapDays: 0 },
-        2026: { months: [29, 30, 29, 30, 29, 30, 29, 30, 29, 30, 29, 30], leapMonth: 5, leapDays: 30 }, // 闰五月大
+        2026: { months: [29, 30, 29, 30, 29, 30, 29, 30, 29, 30, 29, 30], leapMonth: 5, leapDays: 30 },
         2027: { months: [30, 29, 30, 29, 30, 29, 30, 29, 30, 29, 30, 29], leapMonth: 0, leapDays: 0 },
-        2028: { months: [30, 29, 30, 29, 30, 29, 30, 29, 30, 29, 30, 29], leapMonth: 4, leapDays: 29 }, // 闰四月小
+        2028: { months: [30, 29, 30, 29, 30, 29, 30, 29, 30, 29, 30, 29], leapMonth: 4, leapDays: 29 },
         2029: { months: [30, 30, 29, 30, 29, 30, 29, 30, 29, 30, 29, 30], leapMonth: 0, leapDays: 0 },
-        2030: { months: [29, 30, 29, 30, 29, 30, 29, 30, 29, 30, 29, 30], leapMonth: 3, leapDays: 30 }  // 闰三月大
+        2030: { months: [29, 30, 29, 30, 29, 30, 29, 30, 29, 30, 29, 30], leapMonth: 3, leapDays: 30 }
     };
     
     // 确定当前日期所在的农历年
@@ -9221,9 +9220,9 @@ function solarToLunar(date) {
         springFestival = springFestivals[lunarYear];
     }
     
-    // 计算从春节到当前日期的天数
-    const springDate = new Date(lunarYear, springFestival.month - 1, springFestival.day);
-    const targetDate = new Date(year, month - 1, day);
+    // 计算从春节到当前日期的天数（使用UTC时间避免时区问题）
+    const springDate = Date.UTC(lunarYear, springFestival.month - 1, springFestival.day);
+    const targetDate = Date.UTC(year, month - 1, day);
     let diffDays = Math.floor((targetDate - springDate) / (24 * 60 * 60 * 1000));
     
     // 获取该年的农历数据
@@ -9236,27 +9235,28 @@ function solarToLunar(date) {
     let lunarMonth = 1;
     let lunarDay = 1;
     let isLeap = false;
+    let remainingDays = diffDays;
     
     for (let i = 0; i < monthDays.length; i++) {
         // 检查是否是闰月前
         if (leapMonth > 0 && leapMonth === i + 1) {
             // 先检查闰月
-            if (diffDays < leapDays) {
+            if (remainingDays < leapDays) {
                 lunarMonth = i + 1;
-                lunarDay = diffDays + 1;
+                lunarDay = remainingDays + 1;
                 isLeap = true;
                 break;
             }
-            diffDays -= leapDays;
+            remainingDays -= leapDays;
         }
         
         // 检查正常月份
-        if (diffDays < monthDays[i]) {
+        if (remainingDays < monthDays[i]) {
             lunarMonth = i + 1;
-            lunarDay = diffDays + 1;
+            lunarDay = remainingDays + 1;
             break;
         }
-        diffDays -= monthDays[i];
+        remainingDays -= monthDays[i];
     }
     
     return {
@@ -9333,17 +9333,11 @@ function getSolarTerm(date) {
         }
     };
     
-    // 优先使用精确数据
+    // 使用精确数据（只匹配当天）
     if (solarTermDates[year] && solarTermDates[year][month] && solarTermDates[year][month][day]) {
         return solarTermDates[year][month][day];
     }
     
-    // 使用近似数据（每年固定日期）
-    for (let term of LunarData.solarTerms) {
-        if (term.month === month && term.day === day) {
-            return term.name;
-        }
-    }
     return null;
 }
 
