@@ -9375,8 +9375,9 @@ function renderCalendar() {
 
     document.getElementById('calendar-month').textContent = `${year}年${month + 1}月`;
     
-    // 更新农历黄历信息（显示当月第一天）
-    updateLunarInfo(new Date(year, month, 1));
+    // 更新农历黄历信息（本月显示今天，其他月显示1日）
+    const infoDate = isCurrentMonth ? today : new Date(year, month, 1);
+    updateLunarInfo(infoDate);
 
     const firstDay = new Date(year, month, 1).getDay();
     const daysInMonth = new Date(year, month + 1, 0).getDate();
