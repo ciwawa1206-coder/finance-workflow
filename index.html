@@ -1283,11 +1283,128 @@
             margin: 0 auto;
         }
 
-        /* 每月工作流程 */
+        /* 每月工作流程 - 卡片式布局 */
         .workflow-section {
             background: var(--bg-light);
         }
 
+        .workflow-cards {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .workflow-card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .workflow-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 50px rgba(0,0,0,0.1);
+        }
+
+        .workflow-card-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 20px 24px;
+        }
+
+        .workflow-card-header .workflow-date {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+
+        .workflow-card-header h3 {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 1.2rem;
+            color: white;
+            margin: 0;
+        }
+
+        .workflow-card-body {
+            padding: 20px 24px;
+        }
+
+        .workflow-card-body.compact {
+            padding: 16px 24px;
+        }
+
+        .workflow-step {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 16px;
+            padding-bottom: 16px;
+            border-bottom: 1px dashed var(--border);
+        }
+
+        .workflow-step:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .workflow-step.simple {
+            margin-bottom: 8px;
+            padding-bottom: 8px;
+        }
+
+        .step-num {
+            width: 24px;
+            height: 24px;
+            min-width: 24px;
+            background: var(--gradient-gold);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-top: 2px;
+        }
+
+        .step-content {
+            flex: 1;
+        }
+
+        .step-content h4 {
+            font-size: 0.95rem;
+            color: var(--primary);
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+
+        .step-content p {
+            font-size: 0.85rem;
+            color: var(--text-gray);
+            line-height: 1.6;
+            margin-bottom: 4px;
+        }
+
+        .step-content p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* 响应式：移动端单列 */
+        @media (max-width: 900px) {
+            .workflow-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* 旧时间线样式（保留兼容） */
         .timeline {
             position: relative;
             max-width: 900px;
@@ -3761,140 +3878,173 @@
                 <h2>每月财务流程</h2>
                 <p>标准化月度工作节点，确保财务工作有序进行</p>
             </div>
-            <div class="timeline">
-                <div class="timeline-item">
-                    <div class="timeline-content">
-                        <div class="timeline-month">月初 1-5日</div>
+            <div class="workflow-cards">
+                <!-- 月初 1-5日 -->
+                <div class="workflow-card">
+                    <div class="workflow-card-header">
+                        <div class="workflow-date">月初 1-5日</div>
                         <h3>增值税申报与账务处理</h3>
-                        <div class="workflow-summary">
-                            <span class="workflow-tag">增值税申报</span>
-                            <span class="workflow-tag">社保申报</span>
-                            <span class="workflow-tag">银行对账</span>
-                            <span class="workflow-tag">发票管理</span>
-                            <span class="workflow-tag">银行日记账</span>
+                    </div>
+                    <div class="workflow-card-body">
+                        <div class="workflow-step">
+                            <div class="step-num">1</div>
+                            <div class="step-content">
+                                <h4>增值税申报</h4>
+                                <p>A. 根据开票额度加上未开票收入，统计当月销售金额</p>
+                                <p>B. 按税负率确定进项勾选额度</p>
+                                <p>C. 在税局勾选进项票据并确认抵扣额度</p>
+                                <p>D. 下载用途确认信息表并打印</p>
+                                <p>E. 进行增值税申报并打印申报表及完税凭证</p>
+                            </div>
                         </div>
-                        <div class="workflow-detail-toggle" onclick="toggleWorkflowDetail(this)">
-                            <span>查看详情</span>
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg>
+                        <div class="workflow-step">
+                            <div class="step-num">2</div>
+                            <div class="step-content">
+                                <h4>社保申报</h4>
+                                <p>申报上月社保费用并缴纳，打印申报明细表</p>
+                            </div>
                         </div>
-                        <div class="workflow-detail" style="display:none;">
-                            <div class="workflow-subsection">
-                                <h4>1. 增值税申报</h4>
-                                <ul>
-                                    <li><strong>A.</strong> 根据开票额度加上未开票收入，统计当月销售金额</li>
-                                    <li><strong>B.</strong> 按税负率确定进项勾选额度</li>
-                                    <li><strong>C.</strong> 在税局勾选进项票据并确认抵扣额度</li>
-                                    <li><strong>D.</strong> 下载用途确认信息表并打印</li>
-                                    <li><strong>E.</strong> 进行增值税申报并打印申报表及完税凭证</li>
-                                </ul>
+                        <div class="workflow-step">
+                            <div class="step-num">3</div>
+                            <div class="step-content">
+                                <h4>银行对账</h4>
+                                <p>银行打印上月对账单及银行回单</p>
                             </div>
-                            <div class="workflow-subsection">
-                                <h4>2. 社保申报</h4>
-                                <ul>
-                                    <li>申报上月社保费用并缴纳，打印申报明细表</li>
-                                </ul>
+                        </div>
+                        <div class="workflow-step">
+                            <div class="step-num">4</div>
+                            <div class="step-content">
+                                <h4>发票管理</h4>
+                                <p>财务软件下载上月发票</p>
                             </div>
-                            <div class="workflow-subsection">
-                                <h4>3. 银行对账</h4>
-                                <ul>
-                                    <li>银行打印上月对账单及银行回单</li>
-                                </ul>
-                            </div>
-                            <div class="workflow-subsection">
-                                <h4>4. 发票管理</h4>
-                                <ul>
-                                    <li>财务软件下载上月发票</li>
-                                </ul>
-                            </div>
-                            <div class="workflow-subsection">
-                                <h4>5. 银行日记账</h4>
-                                <ul>
-                                    <li>导出银行流水明细并导入财务软件银行日记账</li>
-                                </ul>
+                        </div>
+                        <div class="workflow-step">
+                            <div class="step-num">5</div>
+                            <div class="step-content">
+                                <h4>银行日记账</h4>
+                                <p>导出银行流水明细并导入财务软件银行日记账</p>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="timeline-item">
-                    <div class="timeline-content">
-                        <div class="timeline-month">月内 6-10日</div>
+
+                <!-- 月内 6-10日 -->
+                <div class="workflow-card">
+                    <div class="workflow-card-header">
+                        <div class="workflow-date">月内 6-10日</div>
                         <h3>往来账款管理与会计做账</h3>
-                        <div class="workflow-summary">
-                            <span class="workflow-tag">应收账款</span>
-                            <span class="workflow-tag">应付账款</span>
-                            <span class="workflow-tag">发票管理</span>
-                            <span class="workflow-tag">会计做账</span>
+                    </div>
+                    <div class="workflow-card-body">
+                        <div class="workflow-step">
+                            <div class="step-num">1</div>
+                            <div class="step-content">
+                                <h4>应收账款管理</h4>
+                                <p>A. 导出大斌和詹德开具发票明细</p>
+                                <p>B. 删除冲红发票将正常发票复制粘贴入应收账款明细表的发票工作表内</p>
+                                <p>C. 根据当月开票票面手写的客户名称对应所开具的发票，并计入对应客户账单的开票明细中</p>
+                                <p>E. 根据当月银行回单在两个表中登记客户收款情况：一是在发票登记表中登记客户收款情况（包括收回之前月份开票的），二是在客户明细表中登记收款</p>
+                                <p>F. 完成银圭上月账单登记并扫描，发送对方对账</p>
+                            </div>
                         </div>
-                        <div class="workflow-detail-toggle" onclick="toggleWorkflowDetail(this)">
-                            <span>查看详情</span>
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg>
+                        <div class="workflow-step">
+                            <div class="step-num">2</div>
+                            <div class="step-content">
+                                <h4>应付账款管理</h4>
+                                <p>A. 找供货商索要上月供货明细表，根据上月录入的进货凭证进行账务核对，同时核对收货金额以及付款和开票额度三项</p>
+                                <p>B. 缺票或有差错的地方与对方沟通，该补票的补票，更正差错，并在群中确认结果</p>
+                            </div>
                         </div>
-                        <div class="workflow-detail" style="display:none;">
-                            <div class="workflow-subsection">
-                                <h4>1. 应收账款管理</h4>
-                                <ul>
-                                    <li><strong>A.</strong> 导出大斌和詹德开具发票明细</li>
-                                    <li><strong>B.</strong> 删除冲红发票将正常发票复制粘贴入应收账款明细表的发票工作表内</li>
-                                    <li><strong>C.</strong> 根据当月开票票面手写的客户名称对应所开具的发票，并计入对应客户账单的开票明细中</li>
-                                    <li><strong>E.</strong> 根据当月银行回单在两个表中登记客户收款情况：一是在发票登记表中登记客户收款情况（包括收回之前月份开票的），二是在客户明细表中登记收款</li>
-                                    <li><strong>F.</strong> 完成银圭上月账单登记并扫描，发送对方对账</li>
-                                </ul>
+                        <div class="workflow-step">
+                            <div class="step-num">3</div>
+                            <div class="step-content">
+                                <h4>发票管理</h4>
+                                <p>打印上月开具发票用来做销售凭证</p>
                             </div>
-                            <div class="workflow-subsection">
-                                <h4>2. 应付账款管理</h4>
-                                <ul>
-                                    <li><strong>A.</strong> 找供货商索要上月供货明细表，根据上月录入的进货凭证进行账务核对，同时核对收货金额以及付款和开票额度三项</li>
-                                    <li><strong>B.</strong> 缺票或有差错的地方与对方沟通，该补票的补票，更正差错，并在群中确认结果</li>
-                                </ul>
-                            </div>
-                            <div class="workflow-subsection">
-                                <h4>3. 发票管理</h4>
-                                <ul>
-                                    <li>打印上月开具发票用来做销售凭证</li>
-                                </ul>
-                            </div>
-                            <div class="workflow-subsection">
-                                <h4>4. 会计做账</h4>
-                                <ul>
-                                    <li>根据原始凭证登记记账</li>
-                                </ul>
+                        </div>
+                        <div class="workflow-step">
+                            <div class="step-num">4</div>
+                            <div class="step-content">
+                                <h4>会计做账</h4>
+                                <p>根据原始凭证登记记账</p>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="timeline-item">
-                    <div class="timeline-content">
-                        <div class="timeline-month">月内 16-20日</div>
+
+                <!-- 月内 16-20日 -->
+                <div class="workflow-card">
+                    <div class="workflow-card-header">
+                        <div class="workflow-date">月内 16-20日</div>
                         <h3>报表编制</h3>
-                        <div class="workflow-summary">
-                            <span class="workflow-tag">资产负债表</span>
-                            <span class="workflow-tag">利润表</span>
-                            <span class="workflow-tag">现金流量表</span>
-                            <span class="workflow-tag">内部管理报表</span>
+                    </div>
+                    <div class="workflow-card-body compact">
+                        <div class="workflow-step simple">
+                            <div class="step-num">1</div>
+                            <div class="step-content"><p>资产负债表编制</p></div>
+                        </div>
+                        <div class="workflow-step simple">
+                            <div class="step-num">2</div>
+                            <div class="step-content"><p>利润表编制</p></div>
+                        </div>
+                        <div class="workflow-step simple">
+                            <div class="step-num">3</div>
+                            <div class="step-content"><p>现金流量表编制</p></div>
+                        </div>
+                        <div class="workflow-step simple">
+                            <div class="step-num">4</div>
+                            <div class="step-content"><p>内部管理报表</p></div>
                         </div>
                     </div>
                 </div>
-                <div class="timeline-item">
-                    <div class="timeline-content">
-                        <div class="timeline-month">月内 21-25日</div>
+
+                <!-- 月内 21-25日 -->
+                <div class="workflow-card">
+                    <div class="workflow-card-header">
+                        <div class="workflow-date">月内 21-25日</div>
                         <h3>成本核算</h3>
-                        <div class="workflow-summary">
-                            <span class="workflow-tag">原材料成本</span>
-                            <span class="workflow-tag">制造费用</span>
-                            <span class="workflow-tag">产品成本</span>
-                            <span class="workflow-tag">存货盘点</span>
+                    </div>
+                    <div class="workflow-card-body compact">
+                        <div class="workflow-step simple">
+                            <div class="step-num">1</div>
+                            <div class="step-content"><p>原材料成本分配</p></div>
+                        </div>
+                        <div class="workflow-step simple">
+                            <div class="step-num">2</div>
+                            <div class="step-content"><p>制造费用归集</p></div>
+                        </div>
+                        <div class="workflow-step simple">
+                            <div class="step-num">3</div>
+                            <div class="step-content"><p>产品成本计算</p></div>
+                        </div>
+                        <div class="workflow-step simple">
+                            <div class="step-num">4</div>
+                            <div class="step-content"><p>存货盘点与计价</p></div>
                         </div>
                     </div>
                 </div>
-                <div class="timeline-item">
-                    <div class="timeline-content">
-                        <div class="timeline-month">月底 26-30日</div>
+
+                <!-- 月底 26-30日 -->
+                <div class="workflow-card">
+                    <div class="workflow-card-header">
+                        <div class="workflow-date">月底 26-30日</div>
                         <h3>预算与分析</h3>
-                        <div class="workflow-summary">
-                            <span class="workflow-tag">预算执行分析</span>
-                            <span class="workflow-tag">资金计划</span>
-                            <span class="workflow-tag">异常说明</span>
-                            <span class="workflow-tag">汇报准备</span>
+                    </div>
+                    <div class="workflow-card-body compact">
+                        <div class="workflow-step simple">
+                            <div class="step-num">1</div>
+                            <div class="step-content"><p>本月预算执行分析</p></div>
+                        </div>
+                        <div class="workflow-step simple">
+                            <div class="step-num">2</div>
+                            <div class="step-content"><p>下月资金计划</p></div>
+                        </div>
+                        <div class="workflow-step simple">
+                            <div class="step-num">3</div>
+                            <div class="step-content"><p>异常情况说明</p></div>
+                        </div>
+                        <div class="workflow-step simple">
+                            <div class="step-num">4</div>
+                            <div class="step-content"><p>管理层汇报准备</p></div>
                         </div>
                     </div>
                 </div>
@@ -3925,20 +4075,7 @@
                         <span class="tool-tag">批量合并</span>
                     </div>
                 </div>
-                <div class="tool-card" onclick="openTool('attendance')">
-                    <div class="tool-header">
-                        <div class="tool-icon">
-                            <svg viewBox="0 0 24 24" fill="#C9A962"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zm-7-9H7v5h5v-5z"/></svg>
-                        </div>
-                        <h3>考勤统计工具</h3>
-                    </div>
-                    <p>日考勤数据导入，智能统计应出勤、实际出勤、迟到早退，支持4次打卡双班制</p>
-                    <div class="tool-tags">
-                        <span class="tool-tag">考勤统计</span>
-                        <span class="tool-tag">加班计算</span>
-                        <span class="tool-tag">Excel导出</span>
-                    </div>
-                </div>
+
                 <div class="tool-card" onclick="openTool('tax')">
                     <div class="tool-header">
                         <div class="tool-icon">
