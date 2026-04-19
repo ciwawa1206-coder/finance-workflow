@@ -1381,6 +1381,56 @@
             left: 0;
             top: 14px;
             width: 6px;
+        }
+
+        /* 工作流程摘要标签 */
+        .workflow-summary {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 12px 0;
+        }
+
+        .workflow-tag {
+            display: inline-block;
+            padding: 4px 10px;
+            background: rgba(201, 169, 98, 0.12);
+            color: var(--accent);
+            font-size: 0.8rem;
+            border-radius: 12px;
+            font-weight: 500;
+        }
+
+        /* 展开/收起按钮 */
+        .workflow-detail-toggle {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            color: var(--accent);
+            font-size: 0.85rem;
+            cursor: pointer;
+            margin-top: 8px;
+            padding: 4px 0;
+            transition: opacity 0.2s;
+        }
+
+        .workflow-detail-toggle:hover {
+            opacity: 0.8;
+        }
+
+        .workflow-detail-toggle svg {
+            transition: transform 0.3s;
+        }
+
+        .workflow-detail-toggle.expanded svg {
+            transform: rotate(180deg);
+        }
+
+        /* 详情内容 */
+        .workflow-detail {
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px dashed var(--border);
             height: 6px;
             background: var(--accent);
             border-radius: 50%;
@@ -3716,39 +3766,52 @@
                     <div class="timeline-content">
                         <div class="timeline-month">月初 1-5日</div>
                         <h3>增值税申报与账务处理</h3>
-                        <div class="workflow-subsection">
-                            <h4>1. 增值税申报</h4>
-                            <ul>
-                                <li><strong>A.</strong> 根据开票额度加上未开票收入，统计当月销售金额</li>
-                                <li><strong>B.</strong> 按税负率确定进项勾选额度</li>
-                                <li><strong>C.</strong> 在税局勾选进项票据并确认抵扣额度</li>
-                                <li><strong>D.</strong> 下载用途确认信息表并打印</li>
-                                <li><strong>E.</strong> 进行增值税申报并打印申报表及完税凭证</li>
-                            </ul>
+                        <div class="workflow-summary">
+                            <span class="workflow-tag">增值税申报</span>
+                            <span class="workflow-tag">社保申报</span>
+                            <span class="workflow-tag">银行对账</span>
+                            <span class="workflow-tag">发票管理</span>
+                            <span class="workflow-tag">银行日记账</span>
                         </div>
-                        <div class="workflow-subsection">
-                            <h4>2. 社保申报</h4>
-                            <ul>
-                                <li>申报上月社保费用并缴纳，打印申报明细表</li>
-                            </ul>
+                        <div class="workflow-detail-toggle" onclick="toggleWorkflowDetail(this)">
+                            <span>查看详情</span>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg>
                         </div>
-                        <div class="workflow-subsection">
-                            <h4>3. 银行对账</h4>
-                            <ul>
-                                <li>银行打印上月对账单及银行回单</li>
-                            </ul>
-                        </div>
-                        <div class="workflow-subsection">
-                            <h4>4. 发票管理</h4>
-                            <ul>
-                                <li>财务软件下载上月发票</li>
-                            </ul>
-                        </div>
-                        <div class="workflow-subsection">
-                            <h4>5. 银行日记账</h4>
-                            <ul>
-                                <li>导出银行流水明细并导入财务软件银行日记账</li>
-                            </ul>
+                        <div class="workflow-detail" style="display:none;">
+                            <div class="workflow-subsection">
+                                <h4>1. 增值税申报</h4>
+                                <ul>
+                                    <li><strong>A.</strong> 根据开票额度加上未开票收入，统计当月销售金额</li>
+                                    <li><strong>B.</strong> 按税负率确定进项勾选额度</li>
+                                    <li><strong>C.</strong> 在税局勾选进项票据并确认抵扣额度</li>
+                                    <li><strong>D.</strong> 下载用途确认信息表并打印</li>
+                                    <li><strong>E.</strong> 进行增值税申报并打印申报表及完税凭证</li>
+                                </ul>
+                            </div>
+                            <div class="workflow-subsection">
+                                <h4>2. 社保申报</h4>
+                                <ul>
+                                    <li>申报上月社保费用并缴纳，打印申报明细表</li>
+                                </ul>
+                            </div>
+                            <div class="workflow-subsection">
+                                <h4>3. 银行对账</h4>
+                                <ul>
+                                    <li>银行打印上月对账单及银行回单</li>
+                                </ul>
+                            </div>
+                            <div class="workflow-subsection">
+                                <h4>4. 发票管理</h4>
+                                <ul>
+                                    <li>财务软件下载上月发票</li>
+                                </ul>
+                            </div>
+                            <div class="workflow-subsection">
+                                <h4>5. 银行日记账</h4>
+                                <ul>
+                                    <li>导出银行流水明细并导入财务软件银行日记账</li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -3756,34 +3819,46 @@
                     <div class="timeline-content">
                         <div class="timeline-month">月内 6-10日</div>
                         <h3>往来账款管理与会计做账</h3>
-                        <div class="workflow-subsection">
-                            <h4>1. 应收账款管理</h4>
-                            <ul>
-                                <li><strong>A.</strong> 导出大斌和詹德开具发票明细</li>
-                                <li><strong>B.</strong> 删除冲红发票将正常发票复制粘贴入应收账款明细表的发票工作表内</li>
-                                <li><strong>C.</strong> 根据当月开票票面手写的客户名称对应所开具的发票，并计入对应客户账单的开票明细中</li>
-                                <li><strong>E.</strong> 根据当月银行回单在两个表中登记客户收款情况：一是在发票登记表中登记客户收款情况（包括收回之前月份开票的），二是在客户明细表中登记收款</li>
-                                <li><strong>F.</strong> 完成银圭上月账单登记并扫描，发送对方对账</li>
-                            </ul>
+                        <div class="workflow-summary">
+                            <span class="workflow-tag">应收账款</span>
+                            <span class="workflow-tag">应付账款</span>
+                            <span class="workflow-tag">发票管理</span>
+                            <span class="workflow-tag">会计做账</span>
                         </div>
-                        <div class="workflow-subsection">
-                            <h4>2. 应付账款管理</h4>
-                            <ul>
-                                <li><strong>A.</strong> 找供货商索要上月供货明细表，根据上月录入的进货凭证进行账务核对，同时核对收货金额以及付款和开票额度三项</li>
-                                <li><strong>B.</strong> 缺票或有差错的地方与对方沟通，该补票的补票，更正差错，并在群中确认结果</li>
-                            </ul>
+                        <div class="workflow-detail-toggle" onclick="toggleWorkflowDetail(this)">
+                            <span>查看详情</span>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg>
                         </div>
-                        <div class="workflow-subsection">
-                            <h4>3. 发票管理</h4>
-                            <ul>
-                                <li>打印上月开具发票用来做销售凭证</li>
-                            </ul>
-                        </div>
-                        <div class="workflow-subsection">
-                            <h4>4. 会计做账</h4>
-                            <ul>
-                                <li>根据原始凭证登记记账</li>
-                            </ul>
+                        <div class="workflow-detail" style="display:none;">
+                            <div class="workflow-subsection">
+                                <h4>1. 应收账款管理</h4>
+                                <ul>
+                                    <li><strong>A.</strong> 导出大斌和詹德开具发票明细</li>
+                                    <li><strong>B.</strong> 删除冲红发票将正常发票复制粘贴入应收账款明细表的发票工作表内</li>
+                                    <li><strong>C.</strong> 根据当月开票票面手写的客户名称对应所开具的发票，并计入对应客户账单的开票明细中</li>
+                                    <li><strong>E.</strong> 根据当月银行回单在两个表中登记客户收款情况：一是在发票登记表中登记客户收款情况（包括收回之前月份开票的），二是在客户明细表中登记收款</li>
+                                    <li><strong>F.</strong> 完成银圭上月账单登记并扫描，发送对方对账</li>
+                                </ul>
+                            </div>
+                            <div class="workflow-subsection">
+                                <h4>2. 应付账款管理</h4>
+                                <ul>
+                                    <li><strong>A.</strong> 找供货商索要上月供货明细表，根据上月录入的进货凭证进行账务核对，同时核对收货金额以及付款和开票额度三项</li>
+                                    <li><strong>B.</strong> 缺票或有差错的地方与对方沟通，该补票的补票，更正差错，并在群中确认结果</li>
+                                </ul>
+                            </div>
+                            <div class="workflow-subsection">
+                                <h4>3. 发票管理</h4>
+                                <ul>
+                                    <li>打印上月开具发票用来做销售凭证</li>
+                                </ul>
+                            </div>
+                            <div class="workflow-subsection">
+                                <h4>4. 会计做账</h4>
+                                <ul>
+                                    <li>根据原始凭证登记记账</li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -3791,36 +3866,36 @@
                     <div class="timeline-content">
                         <div class="timeline-month">月内 16-20日</div>
                         <h3>报表编制</h3>
-                        <ul>
-                            <li>资产负债表编制</li>
-                            <li>利润表编制</li>
-                            <li>现金流量表编制</li>
-                            <li>内部管理报表</li>
-                        </ul>
+                        <div class="workflow-summary">
+                            <span class="workflow-tag">资产负债表</span>
+                            <span class="workflow-tag">利润表</span>
+                            <span class="workflow-tag">现金流量表</span>
+                            <span class="workflow-tag">内部管理报表</span>
+                        </div>
                     </div>
                 </div>
                 <div class="timeline-item">
                     <div class="timeline-content">
                         <div class="timeline-month">月内 21-25日</div>
                         <h3>成本核算</h3>
-                        <ul>
-                            <li>原材料成本分配</li>
-                            <li>制造费用归集</li>
-                            <li>产品成本计算</li>
-                            <li>存货盘点与计价</li>
-                        </ul>
+                        <div class="workflow-summary">
+                            <span class="workflow-tag">原材料成本</span>
+                            <span class="workflow-tag">制造费用</span>
+                            <span class="workflow-tag">产品成本</span>
+                            <span class="workflow-tag">存货盘点</span>
+                        </div>
                     </div>
                 </div>
                 <div class="timeline-item">
                     <div class="timeline-content">
                         <div class="timeline-month">月底 26-30日</div>
                         <h3>预算与分析</h3>
-                        <ul>
-                            <li>本月预算执行分析</li>
-                            <li>下月资金计划</li>
-                            <li>异常情况说明</li>
-                            <li>管理层汇报准备</li>
-                        </ul>
+                        <div class="workflow-summary">
+                            <span class="workflow-tag">预算执行分析</span>
+                            <span class="workflow-tag">资金计划</span>
+                            <span class="workflow-tag">异常说明</span>
+                            <span class="workflow-tag">汇报准备</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -9867,6 +9942,92 @@ function addScheduleWithDate(prefillDate) {
     document.getElementById('scheduleTitle').focus();
 }
 
+// 工作流程折叠/展开功能
+function toggleWorkflowDetail(element) {
+    const detail = element.nextElementSibling;
+    const isExpanded = element.classList.contains('expanded');
+    
+    if (isExpanded) {
+        detail.style.display = 'none';
+        element.classList.remove('expanded');
+        element.querySelector('span').textContent = '查看详情';
+    } else {
+        detail.style.display = 'block';
+        element.classList.add('expanded');
+        element.querySelector('span').textContent = '收起详情';
+    }
+}
+
+// 根据日期获取当前应执行的财务流程任务
+function getWorkflowTasksByDate(date) {
+    const day = date.getDate();
+    const tasks = [];
+    
+    if (day >= 1 && day <= 5) {
+        tasks.push(
+            { title: '增值税申报', desc: '统计销售额、勾选进项、申报纳税', priority: 'high' },
+            { title: '社保申报', desc: '申报上月社保费用并缴纳', priority: 'high' },
+            { title: '银行对账', desc: '打印上月对账单及回单', priority: 'normal' },
+            { title: '发票管理', desc: '财务软件下载上月发票', priority: 'normal' },
+            { title: '银行日记账', desc: '导出流水并导入日记账', priority: 'normal' }
+        );
+    } else if (day >= 6 && day <= 10) {
+        tasks.push(
+            { title: '应收账款管理', desc: '导出发票明细、登记收款、银圭对账', priority: 'high' },
+            { title: '应付账款管理', desc: '供货商对账、补票沟通', priority: 'high' },
+            { title: '发票管理', desc: '打印销售凭证', priority: 'normal' },
+            { title: '会计做账', desc: '根据原始凭证登记记账', priority: 'high' }
+        );
+    } else if (day >= 16 && day <= 20) {
+        tasks.push(
+            { title: '报表编制', desc: '资产负债表、利润表、现金流量表', priority: 'high' }
+        );
+    } else if (day >= 21 && day <= 25) {
+        tasks.push(
+            { title: '成本核算', desc: '原材料成本、制造费用、产品成本', priority: 'high' }
+        );
+    } else if (day >= 26 && day <= 31) {
+        tasks.push(
+            { title: '预算与分析', desc: '预算执行分析、资金计划、汇报准备', priority: 'normal' }
+        );
+    }
+    
+    return tasks;
+}
+
+// 自动将财务流程任务添加到今日行程（如果当天没有这些任务）
+function autoAddWorkflowSchedules() {
+    const today = new Date();
+    const dateStr = `${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,'0')}-${String(today.getDate()).padStart(2,'0')}`;
+    
+    const schedules = JSON.parse(localStorage.getItem('yunxu_schedules') || '[]');
+    const todaySchedules = schedules.filter(s => s.date === dateStr);
+    
+    // 获取当天应执行的财务流程任务
+    const workflowTasks = getWorkflowTasksByDate(today);
+    if (workflowTasks.length === 0) return;
+    
+    // 检查是否已存在相同标题的任务
+    const existingTitles = todaySchedules.map(s => s.title);
+    const newTasks = workflowTasks.filter(task => !existingTitles.includes(task.title));
+    
+    if (newTasks.length === 0) return;
+    
+    // 添加新任务到行程（不同任务设置不同时间）
+    const baseTimes = ['09:00', '10:30', '14:00', '15:30', '16:30'];
+    newTasks.forEach((task, index) => {
+        const time = baseTimes[index % baseTimes.length];
+        schedules.push({
+            date: dateStr,
+            time: time,
+            title: task.title,
+            desc: task.desc
+        });
+    });
+    
+    localStorage.setItem('yunxu_schedules', JSON.stringify(schedules));
+}
+
 // 初始化
 document.addEventListener('DOMContentLoaded', function() {
     // 初始化日期选择器为今天
@@ -9877,6 +10038,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     renderCalendar();
     renderSchedules();
+    
+    // 自动添加当天财务流程任务到行程
+    autoAddWorkflowSchedules();
 });
 
 // ========== 工作笔记功能 ==========
