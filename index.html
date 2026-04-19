@@ -9400,7 +9400,7 @@ function renderCalendar() {
         const d = daysInPrevMonth - i;
         const dateStr = `${prevMonthYear}-${String(prevMonthNum).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
         const hasEvent = checkEventStr(dateStr) ? 'has-event' : '';
-        const lunar = solarToLunar(new Date(year, month - 1, d));
+        const lunar = solarToLunar(new Date(year, month - 1, d)) || { day: 1, monthName: '', dayName: '' };
         html += `<div class="calendar-day other-month ${hasEvent}" data-date="${dateStr}" onmouseenter="showDayTooltip(this, '${dateStr}')" onmouseleave="hideDayTooltip()"><div class="solar-day">${d}</div><div class="lunar-day">${lunar.day === 1 ? lunar.monthName : lunar.dayName}</div></div>`;
     }
 
@@ -9409,7 +9409,7 @@ function renderCalendar() {
         const isToday = isCurrentMonth && d === todayDate ? 'today' : '';
         const dateStr = `${year}-${String(month + 1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
         const hasEvent = checkEventStr(dateStr) ? 'has-event' : '';
-        const lunar = solarToLunar(new Date(year, month, d));
+        const lunar = solarToLunar(new Date(year, month, d)) || { day: 1, monthName: '', dayName: '' };
         const solarTerm = getSolarTerm(new Date(year, month, d));
         const lunarText = solarTerm || (lunar.day === 1 ? lunar.monthName : lunar.dayName);
         html += `<div class="calendar-day ${isToday} ${hasEvent}" data-date="${dateStr}" onclick="selectDate('${dateStr}')" onmouseenter="showDayTooltip(this, '${dateStr}')" onmouseleave="hideDayTooltip()"><div class="solar-day">${d}</div><div class="lunar-day ${solarTerm ? 'solar-term' : ''}">${lunarText}</div></div>`;
@@ -9422,7 +9422,7 @@ function renderCalendar() {
     for (let d = 1; d <= totalCells - firstDay - daysInMonth; d++) {
         const dateStr = `${nextMonthYear}-${String(nextMonthNum).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
         const hasEvent = checkEventStr(dateStr) ? 'has-event' : '';
-        const lunar = solarToLunar(new Date(year, month + 1, d));
+        const lunar = solarToLunar(new Date(year, month + 1, d)) || { day: 1, monthName: '', dayName: '' };
         html += `<div class="calendar-day other-month ${hasEvent}" data-date="${dateStr}" onmouseenter="showDayTooltip(this, '${dateStr}')" onmouseleave="hideDayTooltip()"><div class="solar-day">${d}</div><div class="lunar-day">${lunar.day === 1 ? lunar.monthName : lunar.dayName}</div></div>`;
     }
 
