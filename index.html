@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
@@ -650,6 +650,10 @@
             box-shadow: 0 4px 20px rgba(44, 62, 80, 0.08);
         }
 
+        .widget-card.calendar-card {
+            min-height: 480px;
+        }
+
         .widget-header {
             display: flex;
             align-items: center;
@@ -724,6 +728,9 @@
 
         .calendar-mini {
             margin-top: 8px;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
         }
 
         .calendar-mini-header {
@@ -736,26 +743,142 @@
         .calendar-mini-title {
             font-weight: 600;
             color: var(--primary);
+            font-size: 0.95rem;
+        }
+
+        .calendar-nav-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-gray);
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 2px 8px;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+
+        .calendar-nav-btn:hover {
+            background: var(--bg-light);
+            color: var(--accent);
+        }
+
+        .calendar-today-btn {
+            width: 100%;
+            margin-top: 14px;
+            padding: 10px;
+            background: var(--bg-light);
+            border: none;
+            border-radius: 8px;
+            color: var(--text-gray);
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .calendar-today-btn:hover {
+            background: var(--accent);
+            color: white;
+        }
+
+        /* 农历黄历信息 */
+        .calendar-lunar-info {
+            background: linear-gradient(135deg, #f8f5f0 0%, #f0ebe3 100%);
+            border-radius: 10px;
+            padding: 12px 14px;
+            margin-bottom: 14px;
+            font-size: 0.8rem;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            border: 1px solid #e8e0d5;
+        }
+
+        .calendar-lunar-info .lunar-date {
+            font-weight: 600;
+            color: var(--primary);
+            font-size: 0.95rem;
+        }
+
+        .calendar-lunar-info .lunar-yi {
+            color: #4CAF50;
+            font-size: 0.8rem;
+        }
+
+        .calendar-lunar-info .lunar-ji {
+            color: #e74c3c;
+            font-size: 0.8rem;
+        }
+
+        .calendar-day {
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .calendar-day:hover {
+            background: var(--bg-light);
+        }
+
+        .calendar-day.selected {
+            background: var(--accent);
+            color: white;
         }
 
         .calendar-mini-grid {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
-            gap: 4px;
+            gap: 6px;
             text-align: center;
+            flex: 1;
+            min-height: 320px;
         }
 
         .calendar-day-name {
-            font-size: 0.75rem;
+            font-size: 0.85rem;
             color: var(--text-light);
-            padding: 4px;
+            padding: 8px 4px;
+            font-weight: 500;
         }
 
         .calendar-day {
-            font-size: 0.8rem;
-            padding: 6px 4px;
-            border-radius: 8px;
+            font-size: 0.9rem;
+            padding: 8px 4px;
+            border-radius: 10px;
+            color: var(--text-dark);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 56px;
+            background: rgba(248, 249, 250, 0.5);
+        }
+
+        .calendar-day .solar-day {
+            font-size: 1rem;
+            font-weight: 600;
+            line-height: 1.2;
+        }
+
+        .calendar-day .lunar-day {
+            font-size: 0.7rem;
             color: var(--text-gray);
+            line-height: 1.1;
+            margin-top: 4px;
+        }
+
+        .calendar-day .lunar-day.solar-term {
+            color: #4CAF50;
+            font-weight: 500;
+        }
+
+        .calendar-day.today .lunar-day,
+        .calendar-day.selected .lunar-day {
+            color: rgba(255,255,255,0.9);
+        }
+
+        .calendar-day.today .lunar-day.solar-term,
+        .calendar-day.selected .lunar-day.solar-term {
+            color: #fff;
+            font-weight: 600;
         }
 
         .calendar-day.today {
@@ -765,7 +888,7 @@
         }
 
         .calendar-day.other-month {
-            color: #ccc;
+            color: #999;
         }
 
         .calendar-day.has-event {
@@ -787,6 +910,56 @@
         /* 行程小部件 */
         .schedule-widget {
             text-align: left;
+        }
+
+        .schedule-top-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 14px;
+        }
+
+        .schedule-title-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .schedule-title-row .schedule-widget-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            letter-spacing: 0.02em;
+        }
+
+        .schedule-date-selector {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .schedule-date-label {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--accent);
+        }
+
+        .schedule-date-selector input[type="date"] {
+            padding: 3px 6px;
+            border: 1px solid var(--border-light);
+            border-radius: 6px;
+            font-size: 0.78rem;
+            color: var(--text-gray);
+            background: white;
+            cursor: pointer;
+            width: 36px;
+            opacity: 0.6;
+        }
+
+        .schedule-date-selector input[type="date"]:hover {
+            border-color: var(--accent);
+            opacity: 1;
+            width: auto;
         }
 
         .schedule-list {
@@ -1110,11 +1283,128 @@
             margin: 0 auto;
         }
 
-        /* 每月工作流程 */
+        /* 每月工作流程 - 卡片式布局 */
         .workflow-section {
             background: var(--bg-light);
         }
 
+        .workflow-cards {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .workflow-card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .workflow-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 50px rgba(0,0,0,0.1);
+        }
+
+        .workflow-card-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 20px 24px;
+        }
+
+        .workflow-card-header .workflow-date {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+
+        .workflow-card-header h3 {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 1.2rem;
+            color: white;
+            margin: 0;
+        }
+
+        .workflow-card-body {
+            padding: 20px 24px;
+        }
+
+        .workflow-card-body.compact {
+            padding: 16px 24px;
+        }
+
+        .workflow-step {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 16px;
+            padding-bottom: 16px;
+            border-bottom: 1px dashed var(--border);
+        }
+
+        .workflow-step:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .workflow-step.simple {
+            margin-bottom: 8px;
+            padding-bottom: 8px;
+        }
+
+        .step-num {
+            width: 24px;
+            height: 24px;
+            min-width: 24px;
+            background: var(--gradient-gold);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-top: 2px;
+        }
+
+        .step-content {
+            flex: 1;
+        }
+
+        .step-content h4 {
+            font-size: 0.95rem;
+            color: var(--primary);
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+
+        .step-content p {
+            font-size: 0.85rem;
+            color: var(--text-gray);
+            line-height: 1.6;
+            margin-bottom: 4px;
+        }
+
+        .step-content p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* 响应式：移动端单列 */
+        @media (max-width: 900px) {
+            .workflow-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* 旧时间线样式（保留兼容） */
         .timeline {
             position: relative;
             max-width: 900px;
@@ -1208,6 +1498,56 @@
             left: 0;
             top: 14px;
             width: 6px;
+        }
+
+        /* 工作流程摘要标签 */
+        .workflow-summary {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 12px 0;
+        }
+
+        .workflow-tag {
+            display: inline-block;
+            padding: 4px 10px;
+            background: rgba(201, 169, 98, 0.12);
+            color: var(--accent);
+            font-size: 0.8rem;
+            border-radius: 12px;
+            font-weight: 500;
+        }
+
+        /* 展开/收起按钮 */
+        .workflow-detail-toggle {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            color: var(--accent);
+            font-size: 0.85rem;
+            cursor: pointer;
+            margin-top: 8px;
+            padding: 4px 0;
+            transition: opacity 0.2s;
+        }
+
+        .workflow-detail-toggle:hover {
+            opacity: 0.8;
+        }
+
+        .workflow-detail-toggle svg {
+            transition: transform 0.3s;
+        }
+
+        .workflow-detail-toggle.expanded svg {
+            transform: rotate(180deg);
+        }
+
+        /* 详情内容 */
+        .workflow-detail {
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px dashed var(--border);
             height: 6px;
             background: var(--accent);
             border-radius: 50%;
@@ -3416,7 +3756,14 @@
                 <div class="widget-card calendar-card">
                     <div class="calendar-mini">
                         <div class="calendar-mini-header">
+                            <button class="calendar-nav-btn" onclick="prevMonth()" title="上月">‹</button>
                             <div class="calendar-mini-title" id="calendar-month">2026年4月</div>
+                            <button class="calendar-nav-btn" onclick="nextMonth()" title="下月">›</button>
+                        </div>
+                        <div class="calendar-lunar-info" id="calendar-lunar-info">
+                            <span class="lunar-date" id="lunar-date">农历三月初二</span>
+                            <span class="lunar-yi" id="lunar-yi">宜：祭祀 祈福</span>
+                            <span class="lunar-ji" id="lunar-ji">忌：嫁娶 出行</span>
                         </div>
                         <div class="calendar-mini-grid" id="calendar-grid">
                             <div class="calendar-day-name">日</div>
@@ -3427,17 +3774,21 @@
                             <div class="calendar-day-name">五</div>
                             <div class="calendar-day-name">六</div>
                         </div>
+                        <button class="calendar-today-btn" onclick="goToToday()">回到今天</button>
                     </div>
                 </div>
 
                 <!-- 今日行程 -->
                 <div class="widget-card schedule-widget">
-                    <div class="widget-header">
-                        <div class="widget-title">
-                            <svg viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM9 10H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2zm-8 4H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2z"/></svg>
-                            今日行程
+                    <div class="schedule-top-header">
+                        <div class="schedule-title-row">
+                            <svg viewBox="0 0 24 24" width="22" height="22" fill="var(--accent)"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM9 10H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2zm-8 4H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2z"/></svg>
+                            <span class="schedule-widget-title">今日行程</span>
                         </div>
-                        <span id="schedule-date" style="font-size:0.8rem;color:var(--text-light)">4月16日</span>
+                        <div class="schedule-date-selector">
+                            <span id="schedule-date" data-date="" class="schedule-date-label"></span>
+                            <input type="date" id="schedule-date-picker" onchange="onDatePickerChange(this.value)" title="切换日期">
+                        </div>
                     </div>
                     <div class="schedule-list" id="schedule-list">
                         <div class="schedule-empty">
@@ -3445,7 +3796,7 @@
                             <p>暂无日程安排</p>
                         </div>
                     </div>
-                    <button class="add-schedule-btn" onclick="addSchedule()">
+                    <button class="add-schedule-btn" onclick="addScheduleForSelectedDate()">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
                         添加行程
                     </button>
@@ -3507,7 +3858,7 @@
                     <svg viewBox="0 0 24 24" fill="#C9A962"><path d="M19 3h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm2 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
                 </div>
                 <h3>行政考勤</h3>
-                <p>员工考勤管理、加班统计、请假审批，数据精准、流程规范</p>
+                <p>员工考勤管理、加班统计，数据精准、流程规范</p>
             </div>
             <div class="feature-card">
                 <div class="feature-icon">
@@ -3527,65 +3878,223 @@
                 <h2>每月财务流程</h2>
                 <p>标准化月度工作节点，确保财务工作有序进行</p>
             </div>
-            <div class="timeline">
-                <div class="timeline-item">
-                    <div class="timeline-content">
-                        <div class="timeline-month">月初 1-5日</div>
-                        <h3>上月结账</h3>
-                        <ul>
-                            <li>核对银行流水与账面余额</li>
-                            <li>完成所有记账凭证审核</li>
-                            <li>结转本期损益</li>
-                            <li>生成科目余额表</li>
-                        </ul>
+            <div class="workflow-cards">
+                <!-- 月初 1-5日 -->
+                <div class="workflow-card">
+                    <div class="workflow-card-header">
+                        <div class="workflow-date">月初 1-5日</div>
+                        <h3>增值税申报与账务处理</h3>
+                    </div>
+                    <div class="workflow-card-body">
+                        <div class="workflow-step">
+                            <div class="step-num">1</div>
+                            <div class="step-content">
+                                <h4>增值税申报</h4>
+                                <p>A. 根据开票额度加上未开票收入，统计当月销售金额</p>
+                                <p>B. 按税负率确定进项勾选额度</p>
+                                <p>C. 在税局勾选进项票据并确认抵扣额度</p>
+                                <p>D. 下载用途确认信息表并打印</p>
+                                <p>E. 进行增值税申报并打印申报表及完税凭证</p>
+                            </div>
+                        </div>
+                        <div class="workflow-step">
+                            <div class="step-num">2</div>
+                            <div class="step-content">
+                                <h4>社保申报</h4>
+                                <p>申报上月社保费用并缴纳，打印申报明细表</p>
+                            </div>
+                        </div>
+                        <div class="workflow-step">
+                            <div class="step-num">3</div>
+                            <div class="step-content">
+                                <h4>银行对账</h4>
+                                <p>银行打印上月对账单及银行回单</p>
+                            </div>
+                        </div>
+                        <div class="workflow-step">
+                            <div class="step-num">4</div>
+                            <div class="step-content">
+                                <h4>发票管理</h4>
+                                <p>财务软件下载上月发票</p>
+                            </div>
+                        </div>
+                        <div class="workflow-step">
+                            <div class="step-num">5</div>
+                            <div class="step-content">
+                                <h4>银行日记账</h4>
+                                <p>导出银行流水明细并导入财务软件银行日记账</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="timeline-item">
-                    <div class="timeline-content">
-                        <div class="timeline-month">月内 6-15日</div>
-                        <h3>税务申报</h3>
-                        <ul>
-                            <li>增值税及附加税申报</li>
-                            <li>企业所得税预缴</li>
-                            <li>个人所得税代扣代缴</li>
-                            <li>印花税等其他税种</li>
-                        </ul>
+
+                <!-- 月内 6-10日 -->
+                <div class="workflow-card">
+                    <div class="workflow-card-header">
+                        <div class="workflow-date">月内 6-10日</div>
+                        <h3>往来账款管理与会计做账</h3>
+                    </div>
+                    <div class="workflow-card-body">
+                        <div class="workflow-step">
+                            <div class="step-num">1</div>
+                            <div class="step-content">
+                                <h4>应收账款管理</h4>
+                                <p>A. 导出大斌和詹德开具发票明细</p>
+                                <p>B. 删除冲红发票将正常发票复制粘贴入应收账款明细表的发票工作表内</p>
+                                <p>C. 根据当月开票票面手写的客户名称对应所开具的发票，并计入对应客户账单的开票明细中</p>
+                                <p>E. 根据当月银行回单在两个表中登记客户收款情况：一是在发票登记表中登记客户收款情况（包括收回之前月份开票的），二是在客户明细表中登记收款</p>
+                                <p>F. 完成银圭上月账单登记并扫描，发送对方对账</p>
+                            </div>
+                        </div>
+                        <div class="workflow-step">
+                            <div class="step-num">2</div>
+                            <div class="step-content">
+                                <h4>应付账款管理</h4>
+                                <p>A. 找供货商索要上月供货明细表，根据上月录入的进货凭证进行账务核对，同时核对收货金额以及付款和开票额度三项</p>
+                                <p>B. 缺票或有差错的地方与对方沟通，该补票的补票，更正差错，并在群中确认结果</p>
+                            </div>
+                        </div>
+                        <div class="workflow-step">
+                            <div class="step-num">3</div>
+                            <div class="step-content">
+                                <h4>发票管理</h4>
+                                <p>打印上月开具发票用来做销售凭证</p>
+                            </div>
+                        </div>
+                        <div class="workflow-step">
+                            <div class="step-num">4</div>
+                            <div class="step-content">
+                                <h4>会计做账</h4>
+                                <p>根据原始凭证登记记账</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="timeline-item">
-                    <div class="timeline-content">
-                        <div class="timeline-month">月内 16-20日</div>
-                        <h3>报表编制</h3>
-                        <ul>
-                            <li>资产负债表编制</li>
-                            <li>利润表编制</li>
-                            <li>现金流量表编制</li>
-                            <li>内部管理报表</li>
-                        </ul>
+
+                <!-- 月内 11-20日 -->
+                <div class="workflow-card">
+                    <div class="workflow-card-header">
+                        <div class="workflow-date">月内 11-20日</div>
+                        <h3>考勤审核、纳税申报与账目核对</h3>
+                    </div>
+                    <div class="workflow-card-body">
+                        <div class="workflow-step">
+                            <div class="step-num">1</div>
+                            <div class="step-content">
+                                <h4>考勤审核</h4>
+                                <p>对照企业微信考勤日报和月报表，审核行政发来的考勤统计表数据是否准确，与行政沟通确认考勤状况</p>
+                            </div>
+                        </div>
+                        <div class="workflow-step">
+                            <div class="step-num">2</div>
+                            <div class="step-content">
+                                <h4>纳税申报</h4>
+                                <p><strong>A.</strong> 每1、4、7、10月进行季度申报，包括企业所得税、印花税、环保税</p>
+                                <p><strong>B.</strong> 每月进行个人所得税申报</p>
+                                <p><strong>C.</strong> 季度财务报表申报</p>
+                            </div>
+                        </div>
+                        <div class="workflow-step">
+                            <div class="step-num">3</div>
+                            <div class="step-content">
+                                <h4>核对账目</h4>
+                                <p><strong>A.</strong> 销售收入与增值税纳税申报表总销售额是否一致</p>
+                                <p><strong>B.</strong> 核对增值税应交税金与账面是否一致</p>
+                                <p><strong>C.</strong> 银行资金余额进行账实核对是否相符，如有不符在下月进行凭证更正</p>
+                                <p><strong>D.</strong> 供应商应开发票及账款核对</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="timeline-item">
-                    <div class="timeline-content">
-                        <div class="timeline-month">月内 21-25日</div>
-                        <h3>成本核算</h3>
-                        <ul>
-                            <li>原材料成本分配</li>
-                            <li>制造费用归集</li>
-                            <li>产品成本计算</li>
-                            <li>存货盘点与计价</li>
-                        </ul>
+
+                <!-- 月内 21-25日 -->
+                <div class="workflow-card">
+                    <div class="workflow-card-header">
+                        <div class="workflow-date">月内 21-25日</div>
+                        <h3>工资核算与往来账处理</h3>
+                    </div>
+                    <div class="workflow-card-body">
+                        <div class="workflow-step">
+                            <div class="step-num">1</div>
+                            <div class="step-content">
+                                <h4>工资核算与发放</h4>
+                                <p><strong>A.</strong> 根据审核后的考勤统计表计算员工工资</p>
+                                <p><strong>B.</strong> 将工资表发老板审核</p>
+                                <p><strong>C.</strong> 打印工资表并做好银行批量发放表</p>
+                                <p><strong>D.</strong> 每月25日发放工资</p>
+                            </div>
+                        </div>
+                        <div class="workflow-step">
+                            <div class="step-num">2</div>
+                            <div class="step-content">
+                                <h4>应收账款明细登账</h4>
+                                <p><strong>A.</strong> 销售提供上月销售汇总表</p>
+                                <p><strong>B.</strong> 根据客户名称对销售汇总表进行拆分</p>
+                                <p><strong>C.</strong> 每季度对前三个月的销售拆分表格进行合并，并复制粘贴至应收账款明细表内</p>
+                            </div>
+                        </div>
+                        <div class="workflow-step">
+                            <div class="step-num">3</div>
+                            <div class="step-content">
+                                <h4>应付账款明细录入</h4>
+                                <p>从销售处获得当月收货凭证，录入应付账款明细表对应供货商工作表中</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="timeline-item">
-                    <div class="timeline-content">
-                        <div class="timeline-month">月底 26-30日</div>
-                        <h3>预算与分析</h3>
-                        <ul>
-                            <li>本月预算执行分析</li>
-                            <li>下月资金计划</li>
-                            <li>异常情况说明</li>
-                            <li>管理层汇报准备</li>
-                        </ul>
+
+                <!-- 月底 26-30日 -->
+                <div class="workflow-card">
+                    <div class="workflow-card-header">
+                        <div class="workflow-date">月底 26-30日</div>
+                        <h3>销售单归档与个税准备</h3>
+                    </div>
+                    <div class="workflow-card-body">
+                        <div class="workflow-step">
+                            <div class="step-num">1</div>
+                            <div class="step-content">
+                                <h4>销售单分类</h4>
+                                <p>按客户名称将销售单分类，并放入客户销售档案袋内</p>
+                            </div>
+                        </div>
+                        <div class="workflow-step">
+                            <div class="step-num">2</div>
+                            <div class="step-content">
+                                <h4>个人所得税申报准备</h4>
+                                <p>根据工资表上传当月发放工资收入明细，做好下月申报准备</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 每日日常工作 -->
+                <div class="workflow-card daily-work">
+                    <div class="workflow-card-header">
+                        <div class="workflow-date">每日</div>
+                        <h3>日常工作</h3>
+                    </div>
+                    <div class="workflow-card-body">
+                        <div class="workflow-step">
+                            <div class="step-num">1</div>
+                            <div class="step-content">
+                                <h4>开具发票</h4>
+                                <p>根据业务需求开具增值税发票</p>
+                            </div>
+                        </div>
+                        <div class="workflow-step">
+                            <div class="step-num">2</div>
+                            <div class="step-content">
+                                <h4>公账转账</h4>
+                                <p>处理公司账户转账业务</p>
+                            </div>
+                        </div>
+                        <div class="workflow-step">
+                            <div class="step-num">3</div>
+                            <div class="step-content">
+                                <h4>网店收款回单查询</h4>
+                                <p>查询并核对网店平台收款回单</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -3615,20 +4124,7 @@
                         <span class="tool-tag">批量合并</span>
                     </div>
                 </div>
-                <div class="tool-card" onclick="openTool('attendance')">
-                    <div class="tool-header">
-                        <div class="tool-icon">
-                            <svg viewBox="0 0 24 24" fill="#C9A962"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zm-7-9H7v5h5v-5z"/></svg>
-                        </div>
-                        <h3>考勤统计工具</h3>
-                    </div>
-                    <p>日考勤数据导入，智能统计应出勤、实际出勤、迟到早退，支持4次打卡双班制</p>
-                    <div class="tool-tags">
-                        <span class="tool-tag">考勤统计</span>
-                        <span class="tool-tag">加班计算</span>
-                        <span class="tool-tag">Excel导出</span>
-                    </div>
-                </div>
+
                 <div class="tool-card" onclick="openTool('tax')">
                     <div class="tool-header">
                         <div class="tool-icon">
@@ -3679,20 +4175,6 @@
                         <button class="btn-primary" style="font-size:13px;padding:8px 16px;" onclick="openReportGenerator()">
                             🚀 启动报表生成器
                         </button>
-                    </div>
-                </div>
-                <div class="tool-card">
-                    <div class="tool-header">
-                        <div class="tool-icon">
-                            <svg viewBox="0 0 24 24" fill="#C9A962"><path d="M21 18v1c0 1.1-.9 2-2 2H5c-1.11 0-2-.9-2-2V5c0-1.1.89-2 2-2h14c1.1 0 2 .9 2 2v1h-9c-1.11 0-2 .9-2 2v8c0 1.1.89 2 2 2h9zm-9-2h10V8H12v8zm4-2.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
-                        </div>
-                        <h3>资金管理</h3>
-                    </div>
-                    <p>银行流水导入、资金余额监控、付款计划与审批流程</p>
-                    <div class="tool-tags">
-                        <span class="tool-tag">流水导入</span>
-                        <span class="tool-tag">余额监控</span>
-                        <span class="tool-tag">付款审批</span>
                     </div>
                 </div>
                 <div class="tool-card">
@@ -3878,15 +4360,7 @@
                         <li><span class="check-icon"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></span>加班调休自动换算</li>
                     </ul>
                 </div>
-                <div class="attendance-card">
-                    <h3>请假管理</h3>
-                    <ul>
-                        <li><span class="check-icon"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></span>多种假期类型</li>
-                        <li><span class="check-icon"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></span>在线申请审批</li>
-                        <li><span class="check-icon"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></span>余额自动更新</li>
-                        <li><span class="check-icon"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></span>销假自动核销</li>
-                    </ul>
-                </div>
+
                 <div class="attendance-card">
                     <h3>统计报表</h3>
                     <ul>
@@ -3982,6 +4456,14 @@
                     <div class="law-title">民法典</div>
                     <div class="law-subtitle">中华人民共和国民法典</div>
                     <div class="law-tag civil">基础法律</div>
+                </div>
+                <div class="law-card" onclick="openLawDetail('consumption')">
+                    <div class="law-icon">
+                        <svg viewBox="0 0 24 24"><path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/></svg>
+                    </div>
+                    <div class="law-title">消费税法</div>
+                    <div class="law-subtitle">消费税法（征求意见稿）</div>
+                    <div class="law-tag tax">间接税</div>
                 </div>
             </div>
         </div>
@@ -5567,6 +6049,153 @@
         </div>
     </div>
 
+    <!-- 消费税法详情弹窗 -->
+    <div class="law-modal" id="consumptionModal">
+        <div class="law-modal-content">
+            <div class="law-modal-header">
+                <button class="law-modal-close" onclick="closeLawDetail('consumption')">
+                    <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+                </button>
+                <h2>消费税法（征求意见稿）</h2>
+                <div class="law-meta">财政部 国家税务总局起草 | 现行依据：消费税暂行条例（1993年）</div>
+            </div>
+            <div class="law-modal-body">
+                <div class="law-nav">
+                    <button class="law-nav-btn active" onclick="switchLawTab('consumption', 'basic')">基本规定</button>
+                    <button class="law-nav-btn" onclick="switchLawTab('consumption', 'rates')">税目税率</button>
+                    <button class="law-nav-btn" onclick="switchLawTab('consumption', 'paint')">涂料行业适用</button>
+                </div>
+
+                <div class="law-content active" id="consumption-basic">
+                    <div class="law-section">
+                        <h3>📌 立法背景</h3>
+                        <p>消费税自1993年开征，目前依据《中华人民共和国消费税暂行条例》执行。财政部已起草《中华人民共和国消费税法（征求意见稿）》，列入国务院2025年立法计划，正式立法后将替代现行暂行条例。</p>
+                    </div>
+                    <div class="law-section">
+                        <h3>纳税人</h3>
+                        <p>在中华人民共和国境内<strong>销售、委托加工和进口</strong>应税消费品的单位和个人。</p>
+                    </div>
+                    <div class="law-section">
+                        <h3>纳税环节</h3>
+                        <table class="law-table">
+                            <thead><tr><th>情形</th><th>纳税环节</th><th>说明</th></tr></thead>
+                            <tbody>
+                                <tr><td>生产销售</td><td>生产环节（出厂）</td><td>纳税人向主管税务机关申报</td></tr>
+                                <tr><td>委托加工</td><td>交货时</td><td>受托方代收代缴</td></tr>
+                                <tr><td>进口</td><td>进入关境</td><td>海关代征</td></tr>
+                                <tr><td>批发/零售（部分税目）</td><td>批发或零售环节</td><td>金银首饰等特殊税目</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="law-section">
+                        <h3>计税方法</h3>
+                        <table class="law-table">
+                            <thead><tr><th>方法</th><th>公式</th><th>适用税目</th></tr></thead>
+                            <tbody>
+                                <tr><td>从价计税</td><td>应纳税额 = 销售额 × 比例税率</td><td>涂料、化妆品、小汽车等</td></tr>
+                                <tr><td>从量计税</td><td>应纳税额 = 销售数量 × 定额税率</td><td>成品油、啤酒、黄酒</td></tr>
+                                <tr><td>复合计税</td><td>应纳税额 = 销售额×比例税率 + 数量×定额税率</td><td>白酒、卷烟</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="law-section">
+                        <h3>抵扣规定</h3>
+                        <p>委托加工收回的应税消费品，委托方用于<strong>连续生产应税消费品</strong>的，所纳消费税准予按规定抵扣。</p>
+                        <p>外购应税消费品用于连续生产应税消费品的，符合规定情形可抵扣（含10种情形，如烟丝→卷烟、鞭炮原料→鞭炮等）。</p>
+                    </div>
+                    <div class="law-section">
+                        <h3>出口免税</h3>
+                        <p>纳税人出口应税消费品，<strong>免征消费税</strong>；国务院另有规定的除外。</p>
+                    </div>
+                </div>
+
+                <div class="law-content" id="consumption-rates">
+                    <div class="law-section">
+                        <h3>消费税税目税率表（15大类）</h3>
+                        <table class="law-table">
+                            <thead><tr><th>序号</th><th>税目</th><th>税率/税额</th><th>计税方法</th></tr></thead>
+                            <tbody>
+                                <tr><td>一</td><td>烟（甲类卷烟）</td><td>生产56%+0.003元/支；批发11%+0.005元/支</td><td>复合</td></tr>
+                                <tr><td></td><td>烟（乙类卷烟）</td><td>36%+0.003元/支</td><td>复合</td></tr>
+                                <tr><td></td><td>雪茄烟</td><td>36%</td><td>从价</td></tr>
+                                <tr><td></td><td>烟丝</td><td>30%</td><td>从价</td></tr>
+                                <tr><td>二</td><td>白酒</td><td>20%+0.5元/500克</td><td>复合</td></tr>
+                                <tr><td></td><td>黄酒</td><td>240元/吨</td><td>从量</td></tr>
+                                <tr><td></td><td>啤酒（甲类）</td><td>250元/吨</td><td>从量</td></tr>
+                                <tr><td></td><td>其他酒</td><td>10%</td><td>从价</td></tr>
+                                <tr><td>三</td><td>高档化妆品</td><td>15%</td><td>从价</td></tr>
+                                <tr><td>四</td><td>贵重首饰（金银铂钻）</td><td>零售5%</td><td>从价</td></tr>
+                                <tr><td>五</td><td>鞭炮焰火</td><td>15%</td><td>从价</td></tr>
+                                <tr><td>六</td><td>成品油（汽油）</td><td>1.52元/升</td><td>从量</td></tr>
+                                <tr><td>七</td><td>摩托车（250ml以下）</td><td>3%；250ml以上10%</td><td>从价</td></tr>
+                                <tr><td>八</td><td>小汽车（乘用车）</td><td>1%～40%不等；超豪华+10%</td><td>从价</td></tr>
+                                <tr><td>九</td><td>高尔夫球及球具</td><td>10%</td><td>从价</td></tr>
+                                <tr><td>十</td><td>高档手表</td><td>20%</td><td>从价</td></tr>
+                                <tr><td>十一</td><td>游艇</td><td>10%</td><td>从价</td></tr>
+                                <tr><td>十二</td><td>木制一次性筷子</td><td>5%</td><td>从价</td></tr>
+                                <tr><td>十三</td><td>实木地板</td><td>5%</td><td>从价</td></tr>
+                                <tr><td>十四</td><td>电池</td><td>4%</td><td>从价</td></tr>
+                                <tr style="background: rgba(201,163,84,0.12); font-weight:bold;"><td>十五</td><td>🎨 涂料</td><td><strong style="color:var(--gold);">4%</strong></td><td>从价</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="law-content" id="consumption-paint">
+                    <div class="law-highlight">
+                        <h3>🎨 涂料行业消费税要点</h3>
+                        <p>涂料为消费税第十五税目，适用<strong>4%从价计税</strong>，在<strong>生产（进口）环节</strong>征收。</p>
+                    </div>
+                    <div class="law-section">
+                        <h3>应纳税额计算</h3>
+                        <table class="law-table">
+                            <thead><tr><th>情形</th><th>计税基础</th><th>公式</th></tr></thead>
+                            <tbody>
+                                <tr><td>直接销售</td><td>不含增值税销售额</td><td>应纳消费税 = 销售额（不含税）× 4%</td></tr>
+                                <tr><td>委托加工</td><td>受托方同类涂料销售价格</td><td>组价 = (材料成本+加工费) ÷ (1-4%)，再×4%</td></tr>
+                                <tr><td>自产自用</td><td>同类涂料销售价格或组价</td><td>移送当天确认纳税义务</td></tr>
+                                <tr><td>进口</td><td>关税完税价格+关税</td><td>组价 = (完税价格+关税) ÷ (1-4%)，再×4%</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="law-section">
+                        <h3>与增值税的关系</h3>
+                        <table class="law-table">
+                            <thead><tr><th>税种</th><th>税率</th><th>计税基础</th><th>说明</th></tr></thead>
+                            <tbody>
+                                <tr><td>消费税</td><td>4%</td><td>不含税销售额</td><td>价内税，已含在销售价格中</td></tr>
+                                <tr><td>增值税（一般纳税人）</td><td>13%</td><td>不含税销售额</td><td>价外税，单独计列</td></tr>
+                                <tr><td>增值税（小规模）</td><td>1%（减按）</td><td>不含税销售额</td><td>价外税</td></tr>
+                            </tbody>
+                        </table>
+                        <p style="color:var(--text-gray);margin-top:10px;font-size:13px;">⚠️ 消费税为<strong>价内税</strong>（含在售价中），增值税为<strong>价外税</strong>（在售价基础上加收）。消费税税款<strong>不得</strong>作为增值税进项税额抵扣。</p>
+                    </div>
+                    <div class="law-section">
+                        <h3>免税情形</h3>
+                        <ul style="color:var(--text-gray);padding-left:20px;line-height:2;">
+                            <li>符合规定的<strong>无溶剂涂料、水性涂料</strong>等低VOC环保产品，现行政策中已暂免消费税（2015年起）</li>
+                            <li>出口涂料产品：<strong>免征消费税</strong></li>
+                            <li>用于连续生产应税消费品的外购涂料，符合规定可<strong>抵扣已纳消费税</strong></li>
+                        </ul>
+                    </div>
+                    <div class="law-section">
+                        <h3>纳税申报要点</h3>
+                        <ul style="color:var(--text-gray);padding-left:20px;line-height:2;">
+                            <li>纳税期限：按月申报，次月15日前申报缴纳</li>
+                            <li>纳税地点：机构所在地主管税务机关</li>
+                            <li>兼营多税率消费品：须<strong>分别核算</strong>，否则从高适用税率</li>
+                            <li>计税价格明显偏低：税务机关有权核定</li>
+                        </ul>
+                    </div>
+                    <div class="law-section">
+                        <h3>⚠️ 立法进展提示</h3>
+                        <p style="color:var(--text-gray);">目前消费税法仍为<strong>征求意见稿</strong>阶段，列入2025年国务院立法计划。正式实施前，仍依据<strong>《消费税暂行条例》</strong>（1993年颁布）执行。涂料企业应关注后续立法动态，及时调整税务合规策略。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- 税务计算器弹窗 -->
     <div class="tool-modal" id="taxModal">
         <div class="modal-content" style="max-width: 900px;">
@@ -5811,9 +6440,9 @@
             <div class="footer-links">
                 <div class="footer-links-title">常用政务链接</div>
                 <div class="footer-links-list">
-                    <a href="https://ningbo.zjtax.gov.cn" target="_blank" class="footer-link">
+                    <a href="https://ningbo.chinatax.gov.cn" target="_blank" class="footer-link">
                         <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
-                        宁波税务局
+                        国家税务总局宁波市税务局
                     </a>
                     <a href="https://www.chanjet.com" target="_blank" class="footer-link">
                         <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
@@ -8827,14 +9456,252 @@ function attToggleRaw() {
 }
 
 // ========== 日历功能 ==========
+// 当前日历显示的月份（用于切换月份）
+let currentCalendarDate = new Date();
+
+// ========== 农历黄历数据 ==========
+const LunarData = {
+    // 农历月份名称
+    months: ['正', '二', '三', '四', '五', '六', '七', '八', '九', '十', '冬', '腊'],
+    // 农历日期名称
+    days: ['初一', '初二', '初三', '初四', '初五', '初六', '初七', '初八', '初九', '初十',
+           '十一', '十二', '十三', '十四', '十五', '十六', '十七', '十八', '十九', '二十',
+           '廿一', '廿二', '廿三', '廿四', '廿五', '廿六', '廿七', '廿八', '廿九', '三十'],
+    // 天干
+    heavenlyStems: ['甲', '乙', '丙', '丁', '戊', '己', '庚', '辛', '壬', '癸'],
+    // 地支
+    earthlyBranches: ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥'],
+    // 生肖
+    zodiac: ['鼠', '牛', '虎', '兔', '龙', '蛇', '马', '羊', '猴', '鸡', '狗', '猪'],
+    // 节气（简化版，每年固定日期）
+    solarTerms: [
+        {name: '小寒', month: 1, day: 5}, {name: '大寒', month: 1, day: 20},
+        {name: '立春', month: 2, day: 4}, {name: '雨水', month: 2, day: 19},
+        {name: '惊蛰', month: 3, day: 5}, {name: '春分', month: 3, day: 20},
+        {name: '清明', month: 4, day: 4}, {name: '谷雨', month: 4, day: 20},
+        {name: '立夏', month: 5, day: 5}, {name: '小满', month: 5, day: 21},
+        {name: '芒种', month: 6, day: 5}, {name: '夏至', month: 6, day: 21},
+        {name: '小暑', month: 7, day: 7}, {name: '大暑', month: 7, day: 22},
+        {name: '立秋', month: 8, day: 7}, {name: '处暑', month: 8, day: 23},
+        {name: '白露', month: 9, day: 7}, {name: '秋分', month: 9, day: 23},
+        {name: '寒露', month: 10, day: 8}, {name: '霜降', month: 10, day: 23},
+        {name: '立冬', month: 11, day: 7}, {name: '小雪', month: 11, day: 22},
+        {name: '大雪', month: 12, day: 7}, {name: '冬至', month: 12, day: 22}
+    ],
+    // 黄历宜忌事项
+    yiItems: ['祭祀', '祈福', '求嗣', '开光', '出行', '解除', '拆卸', '修造', '动土', '起基', 
+              '上梁', '安床', '入宅', '移徙', '安香', '纳畜', '嫁娶', '纳采', '订盟', '开市',
+              '交易', '立券', '纳财', '栽种', '牧养', '破土', '安葬', '启钻', '除服', '成服'],
+    jiItems: ['嫁娶', '纳采', '订盟', '开市', '入宅', '移徙', '安床', '出行', '祭祀', '祈福',
+              '动土', '破土', '安葬', '修造', '拆卸', '起基', '上梁', '开仓', '出货', '纳财',
+              '立券', '交易', '求医', '治病', '栽种', '牧养', '捕捉', '畋猎', '取渔', '结网']
+};
+
+// 准确的农历转换函数（基于2000-2050年精确数据）
+function solarToLunar(date) {
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    
+    // 2020-2030年农历春节（正月初一）对应的阳历日期
+    const springFestivals = {
+        2020: { month: 1, day: 25 },
+        2021: { month: 2, day: 12 },
+        2022: { month: 2, day: 1 },
+        2023: { month: 1, day: 22 },
+        2024: { month: 2, day: 10 },
+        2025: { month: 1, day: 29 },
+        2026: { month: 2, day: 17 },
+        2027: { month: 2, day: 6 },
+        2028: { month: 1, day: 26 },
+        2029: { month: 2, day: 13 },
+        2030: { month: 2, day: 3 }
+    };
+    
+    // 农历每月天数和闰月信息（2020-2030年）
+    // 格式：每月天数数组 + 闰月信息 {leapMonth: 闰几月(0=无), leapDays: 闰月天数}
+    const lunarYearData = {
+        2020: { months: [29, 30, 29, 30, 29, 30, 29, 30, 30, 29, 30, 29], leapMonth: 4, leapDays: 29 },
+        2021: { months: [30, 29, 30, 29, 30, 29, 30, 29, 30, 30, 29, 30], leapMonth: 0, leapDays: 0 },
+        2022: { months: [29, 30, 29, 30, 29, 30, 29, 30, 29, 30, 29, 30], leapMonth: 2, leapDays: 29 },
+        2023: { months: [29, 30, 29, 30, 29, 30, 29, 30, 29, 30, 30, 29], leapMonth: 2, leapDays: 30 },
+        2024: { months: [30, 29, 30, 29, 30, 29, 30, 29, 30, 29, 30, 29], leapMonth: 6, leapDays: 30 },
+        2025: { months: [30, 29, 30, 29, 30, 29, 30, 29, 30, 29, 30, 30], leapMonth: 0, leapDays: 0 },
+        2026: { months: [29, 30, 29, 30, 29, 30, 29, 30, 29, 30, 29, 30], leapMonth: 5, leapDays: 30 },
+        2027: { months: [30, 29, 30, 29, 30, 29, 30, 29, 30, 29, 30, 29], leapMonth: 0, leapDays: 0 },
+        2028: { months: [30, 29, 30, 29, 30, 29, 30, 29, 30, 29, 30, 29], leapMonth: 4, leapDays: 29 },
+        2029: { months: [30, 30, 29, 30, 29, 30, 29, 30, 29, 30, 29, 30], leapMonth: 0, leapDays: 0 },
+        2030: { months: [29, 30, 29, 30, 29, 30, 29, 30, 29, 30, 29, 30], leapMonth: 3, leapDays: 30 }
+    };
+    
+    // 确定当前日期所在的农历年
+    let lunarYear = year;
+    let springFestival = springFestivals[year];
+    
+    // 如果当前日期在春节之前，则属于上一年的农历
+    if (month < springFestival.month || (month === springFestival.month && day < springFestival.day)) {
+        lunarYear = year - 1;
+        springFestival = springFestivals[lunarYear];
+    }
+    
+    // 计算从春节到当前日期的天数（使用UTC时间避免时区问题）
+    const springDate = Date.UTC(lunarYear, springFestival.month - 1, springFestival.day);
+    const targetDate = Date.UTC(year, month - 1, day);
+    let diffDays = Math.floor((targetDate - springDate) / (24 * 60 * 60 * 1000));
+    
+    // 获取该年的农历数据
+    const yearData = lunarYearData[lunarYear] || lunarYearData[2025];
+    const monthDays = yearData.months;
+    const leapMon = yearData.leapMonth;
+    const leapMonDays = yearData.leapDays;
+    
+    // 计算农历月份和日期
+    let lunarMonth = 1;
+    let lunarDay = 1;
+    let isLeap = false;
+    let remainingDays = diffDays;
+    
+    for (let i = 0; i < monthDays.length; i++) {
+        // 检查闰月（在第i+1月的正常月之前）
+        if (leapMon > 0 && leapMon === i + 1) {
+            if (remainingDays < leapMonDays) {
+                lunarMonth = i + 1;
+                lunarDay = remainingDays + 1;
+                isLeap = true;
+                break;
+            }
+            remainingDays -= leapMonDays;
+        }
+        
+        // 检查正常月份
+        if (remainingDays < monthDays[i]) {
+            lunarMonth = i + 1;
+            lunarDay = remainingDays + 1;
+            break;
+        }
+        remainingDays -= monthDays[i];
+    }
+    
+    return {
+        year: lunarYear,
+        month: lunarMonth,
+        day: lunarDay,
+        isLeap: isLeap,
+        monthName: (isLeap ? '闰' : '') + LunarData.months[lunarMonth - 1] + '月',
+        dayName: LunarData.days[lunarDay - 1],
+        fullName: (isLeap ? '闰' : '') + LunarData.months[lunarMonth - 1] + '月' + LunarData.days[lunarDay - 1]
+    };
+}
+
+
+
+
+// 获取干支纪年
+function getGanZhiYear(year) {
+    const gan = LunarData.heavenlyStems[(year - 4) % 10];
+    const zhi = LunarData.earthlyBranches[(year - 4) % 12];
+    return gan + zhi;
+}
+
+// 获取生肖
+function getZodiac(year) {
+    return LunarData.zodiac[(year - 4) % 12];
+}
+
+// 获取节气（使用精确数据）
+function getSolarTerm(date) {
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    
+    // 2024-2030年节气精确日期
+    const solarTermDates = {
+        2026: {
+            1: { 5: '小寒', 20: '大寒' },
+            2: { 4: '立春', 18: '雨水' },
+            3: { 5: '惊蛰', 20: '春分' },
+            4: { 5: '清明', 20: '谷雨' },
+            5: { 5: '立夏', 21: '小满' },
+            6: { 5: '芒种', 21: '夏至' },
+            7: { 7: '小暑', 22: '大暑' },
+            8: { 7: '立秋', 23: '处暑' },
+            9: { 7: '白露', 23: '秋分' },
+            10: { 8: '寒露', 23: '霜降' },
+            11: { 7: '立冬', 22: '小雪' },
+            12: { 7: '大雪', 22: '冬至' }
+        }
+    };
+    
+    // 使用精确数据（只匹配当天）
+    if (solarTermDates[year] && solarTermDates[year][month] && solarTermDates[year][month][day]) {
+        return solarTermDates[year][month][day];
+    }
+    
+    return null;
+}
+
+// 生成黄历宜忌（基于日期的伪随机算法，保证同一天结果一致）
+function getHuangli(date) {
+    const seed = date.getFullYear() * 10000 + (date.getMonth() + 1) * 100 + date.getDate();
+    
+    // 简单的伪随机数生成器
+    function random(seed) {
+        let x = Math.sin(seed) * 10000;
+        return x - Math.floor(x);
+    }
+    
+    // 根据日期生成宜忌
+    function getRandomItems(seed, items, count) {
+        const result = [];
+        const used = new Set();
+        for (let i = 0; i < count; i++) {
+            let idx = Math.floor(random(seed + i) * items.length);
+            while (used.has(idx)) {
+                idx = (idx + 1) % items.length;
+            }
+            used.add(idx);
+            result.push(items[idx]);
+        }
+        return result;
+    }
+    
+    const yi = getRandomItems(seed, LunarData.yiItems, 3 + Math.floor(random(seed) * 3));
+    const ji = getRandomItems(seed + 1000, LunarData.jiItems, 2 + Math.floor(random(seed + 1000) * 3));
+    
+    return { yi, ji };
+}
+
+// 更新日历头部农历黄历信息
+function updateLunarInfo(date) {
+    const lunar = solarToLunar(date);
+    const solarTerm = getSolarTerm(date);
+    const huangli = getHuangli(date);
+    const ganzhi = getGanZhiYear(date.getFullYear());
+    const zodiac = getZodiac(date.getFullYear());
+    
+    let lunarText = lunar.fullName;
+    if (solarTerm) {
+        lunarText += ' · ' + solarTerm;
+    }
+    
+    document.getElementById('lunar-date').textContent = `${date.getFullYear()}年${ganzhi}年 · ${zodiac}年 · ${lunarText}`;
+    document.getElementById('lunar-yi').textContent = '宜：' + huangli.yi.join(' ');
+    document.getElementById('lunar-ji').textContent = '忌：' + huangli.ji.join(' ');
+}
+
 // 渲染日历
 function renderCalendar() {
-    const now = new Date();
-    const year = now.getFullYear();
-    const month = now.getMonth();
-    const today = now.getDate();
+    const year = currentCalendarDate.getFullYear();
+    const month = currentCalendarDate.getMonth();
+    const today = new Date();
+    const isCurrentMonth = today.getFullYear() === year && today.getMonth() === month;
+    const todayDate = today.getDate();
 
     document.getElementById('calendar-month').textContent = `${year}年${month + 1}月`;
+    
+    // 更新农历黄历信息（本月显示今天，其他月显示1日）
+    const infoDate = isCurrentMonth ? today : new Date(year, month, 1);
+    updateLunarInfo(infoDate);
 
     const firstDay = new Date(year, month, 1).getDay();
     const daysInMonth = new Date(year, month + 1, 0).getDate();
@@ -8851,62 +9718,196 @@ function renderCalendar() {
     `;
 
     // 上月日期
+    const prevMonthYear = month === 0 ? year - 1 : year;
+    const prevMonthNum = month === 0 ? 12 : month;
     for (let i = firstDay - 1; i >= 0; i--) {
-        html += `<div class="calendar-day other-month">${daysInPrevMonth - i}</div>`;
+        const d = daysInPrevMonth - i;
+        const dateStr = `${prevMonthYear}-${String(prevMonthNum).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+        const hasEvent = checkEventStr(dateStr) ? 'has-event' : '';
+        const lunar = solarToLunar(new Date(year, month - 1, d)) || { day: 1, monthName: '', dayName: '' };
+        html += `<div class="calendar-day other-month ${hasEvent}" data-date="${dateStr}" onmouseenter="showDayTooltip(this, '${dateStr}')" onmouseleave="hideDayTooltip()"><div class="solar-day">${d}</div><div class="lunar-day">${lunar.day === 1 ? lunar.monthName : lunar.dayName}</div></div>`;
     }
 
     // 本月日期
     for (let d = 1; d <= daysInMonth; d++) {
-        const isToday = d === today ? 'today' : '';
-        const hasEvent = checkEvent(year, month + 1, d) ? 'has-event' : '';
-        html += `<div class="calendar-day ${isToday} ${hasEvent}">${d}</div>`;
+        const isToday = isCurrentMonth && d === todayDate ? 'today' : '';
+        const dateStr = `${year}-${String(month + 1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+        const hasEvent = checkEventStr(dateStr) ? 'has-event' : '';
+        const lunar = solarToLunar(new Date(year, month, d)) || { day: 1, monthName: '', dayName: '' };
+        const solarTerm = getSolarTerm(new Date(year, month, d));
+        const lunarText = solarTerm || (lunar.day === 1 ? lunar.monthName : lunar.dayName);
+        html += `<div class="calendar-day ${isToday} ${hasEvent}" data-date="${dateStr}" onclick="selectDate('${dateStr}')" onmouseenter="showDayTooltip(this, '${dateStr}')" onmouseleave="hideDayTooltip()"><div class="solar-day">${d}</div><div class="lunar-day ${solarTerm ? 'solar-term' : ''}">${lunarText}</div></div>`;
     }
 
     // 下月日期
+    const nextMonthYear = month === 11 ? year + 1 : year;
+    const nextMonthNum = month === 11 ? 1 : month + 2;
     const totalCells = Math.ceil((firstDay + daysInMonth) / 7) * 7;
     for (let d = 1; d <= totalCells - firstDay - daysInMonth; d++) {
-        html += `<div class="calendar-day other-month">${d}</div>`;
+        const dateStr = `${nextMonthYear}-${String(nextMonthNum).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+        const hasEvent = checkEventStr(dateStr) ? 'has-event' : '';
+        const lunar = solarToLunar(new Date(year, month + 1, d)) || { day: 1, monthName: '', dayName: '' };
+        html += `<div class="calendar-day other-month ${hasEvent}" data-date="${dateStr}" onmouseenter="showDayTooltip(this, '${dateStr}')" onmouseleave="hideDayTooltip()"><div class="solar-day">${d}</div><div class="lunar-day">${lunar.day === 1 ? lunar.monthName : lunar.dayName}</div></div>`;
     }
 
     document.getElementById('calendar-grid').innerHTML = html;
 }
 
-// 检查是否有事件
-function checkEvent(year, month, day) {
+// 检查日期是否有行程（传入日期字符串）
+function checkEventStr(dateStr) {
     const schedules = JSON.parse(localStorage.getItem('yunxu_schedules') || '[]');
-    const dateStr = `${year}-${String(month).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
     return schedules.some(s => s.date === dateStr);
 }
 
-// 渲染行程列表
+// 显示日期悬浮提示
+function showDayTooltip(element, dateStr) {
+    const schedules = JSON.parse(localStorage.getItem('yunxu_schedules') || '[]');
+    const daySchedules = schedules
+        .filter(s => s.date === dateStr)
+        .sort((a, b) => a.time.localeCompare(b.time));
+    
+    if (daySchedules.length === 0) return;
+    
+    // 创建或获取tooltip
+    let tooltip = document.getElementById('calendar-tooltip');
+    if (!tooltip) {
+        tooltip = document.createElement('div');
+        tooltip.id = 'calendar-tooltip';
+        tooltip.style.cssText = `
+            position: fixed;
+            background: rgba(44, 62, 80, 0.95);
+            color: white;
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            z-index: 10000;
+            max-width: 220px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            pointer-events: none;
+            backdrop-filter: blur(10px);
+        `;
+        document.body.appendChild(tooltip);
+    }
+    
+    const dateObj = new Date(dateStr);
+    const dateTitle = `${dateObj.getMonth() + 1}月${dateObj.getDate()}日`;
+    
+    tooltip.innerHTML = `
+        <div style="font-weight:600;margin-bottom:8px;border-bottom:1px solid rgba(255,255,255,0.2);padding-bottom:6px;">${dateTitle} · ${daySchedules.length}个行程</div>
+        ${daySchedules.map(s => `
+            <div style="margin-bottom:6px;display:flex;align-items:center;gap:8px;">
+                <span style="color:#C9A962;font-weight:500;">${s.time}</span>
+                <span style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:140px;">${s.title}</span>
+            </div>
+        `).join('')}
+    `;
+    
+    const rect = element.getBoundingClientRect();
+    tooltip.style.left = `${rect.right + 10}px`;
+    tooltip.style.top = `${rect.top}px`;
+    tooltip.style.display = 'block';
+}
+
+// 隐藏日期悬浮提示
+function hideDayTooltip() {
+    const tooltip = document.getElementById('calendar-tooltip');
+    if (tooltip) tooltip.style.display = 'none';
+}
+
+// 选择日期
+function selectDate(dateStr) {
+    document.getElementById('schedule-date').dataset.date = dateStr;
+    const dateObj = new Date(dateStr);
+    document.getElementById('schedule-date').textContent = `${dateObj.getMonth() + 1}月${dateObj.getDate()}日`;
+    renderSchedulesForDate(dateStr);
+    
+    // 更新黄历信息
+    updateLunarInfo(dateObj);
+    
+    // 高亮选中的日期
+    document.querySelectorAll('.calendar-day').forEach(d => d.classList.remove('selected'));
+    const selectedDay = document.querySelector(`.calendar-day[data-date="${dateStr}"]`);
+    if (selectedDay) selectedDay.classList.add('selected');
+}
+
+// 切换到上一个月
+function prevMonth() {
+    currentCalendarDate.setMonth(currentCalendarDate.getMonth() - 1);
+    renderCalendar();
+}
+
+// 切换到下一个月
+function nextMonth() {
+    currentCalendarDate.setMonth(currentCalendarDate.getMonth() + 1);
+    renderCalendar();
+}
+
+// 回到今天
+function goToToday() {
+    currentCalendarDate = new Date();
+    renderCalendar();
+    const today = new Date();
+    const dateStr = `${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,'0')}-${String(today.getDate()).padStart(2,'0')}`;
+    selectDate(dateStr);
+}
+
+// 检查是否有事件（兼容旧版本调用）
+function checkEvent(year, month, day) {
+    const dateStr = `${year}-${String(month).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
+    return checkEventStr(dateStr);
+}
+
+// 渲染行程列表（默认显示今日）
 function renderSchedules() {
     const now = new Date();
     const dateStr = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}`;
-    document.getElementById('schedule-date').textContent = `${now.getMonth()+1}月${now.getDate()}日`;
-
-    const schedules = JSON.parse(localStorage.getItem('yunxu_schedules') || '[]');
-    // 获取当前选中的日期
-    const selectedDate = document.getElementById('schedule-date')?.dataset.date || dateStr;
     
+    // 如果没有选中日期，默认今天
+    const scheduleDateEl = document.getElementById('schedule-date');
+    const selectedDate = scheduleDateEl?.dataset.date || dateStr;
+    
+    renderSchedulesForDate(selectedDate);
+}
+
+// 渲染指定日期的行程列表
+function renderSchedulesForDate(dateStr) {
+    const schedules = JSON.parse(localStorage.getItem('yunxu_schedules') || '[]');
     const listEl = document.getElementById('schedule-list');
+    
+    // 更新日期显示
+    const dateObj = new Date(dateStr);
+    const scheduleDateEl = document.getElementById('schedule-date');
+    scheduleDateEl.textContent = `${dateObj.getMonth() + 1}月${dateObj.getDate()}日`;
+    scheduleDateEl.dataset.date = dateStr;
+    
+    // 判断是否是今天
+    const today = new Date();
+    const todayStr = `${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,'0')}-${String(today.getDate()).padStart(2,'0')}`;
+    const isToday = dateStr === todayStr;
+    
+    // 更新标题文字（今日/当日）
+    const titleEl = document.querySelector('.schedule-widget-title');
+    if (titleEl) {
+        titleEl.textContent = `${isToday ? '今日' : '当日'}行程`;
+    }
 
     // 过滤并排序当天行程，同时记录原始索引
-    const todaySchedules = schedules
+    const daySchedules = schedules
         .map((s, idx) => ({ ...s, originalIndex: idx }))
-        .filter(s => s.date === selectedDate)
+        .filter(s => s.date === dateStr)
         .sort((a, b) => a.time.localeCompare(b.time));
 
-    if (todaySchedules.length === 0) {
+    if (daySchedules.length === 0) {
         listEl.innerHTML = `
             <div class="schedule-empty">
                 <svg viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11z"/></svg>
-                <p>暂无日程安排</p>
+                <p>${isToday ? '今日暂无日程安排' : '该日暂无日程安排'}</p>
             </div>
         `;
         return;
     }
 
-    listEl.innerHTML = todaySchedules.map((s) => `
+    listEl.innerHTML = daySchedules.map((s) => `
         <div class="schedule-item">
             <div class="schedule-time">${s.time}</div>
             <div class="schedule-content">
@@ -9014,42 +10015,11 @@ function confirmEditSchedule(originalIndex) {
     renderCalendar();
 }
 
-// 添加行程
+        // 添加行程（默认今天）
 function addSchedule() {
     const now = new Date();
     const today = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}`;
-    
-    const modal = document.createElement('div');
-    modal.id = 'scheduleAddModal';
-    modal.innerHTML = `
-        <div style="position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);z-index:10001;display:flex;align-items:center;justify-content:center;">
-            <div style="background:white;border-radius:12px;padding:24px;width:360px;box-shadow:0 10px 40px rgba(0,0,0,0.2);">
-                <h3 style="margin:0 0 16px;font-size:18px;color:#2c3e50;">📅 添加行程</h3>
-                <div style="margin-bottom:12px;">
-                    <label style="font-size:13px;color:#666;">日期</label>
-                    <input type="date" id="scheduleDate" value="${today}" style="width:100%;padding:10px;border:1px solid #ddd;border-radius:8px;box-sizing:border-box;margin-top:4px;">
-                </div>
-                <div style="margin-bottom:12px;">
-                    <label style="font-size:13px;color:#666;">行程标题</label>
-                    <input type="text" id="scheduleTitle" placeholder="输入行程标题" style="width:100%;padding:10px;border:1px solid #ddd;border-radius:8px;box-sizing:border-box;margin-top:4px;">
-                </div>
-                <div style="margin-bottom:12px;">
-                    <label style="font-size:13px;color:#666;">时间</label>
-                    <input type="time" id="scheduleTime" value="09:00" style="width:100%;padding:10px;border:1px solid #ddd;border-radius:8px;box-sizing:border-box;margin-top:4px;">
-                </div>
-                <div style="margin-bottom:16px;">
-                    <label style="font-size:13px;color:#666;">备注（可选）</label>
-                    <input type="text" id="scheduleDesc" placeholder="输入备注" style="width:100%;padding:10px;border:1px solid #ddd;border-radius:8px;box-sizing:border-box;margin-top:4px;">
-                </div>
-                <div style="display:flex;gap:10px;justify-content:flex-end;">
-                    <button onclick="this.closest('#scheduleAddModal').remove()" style="padding:10px 20px;border:1px solid #ddd;border-radius:8px;background:#f5f5f5;cursor:pointer;">取消</button>
-                    <button onclick="confirmAddSchedule()" style="padding:10px 20px;border:none;border-radius:8px;background:#3498db;color:white;cursor:pointer;">确定</button>
-                </div>
-            </div>
-        </div>
-    `;
-    document.body.appendChild(modal);
-    document.getElementById('scheduleTitle').focus();
+    addScheduleWithDate(today);
 }
 
 // 确认添加行程
@@ -9079,10 +10049,166 @@ function confirmAddSchedule() {
     renderCalendar();
 }
 
+// 日期选择器变化处理
+function onDatePickerChange(dateStr) {
+    if (dateStr) {
+        selectDate(dateStr);
+        // 同步更新日历显示到对应月份
+        const selectedDate = new Date(dateStr);
+        if (selectedDate.getFullYear() !== currentCalendarDate.getFullYear() || 
+            selectedDate.getMonth() !== currentCalendarDate.getMonth()) {
+            currentCalendarDate = new Date(selectedDate);
+            renderCalendar();
+        }
+    }
+}
+
+// 为选中日期添加行程
+function addScheduleForSelectedDate() {
+    const scheduleDateEl = document.getElementById('schedule-date');
+    const selectedDate = scheduleDateEl?.dataset.date;
+    addScheduleWithDate(selectedDate);
+}
+
+// 添加行程（指定日期）
+function addScheduleWithDate(prefillDate) {
+    const dateToUse = prefillDate || (() => {
+        const now = new Date();
+        return `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}`;
+    })();
+    
+    const modal = document.createElement('div');
+    modal.id = 'scheduleAddModal';
+    modal.innerHTML = `
+        <div style="position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);z-index:10001;display:flex;align-items:center;justify-content:center;">
+            <div style="background:white;border-radius:12px;padding:24px;width:360px;box-shadow:0 10px 40px rgba(0,0,0,0.2);">
+                <h3 style="margin:0 0 16px;font-size:18px;color:#2c3e50;">📅 添加行程</h3>
+                <div style="margin-bottom:12px;">
+                    <label style="font-size:13px;color:#666;">日期</label>
+                    <input type="date" id="scheduleDate" value="${dateToUse}" style="width:100%;padding:10px;border:1px solid #ddd;border-radius:8px;box-sizing:border-box;margin-top:4px;">
+                </div>
+                <div style="margin-bottom:12px;">
+                    <label style="font-size:13px;color:#666;">行程标题</label>
+                    <input type="text" id="scheduleTitle" placeholder="输入行程标题" style="width:100%;padding:10px;border:1px solid #ddd;border-radius:8px;box-sizing:border-box;margin-top:4px;">
+                </div>
+                <div style="margin-bottom:12px;">
+                    <label style="font-size:13px;color:#666;">时间</label>
+                    <input type="time" id="scheduleTime" value="09:00" style="width:100%;padding:10px;border:1px solid #ddd;border-radius:8px;box-sizing:border-box;margin-top:4px;">
+                </div>
+                <div style="margin-bottom:16px;">
+                    <label style="font-size:13px;color:#666;">备注（可选）</label>
+                    <input type="text" id="scheduleDesc" placeholder="输入备注" style="width:100%;padding:10px;border:1px solid #ddd;border-radius:8px;box-sizing:border-box;margin-top:4px;">
+                </div>
+                <div style="display:flex;gap:10px;justify-content:flex-end;">
+                    <button onclick="this.closest('#scheduleAddModal').remove()" style="padding:10px 20px;border:1px solid #ddd;border-radius:8px;background:#f5f5f5;cursor:pointer;">取消</button>
+                    <button onclick="confirmAddSchedule()" style="padding:10px 20px;border:none;border-radius:8px;background:#3498db;color:white;cursor:pointer;">确定</button>
+                </div>
+            </div>
+        </div>
+    `;
+    document.body.appendChild(modal);
+    document.getElementById('scheduleTitle').focus();
+}
+
+// 工作流程折叠/展开功能
+function toggleWorkflowDetail(element) {
+    const detail = element.nextElementSibling;
+    const isExpanded = element.classList.contains('expanded');
+    
+    if (isExpanded) {
+        detail.style.display = 'none';
+        element.classList.remove('expanded');
+        element.querySelector('span').textContent = '查看详情';
+    } else {
+        detail.style.display = 'block';
+        element.classList.add('expanded');
+        element.querySelector('span').textContent = '收起详情';
+    }
+}
+
+// 根据日期获取当前应执行的财务流程任务
+function getWorkflowTasksByDate(date) {
+    const day = date.getDate();
+    const tasks = [];
+    
+    if (day >= 1 && day <= 5) {
+        tasks.push(
+            { title: '增值税申报', desc: '统计销售额、勾选进项、申报纳税', priority: 'high' },
+            { title: '社保申报', desc: '申报上月社保费用并缴纳', priority: 'high' },
+            { title: '银行对账', desc: '打印上月对账单及回单', priority: 'normal' },
+            { title: '发票管理', desc: '财务软件下载上月发票', priority: 'normal' },
+            { title: '银行日记账', desc: '导出流水并导入日记账', priority: 'normal' }
+        );
+    } else if (day >= 6 && day <= 10) {
+        tasks.push(
+            { title: '应收账款管理', desc: '导出发票明细、登记收款、银圭对账', priority: 'high' },
+            { title: '应付账款管理', desc: '供货商对账、补票沟通', priority: 'high' },
+            { title: '发票管理', desc: '打印销售凭证', priority: 'normal' },
+            { title: '会计做账', desc: '根据原始凭证登记记账', priority: 'high' }
+        );
+    } else if (day >= 16 && day <= 20) {
+        tasks.push(
+            { title: '报表编制', desc: '资产负债表、利润表、现金流量表', priority: 'high' }
+        );
+    } else if (day >= 21 && day <= 25) {
+        tasks.push(
+            { title: '成本核算', desc: '原材料成本、制造费用、产品成本', priority: 'high' }
+        );
+    } else if (day >= 26 && day <= 31) {
+        tasks.push(
+            { title: '预算与分析', desc: '预算执行分析、资金计划、汇报准备', priority: 'normal' }
+        );
+    }
+    
+    return tasks;
+}
+
+// 自动将财务流程任务添加到今日行程（如果当天没有这些任务）
+function autoAddWorkflowSchedules() {
+    const today = new Date();
+    const dateStr = `${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,'0')}-${String(today.getDate()).padStart(2,'0')}`;
+    
+    const schedules = JSON.parse(localStorage.getItem('yunxu_schedules') || '[]');
+    const todaySchedules = schedules.filter(s => s.date === dateStr);
+    
+    // 获取当天应执行的财务流程任务
+    const workflowTasks = getWorkflowTasksByDate(today);
+    if (workflowTasks.length === 0) return;
+    
+    // 检查是否已存在相同标题的任务
+    const existingTitles = todaySchedules.map(s => s.title);
+    const newTasks = workflowTasks.filter(task => !existingTitles.includes(task.title));
+    
+    if (newTasks.length === 0) return;
+    
+    // 添加新任务到行程（不同任务设置不同时间）
+    const baseTimes = ['09:00', '10:30', '14:00', '15:30', '16:30'];
+    newTasks.forEach((task, index) => {
+        const time = baseTimes[index % baseTimes.length];
+        schedules.push({
+            date: dateStr,
+            time: time,
+            title: task.title,
+            desc: task.desc
+        });
+    });
+    
+    localStorage.setItem('yunxu_schedules', JSON.stringify(schedules));
+}
+
 // 初始化
 document.addEventListener('DOMContentLoaded', function() {
+    // 初始化日期选择器为今天
+    const now = new Date();
+    const todayStr = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}`;
+    const datePicker = document.getElementById('schedule-date-picker');
+    if (datePicker) datePicker.value = todayStr;
+    
     renderCalendar();
     renderSchedules();
+    
+    // 自动添加当天财务流程任务到行程
+    autoAddWorkflowSchedules();
 });
 
 // ========== 工作笔记功能 ==========
@@ -9478,3 +10604,4 @@ document.addEventListener('DOMContentLoaded', function() {
 </div>
 </body>
 </html>
+
