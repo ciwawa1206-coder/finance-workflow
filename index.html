@@ -1627,6 +1627,197 @@
             border: 1px solid var(--border);
         }
 
+        /* 增值税进项计算器 */
+        .vat-calc-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        @media (max-width: 600px) {
+            .vat-calc-grid { grid-template-columns: 1fr; }
+        }
+
+        .vat-input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .vat-label {
+            font-size: 13px;
+            color: #666;
+            font-weight: 500;
+        }
+
+        .vat-input, .vat-select {
+            padding: 12px 16px;
+            border: 2px solid #e8e8e8;
+            border-radius: 10px;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            outline: none;
+            background: #fafafa;
+        }
+
+        .vat-input:focus, .vat-select:focus {
+            border-color: #C9A962;
+            box-shadow: 0 0 0 3px rgba(201,169,98,0.15);
+            background: white;
+        }
+
+        .vat-result-panel {
+            background: linear-gradient(135deg, #f8f6f1 0%, #fff 100%);
+            border-radius: 16px;
+            padding: 24px;
+            border: 1px solid #eee;
+        }
+
+        .vat-result-row {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 16px;
+        }
+        .vat-result-row:last-child { margin-bottom: 0; }
+
+        .vat-result-item {
+            flex: 1;
+            background: white;
+            border-radius: 12px;
+            padding: 16px 20px;
+            text-align: center;
+            border: 1px solid #f0f0f0;
+        }
+
+        .vat-result-item.highlight {
+            border-color: #C9A962;
+            background: linear-gradient(135deg, #fffbf3, white);
+        }
+
+        .vat-result-item.highlight-gold {
+            border-color: #C9A962;
+            background: linear-gradient(135deg, #C9A962 0%, #d4b872 100%);
+            color: white;
+        }
+
+        .vat-result-item.highlight-gold .vat-result-value {
+            color: white;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .vat-result-item.full-width {
+            flex: none;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .vat-result-label {
+            display: block;
+            font-size: 12px;
+            color: #999;
+            margin-bottom: 6px;
+        }
+
+        .vat-result-value {
+            display: block;
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .vat-burden-bar {
+            width: 200px;
+            height: 8px;
+            background: #eee;
+            border-radius: 4px;
+            overflow: hidden;
+            display: inline-block;
+            vertical-align: middle;
+            margin-left: 12px;
+        }
+
+        .vat-burden-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #52c41a, #C9A962);
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        .vat-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+
+        .vat-table th {
+            background: #f5f3ef;
+            padding: 12px 16px;
+            text-align: left;
+            font-weight: 600;
+            color: #555;
+            border-bottom: 2px solid #e8e5de;
+            white-space: nowrap;
+        }
+
+        .vat-table td {
+            padding: 12px 16px;
+            border-bottom: 1px solid #f0f0f0;
+            vertical-align: middle;
+        }
+
+        .vat-table tbody tr:hover {
+            background: #fafaf7;
+        }
+
+        .vat-table input[type="text"],
+        .vat-table input[type="number"],
+        .vat-table select {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 13px;
+            outline: none;
+            box-sizing: border-box;
+        }
+
+        .vat-table input:focus,
+        .vat-table select:focus {
+            border-color: #C9A962;
+        }
+
+        .vat-ref-table th,
+        .vat-ref-table td {
+            text-align: center;
+            padding: 10px 8px;
+            font-size: 13px;
+        }
+
+        .vat-ref-table tr:nth-child(even) td {
+            background: #fafafa;
+        }
+
+        .btn-del-invoice {
+            padding: 4px 12px;
+            background: #fee;
+            color: #d44;
+            border: 1px solid #fcc;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.2s;
+        }
+
+        .btn-del-invoice:hover {
+            background: #d44;
+            color: white;
+            border-color: #d44;
+        }
+
         /* 考勤管理 */
         .attendance-section {
             background: var(--primary);
@@ -4146,6 +4337,27 @@
                         <span class="tool-tag">加税点</span>
                     </div>
                 </div>
+
+                <!-- 增值税进项计算器 -->
+                <div class="tool-card">
+                    <div class="tool-header">
+                        <div class="tool-icon">
+                            <svg viewBox="0 0 24 24" fill="#C9A962"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm4-7c0 1.1-.9 2-2 2h-1V9.5L13.5 7H11V5h5v5z"/><path d="M10 14v-2h2v2h-2zm0-4V8h2v2h-2z"/></svg>
+                        </div>
+                        <h3>增值税进项计算器</h3>
+                    </div>
+                    <p>输入销项金额和目标税负率，自动计算所需进项税额，支持多发票汇总与勾选建议</p>
+                    <div class="tool-tags">
+                        <span class="tool-tag">进项测算</span>
+                        <span class="tool-tag">勾选建议</span>
+                        <span class="tool-tag">多票汇总</span>
+                    </div>
+                    <div style="text-align:center; margin-top:16px;">
+                        <button class="btn-primary" style="font-size:13px;padding:8px 16px;" onclick="openVatInputCalc()">
+                            🧮 启动增值税进项计算器
+                        </button>
+                    </div>
+                </div>
                 <div class="tool-card">
                     <div class="tool-header">
                         <div class="tool-icon">
@@ -6203,6 +6415,140 @@
         </div>
     </div>
 
+    <!-- 增值税进项计算器弹窗 -->
+    <div class="tool-modal" id="vatInputModal">
+        <div class="modal-content" style="max-width: 960px;">
+            <div class="modal-header">
+                <h2>🧮 增值税进项计算器</h2>
+                <button class="modal-close" onclick="closeVatInputCalc()">
+                    <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+                </button>
+            </div>
+            <div class="modal-body" style="max-height: 80vh; overflow-y: auto;">
+                <div class="tool-container">
+
+                    <!-- 核心计算区 -->
+                    <div class="tool-section">
+                        <div class="tool-section-title">📊 进项税额测算</div>
+                        <div class="vat-calc-grid">
+                            <div class="vat-input-group">
+                                <label class="vat-label">含税销售额（元）</label>
+                                <input type="number" id="vatSalesAmount" placeholder="输入本月含税销售额" oninput="calcVatInput()" class="vat-input">
+                            </div>
+                            <div class="vat-input-group">
+                                <label class="vat-label">增值税税率</label>
+                                <select id="vatTaxRate" onchange="calcVatInput()" class="vat-select">
+                                    <option value="0.13">13%</option>
+                                    <option value="0.09">9%</option>
+                                    <option value="0.06">6%</option>
+                                </select>
+                            </div>
+                            <div class="vat-input-group">
+                                <label class="vat-label">目标税负率（%）</label>
+                                <input type="number" id="vatTargetBurden" step="0.1" value="3" oninput="calcVatInput()" class="vat-input" placeholder="如：3">
+                            </div>
+                            <div class="vat-input-group">
+                                <label class="vat-label">已勾选进项（元）</label>
+                                <input type="number" id="vatExistingInput" value="0" oninput="calcVatInput()" class="vat-input" placeholder="已勾选的进项税额">
+                            </div>
+                        </div>
+
+                        <!-- 计算结果展示 -->
+                        <div class="vat-result-panel">
+                            <div class="vat-result-row">
+                                <div class="vat-result-item">
+                                    <span class="vat-result-label">不含税销售额</span>
+                                    <span class="vat-result-value" id="vatExTaxSales">¥0.00</span>
+                                </div>
+                                <div class="vat-result-item highlight">
+                                    <span class="vat-result-label">销项税额</span>
+                                    <span class="vat-result-value" id="vatOutputTax">¥0.00</span>
+                                </div>
+                            </div>
+                            <div class="vat-result-row">
+                                <div class="vat-result-item">
+                                    <span class="vat-result-label">目标应纳税额</span>
+                                    <span class="vat-result-value" id="vatTargetPayable">¥0.00</span>
+                                </div>
+                                <div class="vat-result-item highlight-gold">
+                                    <span class="vat-result-label">还需勾选进项</span>
+                                    <span class="vat-result-value" id="vatNeedInput">¥0.00</span>
+                                </div>
+                            </div>
+                            <div class="vat-result-row">
+                                <div class="vat-result-item full-width">
+                                    <span class="vat-result-label">当前实际税负率</span>
+                                    <span class="vat-result-value" id="vatActualBurden">0.00%</span>
+                                    <span class="vat-burden-bar"><span class="vat-burden-fill" id="vatBurdenFill"></span></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 发票明细录入区 -->
+                    <div class="tool-section">
+                        <div class="tool-section-title">📄 发票明细录入</div>
+                        <div style="display:flex; gap:10px; margin-bottom:16px; flex-wrap:wrap;">
+                            <button onclick="addVatInvoice()" style="padding:8px 20px; background:var(--primary); color:white; border:none; border-radius:8px; cursor:pointer; font-size:14px;">➕ 添加发票</button>
+                            <button onclick="clearVatInvoices()" style="padding:8px 20px; background:#f5f5f5; border:none; border-radius:8px; cursor:pointer; font-size:14px;">🗑️ 清空列表</button>
+                            <span style="margin-left:auto; color:var(--text-gray); font-size:14px; align-self:center;">
+                                已录入：<strong id="vatInvoiceCount">0</strong> 张 | 合计进项税额：¥<strong id="vatTotalInput">0.00</strong>
+                            </span>
+                        </div>
+                        <div style="overflow-x:auto;">
+                            <table class="vat-table" id="vatInvoiceTable">
+                                <thead>
+                                    <tr>
+                                        <th style="width:40px;">序号</th>
+                                        <th>发票类型</th>
+                                        <th>供应商名称</th>
+                                        <th>金额(元)</th>
+                                        <th>税率</th>
+                                        <th>进项税额(元)</th>
+                                        <th>操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="vatInvoiceBody">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- 快速参考 -->
+                    <div class="tool-section">
+                        <div class="tool-section-title">💡 税负速查表</div>
+                        <table class="vat-table vat-ref-table">
+                            <thead>
+                                <tr>
+                                    <th>销售额(万元)</th>
+                                    <th>13%税率销项</th>
+                                    <th>税负3%应交</th>
+                                    <th>需进项抵扣</th>
+                                    <th>税负2%应交</th>
+                                    <th>需进项抵扣</th>
+                                    <th>税负1%应交</th>
+                                    <th>需进项抵扣</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>10</td><td>11,504.42</td><td>3,000.00</td><td>8,504.42</td><td>2,000.00</td><td>9,504.42</td><td>1,000.00</td><td>10,504.42</td></tr>
+                                <tr><td>30</td><td>34,513.27</td><td>9,000.00</td><td>25,513.27</td><td>6,000.00</td><td>28,513.27</td><td>3,000.00</td><td>31,513.27</td></tr>
+                                <tr><td>50</td><td>57,522.12</td><td>15,000.00</td><td>42,522.12</td><td>10,000.00</td><td>47,522.12</td><td>5,000.00</td><td>52,522.12</td></tr>
+                                <tr><td>100</td><td>115,044.25</td><td>30,000.00</td><td>85,044.25</td><td>20,000.00</td><td>95,044.25</td><td>10,000.00</td><td>105,044.25</td></tr>
+                                <tr><td>200</td><td>230,088.50</td><td>60,000.00</td><td>170,088.50</td><td>40,000.00</td><td>190,088.50</td><td>20,000.00</td><td>210,088.50</td></tr>
+                                <tr><td>500</td><td>575,221.24</td><td>150,000.00</td><td>425,221.24</td><td>100,000.00</td><td>475,221.24</td><td>50,000.00</td><td>525,221.24</td></tr>
+                            </tbody>
+                        </table>
+                        <p style="color:var(--text-gray); font-size:13px; margin-top:10px;">
+                            💬 说明：以上按<strong>13%增值税率</strong>、<strong>含税销售额</strong>计算。需进项抵扣 = 销项税额 - 目标应纳税额。
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- 税务计算器弹窗 -->
     <div class="tool-modal" id="taxModal">
         <div class="modal-content" style="max-width: 900px;">
@@ -7464,6 +7810,145 @@
         if (dateInput) {
             dateInput.value = now.toISOString().slice(0, 10);
         }
+
+        // ========== 增值税进项计算器功能 ==========
+        let vatInvoices = [];
+        let vatInvoiceIdCounter = 0;
+
+        function openVatInputCalc() {
+            document.getElementById('vatInputModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeVatInputCalc() {
+            document.getElementById('vatInputModal').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function calcVatInput() {
+            const salesAmount = parseFloat(document.getElementById('vatSalesAmount').value) || 0;
+            const taxRate = parseFloat(document.getElementById('vatTaxRate').value);
+            const targetBurden = parseFloat(document.getElementById('vatTargetBurden').value) || 3;
+            const existingInput = parseFloat(document.getElementById('vatExistingInput').value) || 0;
+
+            // 不含税销售额
+            const exTaxSales = salesAmount / (1 + taxRate);
+            
+            // 销项税额
+            const outputTax = exTaxSales * taxRate;
+
+            // 目标应纳税额（按含税销售额 × 目标税负率）
+            const targetPayable = salesAmount * (targetBurden / 100);
+
+            // 还需勾选的进项税额 = 销项 - 目标应交 - 已有进项
+            const needInput = Math.max(0, outputTax - targetPayable - existingInput);
+
+            // 当前实际应纳税额（假设已有进项全部抵扣）
+            const currentPayable = Math.max(0, outputTax - existingInput);
+            const actualBurden = salesAmount > 0 ? (currentPayable / salesAmount * 100) : 0;
+
+            // 更新显示
+            document.getElementById('vatExTaxSales').textContent = '¥' + exTaxSales.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+            document.getElementById('vatOutputTax').textContent = '¥' + outputTax.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+            document.getElementById('vatTargetPayable').textContent = '¥' + targetPayable.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+            document.getElementById('vatNeedInput').textContent = '¥' + needInput.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+            document.getElementById('vatActualBurden').textContent = actualBurden.toFixed(2) + '%';
+
+            // 税负率进度条
+            const burdenPercent = Math.min(actualBurden * 10, 100); // 放大显示效果
+            document.getElementById('vatBurdenFill').style.width = burdenPercent + '%';
+        }
+
+        function addVatInvoice() {
+            const id = ++vatInvoiceIdCounter;
+            vatInvoices.push({
+                id: id,
+                type: '',
+                vendor: '',
+                amount: 0,
+                rate: 13,
+                tax: 0
+            });
+            renderVatInvoiceTable();
+        }
+
+        function removeVatInvoice(id) {
+            vatInvoices = vatInvoices.filter(inv => inv.id !== id);
+            renderVatInvoiceTable();
+            updateVatTotal();
+        }
+
+        function updateVatInvoiceField(id, field, value) {
+            const inv = vatInvoices.find(i => i.id === id);
+            if (!inv) return;
+            inv[field] = field === 'vendor' || field === 'type' ? value : parseFloat(value) || 0;
+
+            // 自动计算进项税额
+            if (field === 'amount' || field === 'rate') {
+                inv.tax = (inv.amount / (1 + inv.rate / 100)) * (inv.rate / 100);
+                // 更新表格中的税额输入框
+                const taxInput = document.querySelector(`#vatInvoiceBody tr[data-id="${id}"] .inv-tax-input`);
+                if (taxInput) {
+                    taxInput.value = inv.tax.toFixed(2);
+                }
+            }
+            updateVatTotal();
+        }
+
+        function updateVatTotal() {
+            const totalTax = vatInvoices.reduce((sum, inv) => sum + (inv.tax || 0), 0);
+            document.getElementById('vatInvoiceCount').textContent = vatInvoices.length;
+            document.getElementById('vatTotalInput').textContent = totalTax.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+            // 同步到已勾选进项字段并重新计算
+            document.getElementById('vatExistingInput').value = totalTax.toFixed(2);
+            calcVatInput();
+        }
+
+        function clearVatInvoices() {
+            if (vatInvoices.length > 0 && !confirm('确定清空所有发票数据吗？')) return;
+            vatInvoices = [];
+            vatInvoiceIdCounter = 0;
+            renderVatInvoiceTable();
+            updateVatTotal();
+        }
+
+        function renderVatInvoiceTable() {
+            const tbody = document.getElementById('vatInvoiceBody');
+            if (vatInvoices.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; color:#ccc; padding:30px;">暂无发票记录，点击上方"添加发票"按钮开始录入</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = vatInvoices.map((inv, idx) => `
+                <tr data-id="${inv.id}">
+                    <td style="text-align:center;">${idx + 1}</td>
+                    <td>
+                        <select onchange="updateVatInvoiceField(${inv.id}, 'type', this.value)" style="width:100%;">
+                            <option value="" ${!inv.type ? 'selected' : ''}>请选择</option>
+                            <option value="专票" ${inv.type === '专票' ? 'selected' : ''}>增值税专用发票</option>
+                            <option value="普票" ${inv.type === '普票' ? 'selected' : ''}>增值税普通发票</option>
+                            <option value="电子专票" ${inv.type === '电子专票' ? 'selected' : ''}>电子专用发票</option>
+                        </select>
+                    </td>
+                    <td><input type="text" placeholder="供应商名称" value="${inv.vendor}" oninput="updateVatInvoiceField(${inv.id}, 'vendor', this.value)"></td>
+                    <td><input type="number" placeholder="金额" value="${inv.amount || ''}" oninput="updateVatInvoiceField(${inv.id}, 'amount', this.value)"></td>
+                    <td style="width:80px;">
+                        <select onchange="updateVatInvoiceField(${inv.id}, 'rate', this.value)" style="width:100%;">
+                            <option value="13" ${inv.rate === 13 ? 'selected' : ''}>13%</option>
+                            <option value="9" ${inv.rate === 9 ? 'selected' : ''}>9%</option>
+                            <option value="6" ${inv.rate === 6 ? 'selected' : ''}>6%</option>
+                            <option value="3" ${inv.rate === 3 ? 'selected' : ''}>3%</option>
+                        </select>
+                    </td>
+                    <td><input type="number" class="inv-tax-input" step="0.01" placeholder="自动/手动" value="${(inv.tax || 0).toFixed(2)}" oninput="if(this.value){const v=parseFloat(this.value)||0;const i=vatInvoices.find(x=>x.id===${inv.id});if(i){i.tax=v;updateVatTotal();}}"></td>
+                    <td style="text-align:center;"><button class="btn-del-invoice" onclick="removeVatInvoice(${inv.id})">删除</button></td>
+                </tr>
+            `).join('');
+        }
+
+        // 初始化发票表格
+        renderVatInvoiceTable();
 
         // 税务计算器功能
         let currentTaxType = 'general';
