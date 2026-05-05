@@ -6437,10 +6437,18 @@
                         <div style="display:flex;flex-direction:column;gap:6px;">
                             <label style="font-size:13px;color:#4a5568;font-weight:500;">当月含税销售额</label>
                             <div style="position:relative;">
-                                <input type="number" id="salesIncl" placeholder="请输入" min="0" step="0.01" onkeydown="if(event.key==='Enter')calcInvoiceNeed()" style="width:100%;height:40px;border:1.5px solid #e2e8f0;border-radius:8px;padding:0 40px 0 12px;font-size:15px;color:#2d3748;outline:none;background:#fafafa;transition:border-color 0.2s;">
+                                <input type="number" id="salesIncl" placeholder="请输入" min="0" step="0.01" oninput="syncSalesFields('incl')" style="width:100%;height:40px;border:1.5px solid #e2e8f0;border-radius:8px;padding:0 40px 0 12px;font-size:15px;color:#2d3748;outline:none;background:#fafafa;transition:border-color 0.2s;">
                                 <span style="position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:13px;color:#a0aec0;">元</span>
                             </div>
                             <span style="font-size:11px;color:#a0aec0;">开票金额（含13%增值税）</span>
+                        </div>
+                        <div style="display:flex;flex-direction:column;gap:6px;">
+                            <label style="font-size:13px;color:#4a5568;font-weight:500;">当月不含税销售额</label>
+                            <div style="position:relative;">
+                                <input type="number" id="salesExcl" placeholder="自动计算" min="0" step="0.01" oninput="syncSalesFields('excl')" style="width:100%;height:40px;border:1.5px solid #e2e8f0;border-radius:8px;padding:0 40px 0 12px;font-size:15px;color:#2d3748;outline:none;background:#fafafa;transition:border-color 0.2s;">
+                                <span style="position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:13px;color:#a0aec0;">元</span>
+                            </div>
+                            <span style="font-size:11px;color:#a0aec0;">含税销售额 ÷ 1.13</span>
                         </div>
                         <div style="display:flex;flex-direction:column;gap:6px;">
                             <label style="font-size:13px;color:#4a5568;font-weight:500;">增值税税负率目标</label>
@@ -7800,22 +7808,64 @@
             return '¥' + n.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
         }
 
+        function syncSalesFields(source) {
+            const salesIncl = document.getElementById('salesIncl');
+            const salesExcl = document.getElementById('salesExcl');
+            const salesRate = 0.13;
+
+            if (source === 'incl') {
+                // 用户正在编辑含税销售额
+                const inclVal = parseFloat(salesIncl.value);
+                if (!isNaN(inclVal) && inclVal > 0) {
+                    salesExcl.value = (inclVal / (1 + salesRate)).toFixed(2);
+                } else {
+                    salesExcl.value = '';
+                }
+            } else if (source === 'excl') {
+                // 用户正在编辑不含税销售额
+                const exclVal = parseFloat(salesExcl.value);
+                if (!isNaN(exclVal) && exclVal > 0) {
+                    salesIncl.value = (exclVal * (1 + salesRate)).toFixed(2);
+                } else {
+                    salesIncl.value = '';
+                }
+            }
+        }
+
         function calcInvoiceNeed() {
-            const salesIncl = parseFloat(document.getElementById('salesIncl').value);
+            const salesInclEl = document.getElementById('salesIncl');
+            const salesExclEl = document.getElementById('salesExcl');
             const vatRatePct = parseFloat(document.getElementById('vatRateTarget').value);
             const citRatePct = parseFloat(document.getElementById('citRateTarget').value);
             const inputTaxRate = parseFloat(document.getElementById('inputTaxRateSel').value);
 
-            if (isNaN(salesIncl) || salesIncl <= 0) { alert('请输入有效的含税销售额'); return; }
+            const salesInclVal = parseFloat(salesInclEl.value);
+            const salesExclVal = parseFloat(salesExclEl.value);
+            const salesRate = 0.13;
+
+            let salesIncl, salesExcl;
+
+            // 判断用户输入了哪个字段
+            if (!isNaN(salesInclVal) && salesInclVal > 0) {
+                // 用户输入了含税销售额
+                salesIncl = salesInclVal;
+                salesExcl = salesIncl / (1 + salesRate);
+            } else if (!isNaN(salesExclVal) && salesExclVal > 0) {
+                // 用户只输入了不含税销售额
+                salesExcl = salesExclVal;
+                salesIncl = salesExcl * (1 + salesRate);
+            } else {
+                alert('请输入有效的含税销售额或不含税销售额');
+                return;
+            }
+
             if (isNaN(vatRatePct) || vatRatePct < 0 || vatRatePct > 13) { alert('增值税税负率请输入 0~13 之间的数值（%）'); return; }
             if (isNaN(citRatePct) || citRatePct < 0) { alert('请输入有效的企业所得税税负率'); return; }
 
             const vatBurden = vatRatePct / 100;
             const citBurden = citRatePct / 100;
-            const salesRate = 0.13;
 
             // 基础数据
-            const salesExcl = salesIncl / (1 + salesRate);
             const outputTax = salesExcl * salesRate;
             const vatPayable = salesExcl * vatBurden;
 
@@ -7877,9 +7927,13 @@
             dominantBlock.appendChild(badge);
 
             // 明细表
+            const inputType = (!isNaN(salesInclVal) && salesInclVal > 0) ? 'incl' : 'excl';
+            const inputLabel = inputType === 'incl' ? '含税销售额（输入）' : '不含税销售额（输入）';
+            const inputValue = inputType === 'incl' ? salesIncl : salesExcl;
+            
             const rows = [
-                { label: '含税销售额（输入）', value: salesIncl, note: '用户输入' },
-                { label: '不含税销售额', value: salesExcl, note: '÷ 1.13', key: false },
+                { label: inputLabel, value: inputValue, note: '用户输入' },
+                { label: inputType === 'incl' ? '不含税销售额' : '含税销售额', value: inputType === 'incl' ? salesExcl : salesIncl, note: inputType === 'incl' ? '÷ 1.13' : '× 1.13', key: false },
                 { label: '销项税额', value: outputTax, note: '不含税 × 13%' },
                 null,
                 { label: '── 增值税维度 ──', value: null, header: true },
