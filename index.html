@@ -4726,14 +4726,14 @@
                         <div class="tool-section-title">上传 Excel 文件</div>
 
                         <!-- 拆分模式上传区 -->
-                        <div class="upload-zone" id="splitUploadZone" onclick="document.getElementById('worksheetFile').click()">
+                        <div class="upload-zone" id="worksheetDropZone" onclick="document.getElementById('worksheetFile').click()">
                             <div class="upload-icon">
                                 <svg viewBox="0 0 24 24"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z"/></svg>
                             </div>
                             <p>将 Excel 文件拖拽到此处，或点击选择文件</p>
                             <p class="hint">支持 .xlsx, .xls · 自动处理合并单元格</p>
                             <input type="file" id="worksheetFile" accept=".xlsx,.xls" multiple style="display:none">
-                            <button class="btn-delete-file" id="worksheetDeleteBtn" onclick="event.stopPropagation(); deleteUploadedFile('splitUploadZone')" style="display:none" title="删除已上传文件">✕ 删除</button>
+                            <button class="btn-delete-file" id="worksheetDeleteBtn" onclick="event.stopPropagation(); deleteUploadedFile('worksheetDropZone')" style="display:none" title="删除已上传文件">✕ 删除</button>
                         </div>
 
                         <!-- 合并模式文件列表 -->
@@ -7249,7 +7249,7 @@
         // 工作表工具操作切换
         document.getElementById('worksheetOperation').addEventListener('change', function() {
             const isMerge = this.value === 'merge';
-            document.getElementById('splitUploadZone').style.display = isMerge ? 'none' : '';
+            document.getElementById('worksheetDropZone').style.display = isMerge ? 'none' : '';
             document.getElementById('mergeUploadSection').style.display = isMerge ? 'block' : 'none';
             clearMergeData();
             mergeFileObjects = [];
