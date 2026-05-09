@@ -6930,9 +6930,10 @@
         /**
          * 解析工作表：处理合并单元格并向下填充
          * @param {object} worksheet - XLSX worksheet对象
+         * @param {Array} headers - 表头数组（可选，用于识别特定列）
          * @returns {Array} - 二维数组，已展开合并单元格
          */
-        function parseSheetWithMerges(worksheet) {
+        function parseSheetWithMerges(worksheet, headers) {
             const range = XLSX.utils.decode_range(worksheet['!ref'] || 'A1');
             const totalRows = range.e.r - range.s.r + 1;
             const totalCols = range.e.c - range.s.c + 1;
@@ -6967,8 +6968,34 @@
                 }
             });
 
-            // 向下填充：对前3列（A/B/C）空白处向上借值
-            for (let C = 0; C < Math.min(3, totalCols); C++) {
+            // 向下填充：识别"日期、编号、客户名称"列，或默认前3列
+            let targetCols = [];
+            
+            if (headers && headers.length > 0) {
+                // 根据表头识别需要处理的列
+                headers.forEach((h, i) => {
+                    const headerStr = String(h).toLowerCase();
+                    if (headerStr.includes('日期') || headerStr.includes('date') || 
+                        headerStr.includes('编号') || headerStr.includes('number') || headerStr.includes('no') ||
+                        headerStr.includes('客户') || headerStr.includes('customer') || 
+                        headerStr.includes('名称') || headerStr.includes('name')) {
+                        targetCols.push(i);
+                    }
+                });
+                console.log('识别到需要向下填充的列（基于表头）:', targetCols, '对应表头:', targetCols.map(i => headers[i]));
+            }
+            
+            // 如果未识别到特定列，默认处理前3列
+            if (targetCols.length === 0) {
+                for (let i = 0; i < Math.min(3, totalCols); i++) {
+                    targetCols.push(i);
+                }
+                console.log('未识别到特定列，默认处理前3列:', targetCols);
+            }
+
+            // 对目标列进行向下填充
+            targetCols.forEach(C => {
+                if (C >= totalCols) return;
                 let lastVal = '';
                 for (let R = 0; R < totalRows; R++) {
                     const v = String(grid[R][C]).trim();
@@ -6978,7 +7005,7 @@
                         grid[R][C] = lastVal;
                     }
                 }
-            }
+            });
 
             return grid;
         }
@@ -7002,12 +7029,18 @@
                             const worksheet = workbook.Sheets[sheetName];
                             if (!worksheet || !worksheet['!ref']) return;
 
-                            // 使用合并单元格解析
+                            // 第一步：解析合并单元格，获取grid和headers
                             const grid = parseSheetWithMerges(worksheet);
                             if (grid.length < 2) return;
 
                             const headers = grid[0].map((h, i) => String(h).trim() || `列${i+1}`);
-                            const rows = grid.slice(1).filter(row => row.some(cell => String(cell).trim() !== ''));
+                            
+                            // 第二步：根据headers重新处理，确保日期/编号/客户名称列正确向下填充
+                            const gridProcessed = parseSheetWithMerges(worksheet, headers);
+                            const rows = gridProcessed.slice(1).filter(row => row.some(cell => String(cell).trim() !== ''));
+                            
+                            console.log(`工作表"${sheetName}"解析完成，识别到${headers.length}列，${rows.length}行数据`);
+                            console.log('识别到的表头:', headers);
 
                             // 按工作表名分组
                             if (!mergeSheetsData[sheetName]) {
@@ -7144,10 +7177,23 @@
                     const sheetName = workbook.SheetNames[0];
                     const worksheet = workbook.Sheets[sheetName];
 
-                    // 使用合并单元格解析（向下填充A/B/C列）
+                    // 使用合并单元格解析（智能识别日期/编号/客户名称列）
                     let jsonData;
                     if (isWorksheet && worksheet['!merges'] && worksheet['!merges'].length > 0) {
+                        // 第一步：解析合并单元格，获取数据和表头
                         jsonData = parseSheetWithMerges(worksheet);
+                        
+                        if (jsonData.length >= 2) {
+                            const headers = jsonData[0].map((h, i) => String(h).trim() || `列${i+1}`);
+                            
+                            // 第二步：根据表头重新解析，确保日期/编号/客户名称列正确向下填充
+                            const jsonDataProcessed = parseSheetWithMerges(worksheet, headers);
+                            
+                            console.log('合并单元格已处理，识别到的表头:', headers);
+                            console.log('将对此文件中识别到的日期/编号/客户名称列进行向下填充');
+                            
+                            jsonData = jsonDataProcessed;
+                        }
                     } else {
                         jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, defval: '' });
                     }
@@ -7461,10 +7507,19 @@
                             workbook.SheetNames.forEach(sheetName => {
                                 const worksheet = workbook.Sheets[sheetName];
                                 if (!worksheet || !worksheet['!ref']) return;
+                                
+                                // 第一步：解析合并单元格，获取grid和headers
                                 const grid = parseSheetWithMerges(worksheet);
                                 if (grid.length < 2) return;
+                                
                                 const headers = grid[0].map((h, i) => String(h).trim() || `列${i+1}`);
-                                const rows = grid.slice(1).filter(row => row.some(cell => String(cell).trim() !== ''));
+                                
+                                // 第二步：根据headers重新处理，确保日期/编号/客户名称列正确向下填充
+                                const gridProcessed = parseSheetWithMerges(worksheet, headers);
+                                const rows = gridProcessed.slice(1).filter(row => row.some(cell => String(cell).trim() !== ''));
+                                
+                                console.log(`工作表"${sheetName}"解析完成，识别到${headers.length}列，${rows.length}行数据`);
+                                
                                 if (!mergeSheetsData[sheetName]) {
                                     mergeSheetsData[sheetName] = { headers, rows: [], files: [] };
                                 }
