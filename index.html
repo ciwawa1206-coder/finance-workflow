@@ -5090,14 +5090,14 @@
                         <div class="tool-section-title">上传 Excel 文件</div>
 
                         <!-- 拆分模式上传区 -->
-                        <div id="splitUploadZone" class="upload-zone" id="worksheetDropZone">
+                        <div class="upload-zone" id="worksheetDropZone" onclick="document.getElementById('worksheetFile').click()">
                             <div class="upload-icon">
                                 <svg viewBox="0 0 24 24"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z"/></svg>
                             </div>
                             <p>将 Excel 文件拖拽到此处，或点击选择文件</p>
                             <p class="hint">支持 .xlsx, .xls · 自动处理合并单元格</p>
                             <input type="file" id="worksheetFile" accept=".xlsx,.xls" multiple style="display:none">
-                            <button class="btn-delete-file" id="worksheetDeleteBtn" onclick="event.stopPropagation(); deleteUploadedFile('splitUploadZone')" style="display:none" title="删除已上传文件">✕ 删除</button>
+                            <button class="btn-delete-file" id="worksheetDeleteBtn" onclick="event.stopPropagation(); deleteUploadedFile('worksheetDropZone')" style="display:none" title="删除已上传文件">✕ 删除</button>
                         </div>
 
                         <!-- 合并模式文件列表 -->
@@ -6819,10 +6819,28 @@
                         <div style="display:flex;flex-direction:column;gap:6px;">
                             <label style="font-size:13px;color:#4a5568;font-weight:500;">当月含税销售额</label>
                             <div style="position:relative;">
-                                <input type="number" id="salesIncl" placeholder="请输入" min="0" step="0.01" onkeydown="if(event.key==='Enter')calcInvoiceNeed()" style="width:100%;height:40px;border:1.5px solid #e2e8f0;border-radius:8px;padding:0 40px 0 12px;font-size:15px;color:#2d3748;outline:none;background:#fafafa;transition:border-color 0.2s;">
+                                <input type="number" id="salesIncl" placeholder="请输入" min="0" step="0.01" oninput="syncSalesFields('incl')" style="width:100%;height:40px;border:1.5px solid #e2e8f0;border-radius:8px;padding:0 40px 0 12px;font-size:15px;color:#2d3748;outline:none;background:#fafafa;transition:border-color 0.2s;">
                                 <span style="position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:13px;color:#a0aec0;">元</span>
                             </div>
-                            <span style="font-size:11px;color:#a0aec0;">开票金额（含13%增值税）</span>
+                            <span style="font-size:11px;color:#a0aec0;" id="salesInclHint">开票金额（含增值税）</span>
+                        </div>
+                        <div style="display:flex;flex-direction:column;gap:6px;">
+                            <label style="font-size:13px;color:#4a5568;font-weight:500;">当月不含税销售额</label>
+                            <div style="position:relative;">
+                                <input type="number" id="salesExcl" placeholder="自动计算" min="0" step="0.01" oninput="syncSalesFields('excl')" style="width:100%;height:40px;border:1.5px solid #e2e8f0;border-radius:8px;padding:0 40px 0 12px;font-size:15px;color:#2d3748;outline:none;background:#fafafa;transition:border-color 0.2s;">
+                                <span style="position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:13px;color:#a0aec0;">元</span>
+                            </div>
+                            <span style="font-size:11px;color:#a0aec0;" id="salesExclHint">含税销售额 ÷ 1.13</span>
+                        </div>
+                        <div style="display:flex;flex-direction:column;gap:6px;">
+                            <label style="font-size:13px;color:#4a5568;font-weight:500;">销项税率</label>
+                            <select id="outputTaxRateSel" onchange="onOutputTaxRateChange()" style="width:100%;height:40px;border:1.5px solid #e2e8f0;border-radius:8px;padding:0 12px;font-size:14px;color:#2d3748;outline:none;background:#fafafa;cursor:pointer;">
+                                    <option value="0.13">13%（货物销售）</option>
+                                    <option value="0.09">9%（运输/建筑/农产品）</option>
+                                    <option value="0.06">6%（服务类）</option>
+                                    <option value="0.03">3%（简易计税）</option>
+                            </select>
+                            <span style="font-size:11px;color:#a0aec0;">销售业务适用的增值税税率</span>
                         </div>
                         <div style="display:flex;flex-direction:column;gap:6px;">
                             <label style="font-size:13px;color:#4a5568;font-weight:500;">企业所得税税负率目标</label>
@@ -7340,9 +7358,10 @@
         /**
          * 解析工作表：处理合并单元格并向下填充
          * @param {object} worksheet - XLSX worksheet对象
+         * @param {Array} headers - 表头数组（可选，用于识别特定列）
          * @returns {Array} - 二维数组，已展开合并单元格
          */
-        function parseSheetWithMerges(worksheet) {
+        function parseSheetWithMerges(worksheet, headers) {
             const range = XLSX.utils.decode_range(worksheet['!ref'] || 'A1');
             const totalRows = range.e.r - range.s.r + 1;
             const totalCols = range.e.c - range.s.c + 1;
@@ -7377,8 +7396,34 @@
                 }
             });
 
-            // 向下填充：对前3列（A/B/C）空白处向上借值
-            for (let C = 0; C < Math.min(3, totalCols); C++) {
+            // 向下填充：识别"日期、编号、客户名称"列，或默认前3列
+            let targetCols = [];
+            
+            if (headers && headers.length > 0) {
+                // 根据表头识别需要处理的列
+                headers.forEach((h, i) => {
+                    const headerStr = String(h).toLowerCase();
+                    if (headerStr.includes('日期') || headerStr.includes('date') || 
+                        headerStr.includes('编号') || headerStr.includes('number') || headerStr.includes('no') ||
+                        headerStr.includes('客户') || headerStr.includes('customer') || 
+                        headerStr.includes('名称') || headerStr.includes('name')) {
+                        targetCols.push(i);
+                    }
+                });
+                console.log('识别到需要向下填充的列（基于表头）:', targetCols, '对应表头:', targetCols.map(i => headers[i]));
+            }
+            
+            // 如果未识别到特定列，默认处理前3列
+            if (targetCols.length === 0) {
+                for (let i = 0; i < Math.min(3, totalCols); i++) {
+                    targetCols.push(i);
+                }
+                console.log('未识别到特定列，默认处理前3列:', targetCols);
+            }
+
+            // 对目标列进行向下填充
+            targetCols.forEach(C => {
+                if (C >= totalCols) return;
                 let lastVal = '';
                 for (let R = 0; R < totalRows; R++) {
                     const v = String(grid[R][C]).trim();
@@ -7388,7 +7433,7 @@
                         grid[R][C] = lastVal;
                     }
                 }
-            }
+            });
 
             return grid;
         }
@@ -7412,12 +7457,18 @@
                             const worksheet = workbook.Sheets[sheetName];
                             if (!worksheet || !worksheet['!ref']) return;
 
-                            // 使用合并单元格解析
+                            // 第一步：解析合并单元格，获取grid和headers
                             const grid = parseSheetWithMerges(worksheet);
                             if (grid.length < 2) return;
 
                             const headers = grid[0].map((h, i) => String(h).trim() || `列${i+1}`);
-                            const rows = grid.slice(1).filter(row => row.some(cell => String(cell).trim() !== ''));
+                            
+                            // 第二步：根据headers重新处理，确保日期/编号/客户名称列正确向下填充
+                            const gridProcessed = parseSheetWithMerges(worksheet, headers);
+                            const rows = gridProcessed.slice(1).filter(row => row.some(cell => String(cell).trim() !== ''));
+                            
+                            console.log(`工作表"${sheetName}"解析完成，识别到${headers.length}列，${rows.length}行数据`);
+                            console.log('识别到的表头:', headers);
 
                             // 按工作表名分组
                             if (!mergeSheetsData[sheetName]) {
@@ -7554,10 +7605,23 @@
                     const sheetName = workbook.SheetNames[0];
                     const worksheet = workbook.Sheets[sheetName];
 
-                    // 使用合并单元格解析（向下填充A/B/C列）
+                    // 使用合并单元格解析（智能识别日期/编号/客户名称列）
                     let jsonData;
                     if (isWorksheet && worksheet['!merges'] && worksheet['!merges'].length > 0) {
+                        // 第一步：解析合并单元格，获取数据和表头
                         jsonData = parseSheetWithMerges(worksheet);
+                        
+                        if (jsonData.length >= 2) {
+                            const headers = jsonData[0].map((h, i) => String(h).trim() || `列${i+1}`);
+                            
+                            // 第二步：根据表头重新解析，确保日期/编号/客户名称列正确向下填充
+                            const jsonDataProcessed = parseSheetWithMerges(worksheet, headers);
+                            
+                            console.log('合并单元格已处理，识别到的表头:', headers);
+                            console.log('将对此文件中识别到的日期/编号/客户名称列进行向下填充');
+                            
+                            jsonData = jsonDataProcessed;
+                        }
                     } else {
                         jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, defval: '' });
                     }
@@ -7659,7 +7723,7 @@
         // 工作表工具操作切换
         document.getElementById('worksheetOperation').addEventListener('change', function() {
             const isMerge = this.value === 'merge';
-            document.getElementById('splitUploadZone').style.display = isMerge ? 'none' : '';
+            document.getElementById('worksheetDropZone').style.display = isMerge ? 'none' : '';
             document.getElementById('mergeUploadSection').style.display = isMerge ? 'block' : 'none';
             clearMergeData();
             mergeFileObjects = [];
@@ -7871,10 +7935,19 @@
                             workbook.SheetNames.forEach(sheetName => {
                                 const worksheet = workbook.Sheets[sheetName];
                                 if (!worksheet || !worksheet['!ref']) return;
+                                
+                                // 第一步：解析合并单元格，获取grid和headers
                                 const grid = parseSheetWithMerges(worksheet);
                                 if (grid.length < 2) return;
+                                
                                 const headers = grid[0].map((h, i) => String(h).trim() || `列${i+1}`);
-                                const rows = grid.slice(1).filter(row => row.some(cell => String(cell).trim() !== ''));
+                                
+                                // 第二步：根据headers重新处理，确保日期/编号/客户名称列正确向下填充
+                                const gridProcessed = parseSheetWithMerges(worksheet, headers);
+                                const rows = gridProcessed.slice(1).filter(row => row.some(cell => String(cell).trim() !== ''));
+                                
+                                console.log(`工作表"${sheetName}"解析完成，识别到${headers.length}列，${rows.length}行数据`);
+                                
                                 if (!mergeSheetsData[sheetName]) {
                                     mergeSheetsData[sheetName] = { headers, rows: [], files: [] };
                                 }
@@ -8237,23 +8310,79 @@
             return '¥' + n.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
         }
 
-        /**
-         * 核心计算函数
-         * 6档税负率：0.5%, 1.0%, 1.5%, 2.0%, 2.5%, 3.0%
-         */
+        function syncSalesFields(source) {
+            const salesIncl = document.getElementById('salesIncl');
+            const salesExcl = document.getElementById('salesExcl');
+            const salesRate = parseFloat(document.getElementById('outputTaxRateSel').value);
+
+            if (source === 'incl') {
+                // 用户正在编辑含税销售额
+                const inclVal = parseFloat(salesIncl.value);
+                if (!isNaN(inclVal) && inclVal > 0) {
+                    salesExcl.value = (inclVal / (1 + salesRate)).toFixed(2);
+                } else {
+                    salesExcl.value = '';
+                }
+            } else if (source === 'excl') {
+                // 用户正在编辑不含税销售额
+                const exclVal = parseFloat(salesExcl.value);
+                if (!isNaN(exclVal) && exclVal > 0) {
+                    salesIncl.value = (exclVal * (1 + salesRate)).toFixed(2);
+                } else {
+                    salesIncl.value = '';
+                }
+            }
+        }
+
+        function onOutputTaxRateChange() {
+            const rate = parseFloat(document.getElementById('outputTaxRateSel').value);
+            const hint1 = document.getElementById('salesInclHint');
+            const hint2 = document.getElementById('salesExclHint');
+            const factor = (1 + rate).toFixed(2);
+            hint1.textContent = '开票金额（含' + (rate*100) + '%增值税）';
+            hint2.textContent = '含税销售额 ÷ ' + factor;
+            const inclVal = parseFloat(document.getElementById('salesIncl').value);
+            const exclVal = parseFloat(document.getElementById('salesExcl').value);
+            if (!isNaN(inclVal) && inclVal > 0) {
+                syncSalesFields('incl');
+            } else if (!isNaN(exclVal) && exclVal > 0) {
+                syncSalesFields('excl');
+            }
+        }
+
         function calcInvoiceNeed() {
-            const salesIncl = parseFloat(document.getElementById('salesIncl').value);
+            const salesInclEl = document.getElementById('salesIncl');
+            const salesExclEl = document.getElementById('salesExcl');
+            const vatRatePct = parseFloat(document.getElementById('vatRateTarget').value);
             const citRatePct = parseFloat(document.getElementById('citRateTarget').value);
             const inputTaxRate = parseFloat(document.getElementById('inputTaxRateSel').value);
+            const salesRate = parseFloat(document.getElementById('outputTaxRateSel').value);
 
-            if (isNaN(salesIncl) || salesIncl <= 0) { alert('请输入有效的含税销售额'); return; }
+            const salesInclVal = parseFloat(salesInclEl.value);
+            const salesExclVal = parseFloat(salesExclEl.value);
+
+            let salesIncl, salesExcl;
+
+            // 判断用户输入了哪个字段
+            if (!isNaN(salesInclVal) && salesInclVal > 0) {
+                // 用户输入了含税销售额
+                salesIncl = salesInclVal;
+                salesExcl = salesIncl / (1 + salesRate);
+            } else if (!isNaN(salesExclVal) && salesExclVal > 0) {
+                // 用户只输入了不含税销售额
+                salesExcl = salesExclVal;
+                salesIncl = salesExcl * (1 + salesRate);
+            } else {
+                alert('请输入有效的含税销售额或不含税销售额');
+                return;
+            }
+
+            if (isNaN(vatRatePct) || vatRatePct < 0 || vatRatePct > 13) { alert('增值税税负率请输入 0~13 之间的数值（%）'); return; }
             if (isNaN(citRatePct) || citRatePct < 0) { alert('请输入有效的企业所得税税负率'); return; }
 
             const citBurden = citRatePct / 100;
-            const salesRate = 0.13; // 销售端增值税率
 
-            // ── 基础数据（所有方案共用） ──
-            const salesExcl = salesIncl / (1 + salesRate);
+            // 基础数据
             const outputTax = salesExcl * salesRate;
             const citPayable = salesExcl * citBurden;
 
@@ -8356,11 +8485,20 @@
             document.getElementById('vatNeedInvoice').textContent = `税负率 ${r.vatRatePct}%`;
             document.getElementById('vatDetails').innerHTML = `
                 <div style="display:flex;justify-content:space-between;font-size:12px;color:#718096;padding:3px 0;border-bottom:1px dashed #e2e8f0;"><span>不含税销售额</span><span style="font-weight:600;color:#4a5568;">${invFmt(salesExcl)}</span></div>
-                <div style="display:flex;justify-content:space-between;font-size:12px;color:#718096;padding:3px 0;border-bottom:1px dashed #e2e8f0;"><span>销项税额（13%）</span><span style="font-weight:600;color:#4a5568;">${invFmt(outputTax)}</span></div>
-                <div style="display:flex;justify-content:space-between;font-size:12px;color:#718096;padding:3px 0;border-bottom:1px dashed #e2e8f0;"><span>应交增值税（税负${r.vatRatePct}%）</span><span style="font-weight:600;color:#4a5568;">${invFmt(r.vatPayable)}</span></div>
-                <div style="display:flex;justify-content:space-between;font-size:12px;color:#718096;padding:3px 0;border-bottom:1px dashed #e2e8f0;"><span>需<strong style="color:#e53e3e;">进项税额</strong></span><span style="font-weight:700;color:#e53e3e;">${invFmt(r.inputTaxNeeded)}</span></div>
-                <div style="display:flex;justify-content:space-between;font-size:12px;color:#718096;padding:3px 0;border-bottom:1px dashed #e2e8f0;"><span>进项票不含税金额（÷${inputTaxRate*100}%）</span><span style="font-weight:600;color:#4a5568;">${invFmt(r.vatInvoiceExcl)}</span></div>
-                <div style="display:flex;justify-content:space-between;font-size:12px;color:#718096;padding:3px 0;"><span>进项票<span style="color:#e53e3e;font-weight:600;">含税金额</span></span><span style="font-weight:700;color:#e53e3e;">${invFmt(r.vatInvoiceIncl)} (${vatPctVsSales}%)</span></div>
+                <div style="display:flex;justify-content:space-between;font-size:12px;color:#718096;padding:3px 0;border-bottom:1px dashed #e2e8f0;"><span>销项税额（${Math.round(salesRate*100)}%）</span><span style="font-weight:600;color:#4a5568;">${invFmt(outputTax)}</span></div>
+                <div style="display:flex;justify-content:space-between;font-size:12px;color:#718096;padding:3px 0;border-bottom:1px dashed #e2e8f0;"><span>应交增值税（税负${vatRatePct}%）</span><span style="font-weight:600;color:#4a5568;">${invFmt(vatPayable)}</span></div>
+                <div style="display:flex;justify-content:space-between;font-size:12px;color:#718096;padding:3px 0;border-bottom:1px dashed #e2e8f0;"><span>需进项税额</span><span style="font-weight:600;color:#e53e3e;">${invFmt(inputTaxNeeded)}</span></div>
+                <div style="display:flex;justify-content:space-between;font-size:12px;color:#718096;padding:3px 0;"><span>对应含税进项票</span><span style="font-weight:600;color:#e53e3e;">${invFmt(vatInvoiceIncl)}</span></div>
+            `;
+
+            // 所得税维度
+            const citPctVsSales = (citInvoiceIncl / salesIncl * 100).toFixed(2);
+            document.getElementById('citNeedInvoice').textContent = invFmt(citInvoiceIncl) + `（${citPctVsSales}%）`;
+            document.getElementById('citDetails').innerHTML = `
+                <div style="display:flex;justify-content:space-between;font-size:12px;color:#718096;padding:3px 0;border-bottom:1px dashed #e2e8f0;"><span>应交所得税（税负${citRatePct}%）</span><span style="font-weight:600;color:#4a5568;">${invFmt(citPayable)}</span></div>
+                <div style="display:flex;justify-content:space-between;font-size:12px;color:#718096;padding:3px 0;border-bottom:1px dashed #e2e8f0;"><span>对应应税利润（÷5%）</span><span style="font-weight:600;color:#4a5568;">${invFmt(taxableProfit)}</span></div>
+                <div style="display:flex;justify-content:space-between;font-size:12px;color:#718096;padding:3px 0;border-bottom:1px dashed #e2e8f0;"><span>需要总成本费用（不含税）</span><span style="font-weight:600;color:#e53e3e;">${invFmt(totalCostNeeded)}</span></div>
+                <div style="display:flex;justify-content:space-between;font-size:12px;color:#718096;padding:3px 0;"><span>对应含税成本票</span><span style="font-weight:600;color:#e53e3e;">${invFmt(citInvoiceIncl)}</span></div>
             `;
 
             // 高亮决定性约束
@@ -8370,11 +8508,14 @@
             citBlock.style.boxShadow = r.basis === '所得税' ? '0 0 0 2px #667eea' : '';
 
             // 明细表
-            const pctVsSales = (r.recommend / salesIncl * 100).toFixed(2);
+            const inputType = (!isNaN(salesInclVal) && salesInclVal > 0) ? 'incl' : 'excl';
+            const inputLabel = inputType === 'incl' ? '含税销售额（输入）' : '不含税销售额（输入）';
+            const inputValue = inputType === 'incl' ? salesIncl : salesExcl;
+            
             const rows = [
-                { label: '含税销售额（输入）', value: salesIncl, note: '用户输入' },
-                { label: '不含税销售额', value: salesExcl, note: '÷ 1.13' },
-                { label: '销项税额', value: outputTax, note: '不含税 × 13%' },
+                { label: inputLabel, value: inputValue, note: '用户输入' },
+                { label: inputType === 'incl' ? '不含税销售额' : '含税销售额', value: inputType === 'incl' ? salesExcl : salesIncl, note: inputType === 'incl' ? '÷ 1.13' : '× 1.13', key: false },
+                { label: '销项税额', value: outputTax, note: '不含税 × ' + Math.round(salesRate*100) + '%' },
                 null,
                 { label: `── 增值税维度（目标税负率 ${r.vatRatePct}%）──`, value: null, header: true },
                 { label: '应交增值税', value: r.vatPayable, note: `不含税 × ${r.vatRatePct}%` },
