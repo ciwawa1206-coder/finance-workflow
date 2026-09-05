@@ -1910,6 +1910,250 @@
             fill: white;
         }
 
+        /* 新手财务指南搜索 */
+        .guide-search {
+            position: relative;
+            max-width: 560px;
+            margin: 0 auto 36px;
+        }
+
+        .guide-search-input {
+            width: 100%;
+            padding: 14px 20px 14px 48px;
+            border: 1px solid var(--border);
+            border-radius: 50px;
+            font-size: 15px;
+            background: white;
+            box-sizing: border-box;
+            outline: none;
+            transition: border-color 0.3s;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23999'%3E%3Cpath d='M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: 16px center;
+            background-size: 20px;
+        }
+
+        .guide-search-input:focus {
+            border-color: var(--accent, #C9A962);
+        }
+
+        .guide-search-results {
+            display: none;
+            position: absolute;
+            top: calc(100% + 8px);
+            left: 0;
+            right: 0;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+            z-index: 100;
+            overflow: hidden;
+            max-height: 320px;
+            overflow-y: auto;
+        }
+
+        .guide-search-results.active {
+            display: block;
+        }
+
+        .guide-search-item {
+            padding: 12px 18px;
+            cursor: pointer;
+            border-bottom: 1px solid #f0f0f0;
+            transition: background 0.2s;
+        }
+
+        .guide-search-item:last-child {
+            border-bottom: none;
+        }
+
+        .guide-search-item:hover {
+            background: #f9f7f2;
+        }
+
+        .guide-search-item .gs-title {
+            font-weight: 500;
+            color: var(--text-dark, #2C3E50);
+            font-size: 14px;
+        }
+
+        .guide-search-item .gs-cat {
+            font-size: 12px;
+            color: #999;
+            margin-top: 2px;
+        }
+
+        .guide-search-item .gs-keyword {
+            color: #C9A962;
+            font-weight: 500;
+        }
+
+        /* 新手指南卡片进度徽章 */
+        .guide-progress-badge {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            background: #f0ead6;
+            color: #8a7440;
+            border: 1px solid #e0d5b8;
+        }
+
+        .guide-progress-badge.done {
+            background: #e8f5e9;
+            color: #2e7d32;
+            border-color: #c8e6c9;
+        }
+
+        /* 新手指南内容区块 */
+        .g-scene {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 18px 22px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        .g-scene h4 {
+            color: white;
+            margin: 0 0 8px 0;
+            font-size: 15px;
+        }
+
+        .g-scene p {
+            margin: 0;
+            line-height: 1.8;
+            font-size: 14px;
+        }
+
+        .g-block {
+            background: #faf9f6;
+            border: 1px solid #eee9dd;
+            border-radius: 12px;
+            padding: 18px 22px;
+            margin-bottom: 18px;
+        }
+
+        .g-block h4 {
+            margin: 0 0 12px 0;
+            font-size: 15px;
+            color: #2C3E50;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .g-prep-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .g-prep-list li {
+            position: relative;
+            padding: 6px 0 6px 28px;
+            line-height: 1.7;
+            color: #555;
+            font-size: 14px;
+        }
+
+        .g-prep-list li::before {
+            content: "✓";
+            position: absolute;
+            left: 4px;
+            color: #2e7d32;
+            font-weight: bold;
+        }
+
+        .g-steps {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            counter-reset: gstep;
+        }
+
+        .g-steps li {
+            position: relative;
+            padding: 10px 0 10px 44px;
+            line-height: 1.7;
+            color: #444;
+            font-size: 14px;
+            border-bottom: 1px dashed #e8e4d8;
+        }
+
+        .g-steps li:last-child {
+            border-bottom: none;
+        }
+
+        .g-steps li::before {
+            counter-increment: gstep;
+            content: counter(gstep);
+            position: absolute;
+            left: 4px;
+            top: 12px;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: #2C3E50;
+            color: #C9A962;
+            font-weight: bold;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .g-note-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .g-note-list li {
+            position: relative;
+            padding: 6px 0 6px 26px;
+            line-height: 1.7;
+            color: #7a5c2e;
+            font-size: 13.5px;
+        }
+
+        .g-note-list li::before {
+            content: "⚠";
+            position: absolute;
+            left: 2px;
+            color: #d4920a;
+        }
+
+        .g-mastered-bar {
+            display: flex;
+            justify-content: flex-end;
+            padding-top: 6px;
+        }
+
+        .g-mastered-btn {
+            padding: 10px 26px;
+            border-radius: 24px;
+            border: 1px solid #C9A962;
+            background: white;
+            color: #8a7440;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.25s;
+            font-family: inherit;
+        }
+
+        .g-mastered-btn:hover {
+            background: #f5efdf;
+        }
+
+        .g-mastered-btn.mastered {
+            background: #2e7d32;
+            border-color: #2e7d32;
+            color: white;
+        }
+
         /* 政策法规法律卡片 */
         .law-grid {
             display: grid;
@@ -3212,6 +3456,109 @@
         }
 
         /* 税务计算器样式 */
+        .quick-examples {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 20px 25px;
+            background: var(--bg-light);
+            border-radius: 16px;
+            flex-wrap: wrap;
+        }
+
+        .quick-example-btn {
+            padding: 12px 28px;
+            border: 2px solid var(--accent);
+            background: white;
+            color: var(--accent);
+            font-size: 1rem;
+            font-weight: 700;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+
+        .quick-example-btn:hover {
+            background: var(--accent);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(201, 169, 98, 0.35);
+        }
+
+        .quick-example-hint {
+            font-size: 0.85rem;
+            color: var(--text-gray);
+        }
+
+        /* 税负率对比表格 */
+        .tax-compare-table-wrap {
+            background: white;
+            border-radius: 14px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+        }
+
+        .tax-compare-title {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 1rem;
+            color: var(--primary);
+            padding: 16px 20px 8px;
+            margin: 0;
+        }
+
+        .tax-compare-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 12px;
+        }
+
+        .tax-compare-table th {
+            background: linear-gradient(135deg, #2d3748 0%, #4a5568 100%);
+            color: #fff;
+            font-size: 0.82rem;
+            font-weight: 600;
+            padding: 12px 10px;
+            text-align: center;
+            line-height: 1.5;
+        }
+
+        .tax-compare-table th small {
+            opacity: 0.75;
+            font-weight: 400;
+            font-size: 0.78rem;
+        }
+
+        .tax-compare-table td {
+            padding: 11px 10px;
+            text-align: center;
+            font-size: 0.9rem;
+            border-bottom: 1px solid #f0eee8;
+            color: #2d3748;
+        }
+
+        .tax-compare-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .tax-compare-table tbody tr:hover {
+            background: rgba(201, 169, 98, 0.06);
+        }
+
+        .tax-compare-table td.rate-col {
+            background: rgba(45, 52, 72, 0.04);
+            font-weight: 700;
+            color: #2d3748;
+        }
+
+        .tax-compute-note {
+            padding: 10px 20px 16px;
+            font-size: 0.8rem;
+            color: #718096;
+            line-height: 1.6;
+            margin: 0;
+        }
+
         .tax-type-selector {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -3933,6 +4280,7 @@
                 <a href="#tools">财务工具</a>
                 <a href="#attendance">行政考勤</a>
                 <a href="#policy">政策法规</a>
+                <a href="#guide">新手指南</a>
                 <a href="javascript:void(0)" onclick="openNotebook();">📓 工作笔记</a>
             </div>
         </div>
@@ -4685,6 +5033,22 @@
                     <div class="law-tag tax">间接税</div>
                 </div>
             </div>
+        </div>
+    </section>
+
+    <!-- 新手财务指南 -->
+    <section class="content-section guide-section" id="guide" style="background: white;">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-tag">新手必读</div>
+                <h2>新手财务指南</h2>
+                <p>面向零基础财务人员的分步骤 APP 操作指南，覆盖社保、办税、开票、退税与个税全流程</p>
+            </div>
+            <div class="guide-search">
+                <input type="text" class="guide-search-input" id="guideSearchInput" placeholder="搜索办理事项，如：失业金、留抵退税、汇算清缴…" oninput="handleGuideSearch(this.value)" onfocus="handleGuideSearch(this.value)">
+                <div class="guide-search-results" id="guideSearchResults"></div>
+            </div>
+            <div class="law-grid" id="guideGrid"></div>
         </div>
     </section>
 
@@ -6417,14 +6781,32 @@
 
     <!-- 增值税进项计算器弹窗 - 当月进项发票需求 -->
     <div class="tool-modal" id="vatInputModal">
-        <div class="modal-content" style="max-width: 780px;">
+        <div class="modal-content" style="max-width: 860px;">
             <div class="modal-header">
                 <h2>📄 当月进项发票需求计算器</h2>
+                <p style="font-size:12px;color:#718096;margin-top:4px;">一般纳税人 · 增值税 13% · 按不同税负率分别计算所需进项发票金额</p>
                 <button class="modal-close" onclick="closeVatInputCalc()">
                     <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
                 </button>
             </div>
-            <div class="modal-body" style="max-height: 82vh; overflow-y: auto; padding: 20px; background: #f0f4f8;">
+            <div class="modal-body" style="max-height: 85vh; overflow-y: auto; padding: 20px; background: #f0f4f8;">
+
+                <!-- 预设示例快捷按钮 -->
+                <div style="background:#fff;border-radius:10px;padding:12px 16px;margin-bottom:16px;box-shadow:0 1px 4px rgba(0,0,0,0.06);display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+                    <span style="font-size:12px;color:#718096;font-weight:600;white-space:nowrap;">📋 快速填入示例：</span>
+                    <button onclick="fillExample(1000000, 1.5, 2)" style="padding:5px 12px;font-size:12px;border:1.5px solid #e2e8f0;border-radius:6px;background:#f7fafc;color:#4a5568;cursor:pointer;font-weight:500;transition:all 0.2s;" onmouseover="this.style.borderColor='#667eea';this.style.color='#667eea';" onmouseout="this.style.borderColor='#e2e8f0';this.style.color='#4a5568';">
+                        销售额100万 · 税负1.5%
+                    </button>
+                    <button onclick="fillExample(500000, 2, 3)" style="padding:5px 12px;font-size:12px;border:1.5px solid #e2e8f0;border-radius:6px;background:#f7fafc;color:#4a5568;cursor:pointer;font-weight:500;transition:all 0.2s;" onmouseover="this.style.borderColor='#667eea';this.style.color='#667eea';" onmouseout="this.style.borderColor='#e2e8f0';this.style.color='#4a5568';">
+                        销售额50万 · 税负2%
+                    </button>
+                    <button onclick="fillExample(2000000, 1, 1.5)" style="padding:5px 12px;font-size:12px;border:1.5px solid #e2e8f0;border-radius:6px;background:#f7fafc;color:#4a5568;cursor:pointer;font-weight:500;transition:all 0.2s;" onmouseover="this.style.borderColor='#667eea';this.style.color='#667eea';" onmouseout="this.style.borderColor='#e2e8f0';this.style.color='#4a5568';">
+                        销售额200万 · 税负1%
+                    </button>
+                    <button onclick="fillExample(300000, 3, 4)" style="padding:5px 12px;font-size:12px;border:1.5px solid #e2e8f0;border-radius:6px;background:#f7fafc;color:#4a5568;cursor:pointer;font-weight:500;transition:all 0.2s;" onmouseover="this.style.borderColor='#667eea';this.style.color='#667eea';" onmouseout="this.style.borderColor='#e2e8f0';this.style.color:'#4a5568';">
+                        销售额30万 · 税负3%
+                    </button>
+                </div>
 
                 <!-- 输入区 -->
                 <div style="background:#fff;border-radius:12px;padding:24px;margin-bottom:16px;box-shadow:0 1px 6px rgba(0,0,0,0.08);">
@@ -6443,24 +6825,16 @@
                             <span style="font-size:11px;color:#a0aec0;">开票金额（含13%增值税）</span>
                         </div>
                         <div style="display:flex;flex-direction:column;gap:6px;">
-                            <label style="font-size:13px;color:#4a5568;font-weight:500;">增值税税负率目标</label>
+                            <label style="font-size:13px;color:#4a5568;font-weight:500;">企业所得税税负率目标</label>
                             <div style="position:relative;">
-                                <input type="number" id="vatRateTarget" placeholder="如：1.5" min="0" max="13" step="0.01" onkeydown="if(event.key==='Enter')calcInvoiceNeed()" style="width:100%;height:40px;border:1.5px solid #e2e8f0;border-radius:8px;padding:0 40px 0 12px;font-size:15px;color:#2d3748;outline:none;background:#fafafa;transition:border-color 0.2s;">
+                                <input type="number" id="citRateTarget" placeholder="如：2" min="0" max="25" step="0.01" onkeydown="if(event.key==='Enter')calcInvoiceNeed()" style="width:100%;height:40px;border:1.5px solid #e2e8f0;border-radius:8px;padding:0 40px 0 12px;font-size:15px;color:#2d3748;outline:none;background:#fafafa;transition:border-color 0.2s;">
                                 <span style="position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:13px;color:#a0aec0;">%</span>
                             </div>
-                            <span style="font-size:11px;color:#a0aec0;">= 应交增值税 ÷ 不含税销售额</span>
+                            <span style="font-size:11px;color:#a0aec0;">= 应交所得税 ÷ 不含税销售额</span>
                         </div>
                     </div>
 
                     <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;">
-                        <div style="display:flex;flex-direction:column;gap:6px;">
-                            <label style="font-size:13px;color:#4a5568;font-weight:500;">企业所得税税负率目标</label>
-                            <div style="position:relative;">
-                                <input type="number" id="citRateTarget" placeholder="如：5" min="0" max="25" step="0.01" onkeydown="if(event.key==='Enter')calcInvoiceNeed()" style="width:100%;height:40px;border:1.5px solid #e2e8f0;border-radius:8px;padding:0 40px 0 12px;font-size:15px;color:#2d3748;outline:none;background:#fafafa;transition:border-color 0.2s;">
-                                <span style="position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:13px;color:#a0aec0;">%</span>
-                            </div>
-                            <span style="font-size:11px;color:#a0aec0;">= 应交所得税 ÷ 不含税销售额（实际税率5%，如小微优惠）</span>
-                        </div>
                         <div style="display:flex;flex-direction:column;gap:6px;">
                             <label style="font-size:13px;color:#4a5568;font-weight:500;">进项发票主要税率</label>
                             <select id="inputTaxRateSel" style="width:100%;height:40px;border:1.5px solid #e2e8f0;border-radius:8px;padding:0 12px;font-size:14px;color:#2d3748;outline:none;background:#fafafa;cursor:pointer;">
@@ -6470,41 +6844,64 @@
                             </select>
                             <span style="font-size:11px;color:#a0aec0;">用于反算成本票含税金额</span>
                         </div>
+                        <div style="display:flex;flex-direction:column;gap:6px;justify-content:end;padding-bottom:2px;">
+                            <button onclick="calcInvoiceNeed()" style="width:100%;height:46px;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:#fff;border:none;border-radius:10px;font-size:16px;font-weight:600;cursor:pointer;transition:opacity 0.2s;letter-spacing:1px;">🧮 计算全部税负率方案</button>
+                        </div>
                     </div>
-
-                    <button onclick="calcInvoiceNeed()" style="width:100%;height:46px;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:#fff;border:none;border-radius:10px;font-size:16px;font-weight:600;cursor:pointer;transition:opacity 0.2s;letter-spacing:1px;">立即计算</button>
                 </div>
 
                 <!-- 结果区 -->
                 <div id="invoiceResultSection" style="display:none;">
 
-                    <!-- 汇总推荐 -->
+                    <!-- 核心指标概览 -->
                     <div id="invResultSummary" style="background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);border-radius:12px;padding:20px 24px;color:#fff;margin-bottom:16px;text-align:center;">
-                        <div style="font-size:13px;opacity:0.85;margin-bottom:6px;">建议本月至少取得进项发票（含税金额）</div>
-                        <div id="summaryAmount" style="font-size:32px;font-weight:700;letter-spacing:1px;">—</div>
-                        <div id="summaryPct" style="font-size:12px;opacity:0.75;margin-top:4px;">占含税销售额 —</div>
-                        <div id="summaryBasis" style="font-size:12px;opacity:0.75;">取增值税与所得税两个维度的较大值</div>
-                    </div>
-
-                    <!-- 两个维度 -->
-                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;" id="invDualBlocks">
-                        <div id="vatBlock" style="border-radius:10px;padding:16px;border:1.5px solid #fde68a;background:#fffbeb;position:relative;">
-                            <div style="font-size:12px;color:#718096;margin-bottom:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;">增值税维度</div>
-                            <div id="vatNeedInvoice" style="font-size:20px;font-weight:700;color:#2d3748;margin-bottom:10px;">—</div>
-                            <div id="vatDetails"></div>
-                        </div>
-                        <div id="citBlock" style="border-radius:10px;padding:16px;border:1.5px solid #a7f3d0;background:#ecfdf5;position:relative;">
-                            <div style="font-size:12px;color:#718096;margin-bottom:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;">企业所得税维度</div>
-                            <div id="citNeedInvoice" style="font-size:20px;font-weight:700;color:#2d3748;margin-bottom:10px;">—</div>
-                            <div id="citDetails"></div>
+                        <div style="font-size:13px;opacity:0.85;margin-bottom:6px;">基于当前销售额的销项税基础数据</div>
+                        <div style="display:flex;justify-content:center;gap:32px;margin-top:12px;flex-wrap:wrap;">
+                            <div><div style="font-size:11px;opacity:0.7;">不含税销售额</div><div id="baseSalesExcl" style="font-size:18px;font-weight:700;">—</div></div>
+                            <div><div style="font-size:11px;opacity:0.7;">销项税额（13%）</div><div id="baseOutputTax" style="font-size:18px;font-weight:700;">—</div></div>
+                            <div><div style="font-size:11px;opacity:0.7;">应交所得税</div><div id="baseCitPayable" style="font-size:18px;font-weight:700;">—</div></div>
                         </div>
                     </div>
 
-                    <!-- 明细推导表 -->
+                    <!-- ★★★ 核心新功能：不同税负率下的进项发票需求对照表 ★★★ -->
                     <div style="background:#fff;border-radius:12px;padding:24px;margin-bottom:16px;box-shadow:0 1px 6px rgba(0,0,0,0.08);">
-                        <div style="font-size:15px;font-weight:600;color:#2d3748;margin-bottom:18px;padding-bottom:10px;border-bottom:2px solid #e2e8f0;display:flex;align-items:center;gap:8px;">
+                        <div style="font-size:15px;font-weight:600;color:#2d3748;margin-bottom:16px;padding-bottom:10px;border-bottom:2px solid #e2e8f0;display:flex;align-items:center;gap:8px;">
+                            <span style="width:22px;height:22px;border-radius:6px;background:#fef3c7;color:#d97706;display:flex;align-items:center;justify-content:center;font-size:13px;">📋</span>
+                            不同增值税税负率下 · 进项发票需求对照表
+                        </div>
+                        <p style="font-size:12px;color:#718096;margin-bottom:14px;line-height:1.6;">下方表格按<strong>6档常见税负率</strong>分别计算所需的<strong>进项税额</strong>和对应的<strong>进项发票含税金额</strong>，取增值税维度与企业所得税维度的较大值。可直接查看哪个税负率最符合当前经营情况。</p>
+
+                        <div style="overflow-x:auto;">
+                            <table id="rateCompareTable" style="width:100%;border-collapse:collapse;font-size:13px;min-width:650px;"></table>
+                        </div>
+                    </div>
+
+                    <!-- 两个维度详情（可折叠） -->
+                    <details open style="background:#fff;border-radius:12px;padding:20px;margin-bottom:16px;box-shadow:0 1px 6px rgba(0,0,0,0.08);">
+                        <summary style="font-size:14px;font-weight:600;color:#2d3748;cursor:pointer;list-style:none;display:flex;align-items:center;gap:8px;padding-bottom:12px;border-bottom:2px solid #e2e8f0;">
+                            <span style="width:22px;height:22px;border-radius:6px;background:#ede9fe;color:#7c3aed;display:flex;align-items:center;justify-content:center;font-size:13px;">🔍</span>
+                            双维度详细推导过程
+                            <span style="margin-left:auto;font-size:11px;color:#a0aec0;font-weight:400;">点击展开/收起 ▼</span>
+                        </summary>
+                        <div style="margin-top:16px;display:grid;grid-template-columns:1fr 1fr;gap:14px;" id="invDualBlocks">
+                            <div id="vatBlock" style="border-radius:10px;padding:16px;border:1.5px solid #fde68a;background:#fffbeb;position:relative;">
+                                <div style="font-size:12px;color:#718096;margin-bottom:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;">增值税维度（以目标税负率为基准）</div>
+                                <div id="vatNeedInvoice" style="font-size:18px;font-weight:700;color:#2d3748;margin-bottom:10px;">选择一行查看详情</div>
+                                <div id="vatDetails"></div>
+                            </div>
+                            <div id="citBlock" style="border-radius:10px;padding:16px;border:1.5px solid #a7f3d0;background:#ecfdf5;position:relative;">
+                                <div style="font-size:12px;color:#718096;margin-bottom:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;">企业所得税维度</div>
+                                <div id="citNeedInvoice" style="font-size:18px;font-weight:700;color:#2d3748;margin-bottom:10px;">—</div>
+                                <div id="citDetails"></div>
+                            </div>
+                        </div>
+                    </details>
+
+                    <!-- 完整推导明细表 -->
+                    <div style="background:#fff;border-radius:12px;padding:24px;margin-bottom:16px;box-shadow:0 1px 6px rgba(0,0,0,0.08);">
+                        <div style="font-size:15px;font-weight:600;color:#2d3748;margin-bottom:16px;padding-bottom:10px;border-bottom:2px solid #e2e8f0;display:flex;align-items:center;gap:8px;">
                             <span style="width:22px;height:22px;border-radius:6px;background:#ede9fe;color:#7c3aed;display:flex;align-items:center;justify-content:center;font-size:13px;">📊</span>
-                            完整推导明细
+                            完整推导明细（选中行）
                         </div>
                         <table id="detailTable" style="width:100%;border-collapse:collapse;font-size:13px;"></table>
                     </div>
@@ -6512,9 +6909,10 @@
                     <!-- 备注 -->
                     <div style="background:#fff8f0;border-left:4px solid #f6ad55;border-radius:0 8px 8px 0;padding:12px 14px;font-size:12px;color:#744210;line-height:1.7;">
                         <strong style="display:block;margin-bottom:4px;color:#c05621;">⚠️ 使用说明</strong>
-                        1. 本计算器结果为<b>理论最低值</b>，实际还需考虑工资、折旧等不需要发票的成本项。<br>
+                        1. 本计算器结果为<b>理论最低值</b>，实际还需考虑工资、折旧等不需要发票的成本项，实际需要的进项票可能更少。<br>
                         2. 进项发票取得时间与认证期限会影响当月可抵扣税额，请以实际认证为准。<br>
-                        3. 所得税实际税率按5%（小微企业优惠）计算，如适用标准25%税率请调整。
+                        3. 所得税实际税率按用户输入的税负率反推（默认约5%~25%），如适用小微企业优惠请调整。<br>
+                        4. <b>点击表格中的任意行</b>可查看该税负率的完整推导明细。
                     </div>
                 </div>
 
@@ -6533,6 +6931,36 @@
             </div>
             <div class="modal-body" style="max-height: 75vh; overflow-y: auto;">
                 <div class="tool-container">
+                    <!-- 快速示例 -->
+                    <div class="tool-section">
+                        <div class="tool-section-title">步骤1½：快速示例（点击自动填充）</div>
+                        <div class="quick-examples">
+                            <button class="quick-example-btn" onclick="fillTaxExample(100000)">10万</button>
+                            <button class="quick-example-btn" onclick="fillTaxExample(500000)">50万</button>
+                            <button class="quick-example-btn" onclick="fillTaxExample(1000000)">100万</button>
+                            <span class="quick-example-hint">💡 点击后按不同税负率自动测算加税点</span>
+                        </div>
+                        <!-- 税负率对比表格 -->
+                        <div id="taxCompareSection" style="display:none; margin-top: 20px;">
+                            <div class="tax-compare-table-wrap">
+                                <h4 class="tax-compare-title">📊 不同税负率下的开票加点对比</h4>
+                                <table class="tax-compare-table" id="taxCompareTable">
+                                    <thead>
+                                        <tr>
+                                            <th>税负率档次</th>
+                                            <th>增值税加税点<br><small>(含附加税)</small></th>
+                                            <th>企业所得税<br><small>(小微5%)</small></th>
+                                            <th>合计加点<br><small>(增值税+所得税)</small></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="taxCompareBody">
+                                    </tbody>
+                                </table>
+                                <p class="tax-compute-note" id="taxComputeNote"></p>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- 纳税人类型选择 -->
                     <div class="tool-section">
                         <div class="tool-section-title">步骤1：选择纳税人类型</div>
@@ -7784,7 +8212,9 @@
             dateInput.value = now.toISOString().slice(0, 10);
         }
 
-        // ========== 增值税进项计算器功能（当月进项发票需求） ==========
+        // ========== 增值税进项计算器功能（当月进项发票需求 - 多税负率版） ==========
+        let selectedRateIndex = 2; // 默认选中第3行(1.5%)
+
         function openVatInputCalc() {
             document.getElementById('vatInputModal').classList.add('active');
             document.body.style.overflow = 'hidden';
@@ -7795,123 +8225,287 @@
             document.body.style.overflow = '';
         }
 
+        /** 填充预设示例数据 */
+        function fillExample(sales, vatRate, citRate) {
+            document.getElementById('salesIncl').value = sales;
+            document.getElementById('citRateTarget').value = citRate;
+            calcInvoiceNeed();
+        }
+
         function invFmt(n) {
             if (isNaN(n) || n === null) return '—';
             return '¥' + n.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
         }
 
+        /**
+         * 核心计算函数
+         * 6档税负率：0.5%, 1.0%, 1.5%, 2.0%, 2.5%, 3.0%
+         */
         function calcInvoiceNeed() {
             const salesIncl = parseFloat(document.getElementById('salesIncl').value);
-            const vatRatePct = parseFloat(document.getElementById('vatRateTarget').value);
             const citRatePct = parseFloat(document.getElementById('citRateTarget').value);
             const inputTaxRate = parseFloat(document.getElementById('inputTaxRateSel').value);
 
             if (isNaN(salesIncl) || salesIncl <= 0) { alert('请输入有效的含税销售额'); return; }
-            if (isNaN(vatRatePct) || vatRatePct < 0 || vatRatePct > 13) { alert('增值税税负率请输入 0~13 之间的数值（%）'); return; }
             if (isNaN(citRatePct) || citRatePct < 0) { alert('请输入有效的企业所得税税负率'); return; }
 
-            const vatBurden = vatRatePct / 100;
             const citBurden = citRatePct / 100;
-            const salesRate = 0.13;
+            const salesRate = 0.13; // 销售端增值税率
 
-            // 基础数据
+            // ── 基础数据（所有方案共用） ──
             const salesExcl = salesIncl / (1 + salesRate);
             const outputTax = salesExcl * salesRate;
-            const vatPayable = salesExcl * vatBurden;
-
-            // 增值税维度
-            const inputTaxNeeded = outputTax - vatPayable;
-            const vatInvoiceExcl = inputTaxNeeded / inputTaxRate;
-            const vatInvoiceIncl = vatInvoiceExcl * (1 + inputTaxRate);
-
-            // 企业所得税维度
             const citPayable = salesExcl * citBurden;
-            const taxableProfit = citPayable / 0.05;
+
+            // ── 企业所得税维度（固定值，不受增值税税负率影响） ──
+            const taxableProfit = citPayable / 0.05; // 假设所得税实际税率5%
             const totalCostNeeded = salesExcl - taxableProfit;
             const citInvoiceIncl = totalCostNeeded * (1 + inputTaxRate);
+            const citInvoiceExcl = totalCostNeeded;
 
-            // 取较大值
-            const recommend = Math.max(vatInvoiceIncl, citInvoiceIncl);
-            const basis = vatInvoiceIncl >= citInvoiceIncl ? '增值税维度' : '企业所得税维度';
+            // 渲染基础概览
+            document.getElementById('baseSalesExcl').textContent = invFmt(salesExcl);
+            document.getElementById('baseOutputTax').textContent = invFmt(outputTax);
+            document.getElementById('baseCitPayable').textContent = invFmt(citPayable);
 
-            // 汇总
-            document.getElementById('summaryAmount').textContent = invFmt(recommend);
-            const pctVsSales = (recommend / salesIncl * 100).toFixed(2);
-            document.getElementById('summaryPct').textContent = `占含税销售额 ${pctVsSales}%`;
-            document.getElementById('summaryBasis').textContent = `取 ${basis} 要求的较大值`;
+            // ── 6档增值税税负率计算 ──
+            const VAT_RATES = [0.005, 0.01, 0.015, 0.02, 0.025, 0.03];
+            const rateResults = [];
 
-            // 增值税维度
-            const vatPctVsSales = (vatInvoiceIncl / salesIncl * 100).toFixed(2);
-            document.getElementById('vatNeedInvoice').textContent = invFmt(vatInvoiceIncl) + `（${vatPctVsSales}%）`;
+            VAT_RATES.forEach((vatBurden, idx) => {
+                const vatPayable = salesExcl * vatBurden;
+                // 增值税维度：需要进项税额 = 销项税额 - 应交增值税
+                const inputTaxNeeded = outputTax - vatPayable;
+                // 进项票不含税金额 = 进项税额 ÷ 进项税率
+                const vatInvoiceExcl = inputTaxNeeded / inputTaxRate;
+                // 进项票含税金额 = 不含税 × (1+税率)
+                const vatInvoiceIncl = vatInvoiceExcl * (1 + inputTaxRate);
+                // 取两个维度的较大值
+                const recommend = Math.max(vatInvoiceIncl, citInvoiceIncl);
+                const basis = vatInvoiceIncl >= citInvoiceIncl ? '增值税' : '所得税';
+
+                rateResults.push({
+                    idx,
+                    vatRatePct: vatBurden * 100,
+                    vatPayable,
+                    inputTaxNeeded,
+                    vatInvoiceExcl,
+                    vatInvoiceIncl,
+                    citInvoiceIncl,
+                    citInvoiceExcl,
+                    recommend,
+                    basis
+                });
+            });
+
+            // ── 渲染对照表 ──
+            renderCompareTable(rateResults, salesIncl, inputTaxRate);
+
+            // ── 渲染所得税维度详情（固定不变） ──
+            renderCitDetail(citRatePct, citPayable, taxableProfit, totalCostNeeded, citInvoiceIncl, citInvoiceExcl, salesExcl);
+
+            // ── 默认选中第3行（1.5%）显示详细推导 ──
+            selectedRateIndex = Math.min(selectedRateIndex, rateResults.length - 1);
+            showRateDetail(rateResults[selectedRateIndex], rateResults, salesExcl, outputTax, inputTaxRate, citRatePct, citPayable, taxableProfit, totalCostNeeded, citInvoiceIncl, salesIncl);
+
+            // 显示结果区
+            document.getElementById('invoiceResultSection').style.display = 'block';
+            document.getElementById('invoiceResultSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        /** 渲染多税负率对照表 */
+        function renderCompareTable(results, salesIncl, inputTaxRate) {
+            let html = `<thead><tr style="background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;">
+                <th style="padding:12px 10px;text-align:left;font-size:12px;border-radius:8px 0 0 0;">增值税<br>税负率</th>
+                <th style="padding:12px 8px;text-align:right;font-size:12px;">应交<br>增值税</th>
+                <th style="padding:12px 8px;text-align:right;font-size:12px;color:#fde68a;">需进项<br>税额</th>
+                <th style="padding:12px 8px;text-align:right;font-size:12px;color:#fde68a;">进项票<br>不含税金额</th>
+                <th style="padding:12px 8px;text-align:right;font-size:12px;color:#a7f3d0;">成本票<br>不含税金额</th>
+                <th style="padding:12px 8px;text-align:right;font-size:12px;font-weight:700;">★ 推荐<br>进项票含税金额</th>
+                <th style="padding:12px 8px;text-align:center;font-size:12px;border-radius:0 8px 0 0;">决定<br>因素</th>
+            </tr></thead><tbody>`;
+
+            results.forEach((r, i) => {
+                const isSelected = i === selectedRateIndex;
+                const bg = isSelected ? 'background:#eef2ff;border-left:3px solid #667eea;' : 'background:' + (i % 2 === 0 ? '#fff' : '#fafbff') + ';';
+                const hoverStyle = isSelected ? '' : ' onmouseover="this.style.background=\'#f0f4ff\'" onmouseout="this.style.background=\''+(i%2===0?'#fff':'#fafbff')+'\'"';
+                html += `<tr style="cursor:pointer;${bg}${hoverStyle}" onclick="selectRateRow(${i})">
+                    <td style="padding:11px 10px;font-weight:700;font-size:14px;color:${isSelected ? '#667eea' : '#2d3748'};">${r.vatRatePct}%</td>
+                    <td style="padding:11px 8px;text-align:right;font-variant-numeric:tabular-nums;font-size:13px;">${invFmt(r.vatPayable)}</td>
+                    <td style="padding:11px 8px;text-align:right;font-variant-numeric:tabular-nums;font-size:13px;color:#c05621;font-weight:600;">${invFmt(r.inputTaxNeeded)}</td>
+                    <td style="padding:11px 8px;text-align:right;font-variant-numeric:tabular-nums;font-size:13px;">${invFmt(r.vatInvoiceExcl)}</td>
+                    <td style="padding:11px 8px;text-align:right;font-variant-numeric:tabular-nums;font-size:13px;">${invFmt(r.citInvoiceExcl)}</td>
+                    <td style="padding:11px 8px;text-align:right;font-variant-numeric:tabular-nums;font-size:14px;font-weight:700;color:${r.basis === '增值税' ? '#c05621' : '#059669'};">${invFmt(r.recommend)}</td>
+                    <td style="padding:11px 8px;text-align:center;"><span style="display:inline-block;padding:2px 10px;border-radius:10px;font-size:11px;font-weight:600;background:${r.basis === '增值税' ? '#fef3c7' : '#d1fae5'};color:${r.basis === '增值税' ? '#d97706' : '#059669'};">${r.basis}</span></td>
+                </tr>`;
+            });
+            html += '</tbody>';
+            document.getElementById('rateCompareTable').innerHTML = html;
+        }
+
+        /** 点击表格行 → 显示该行的详细推导 */
+        window.selectRateRow = function(idx) {
+            selectedRateIndex = idx;
+            calcInvoiceNeed(); // 重新渲染并高亮选中行
+        };
+
+        /** 渲染选中税负率的完整详情 */
+        function showRateDetail(r, allResults, salesExcl, outputTax, inputTaxRate, citRatePct, citPayable, taxableProfit, totalCostNeeded, citInvoiceIncl, salesIncl) {
+            // 增值税维度详情块
+            const vatPctVsSales = (r.vatInvoiceIncl / salesIncl * 100).toFixed(2);
+            document.getElementById('vatNeedInvoice').textContent = `税负率 ${r.vatRatePct}%`;
             document.getElementById('vatDetails').innerHTML = `
                 <div style="display:flex;justify-content:space-between;font-size:12px;color:#718096;padding:3px 0;border-bottom:1px dashed #e2e8f0;"><span>不含税销售额</span><span style="font-weight:600;color:#4a5568;">${invFmt(salesExcl)}</span></div>
                 <div style="display:flex;justify-content:space-between;font-size:12px;color:#718096;padding:3px 0;border-bottom:1px dashed #e2e8f0;"><span>销项税额（13%）</span><span style="font-weight:600;color:#4a5568;">${invFmt(outputTax)}</span></div>
-                <div style="display:flex;justify-content:space-between;font-size:12px;color:#718096;padding:3px 0;border-bottom:1px dashed #e2e8f0;"><span>应交增值税（税负${vatRatePct}%）</span><span style="font-weight:600;color:#4a5568;">${invFmt(vatPayable)}</span></div>
-                <div style="display:flex;justify-content:space-between;font-size:12px;color:#718096;padding:3px 0;border-bottom:1px dashed #e2e8f0;"><span>需进项税额</span><span style="font-weight:600;color:#e53e3e;">${invFmt(inputTaxNeeded)}</span></div>
-                <div style="display:flex;justify-content:space-between;font-size:12px;color:#718096;padding:3px 0;"><span>对应含税进项票</span><span style="font-weight:600;color:#e53e3e;">${invFmt(vatInvoiceIncl)}</span></div>
-            `;
-
-            // 所得税维度
-            const citPctVsSales = (citInvoiceIncl / salesIncl * 100).toFixed(2);
-            document.getElementById('citNeedInvoice').textContent = invFmt(citInvoiceIncl) + `（${citPctVsSales}%）`;
-            document.getElementById('citDetails').innerHTML = `
-                <div style="display:flex;justify-content:space-between;font-size:12px;color:#718096;padding:3px 0;border-bottom:1px dashed #e2e8f0;"><span>应交所得税（税负${citRatePct}%）</span><span style="font-weight:600;color:#4a5568;">${invFmt(citPayable)}</span></div>
-                <div style="display:flex;justify-content:space-between;font-size:12px;color:#718096;padding:3px 0;border-bottom:1px dashed #e2e8f0;"><span>对应应税利润（÷5%）</span><span style="font-weight:600;color:#4a5568;">${invFmt(taxableProfit)}</span></div>
-                <div style="display:flex;justify-content:space-between;font-size:12px;color:#718096;padding:3px 0;border-bottom:1px dashed #e2e8f0;"><span>需要总成本费用（不含税）</span><span style="font-weight:600;color:#e53e3e;">${invFmt(totalCostNeeded)}</span></div>
-                <div style="display:flex;justify-content:space-between;font-size:12px;color:#718096;padding:3px 0;"><span>对应含税成本票</span><span style="font-weight:600;color:#e53e3e;">${invFmt(citInvoiceIncl)}</span></div>
+                <div style="display:flex;justify-content:space-between;font-size:12px;color:#718096;padding:3px 0;border-bottom:1px dashed #e2e8f0;"><span>应交增值税（税负${r.vatRatePct}%）</span><span style="font-weight:600;color:#4a5568;">${invFmt(r.vatPayable)}</span></div>
+                <div style="display:flex;justify-content:space-between;font-size:12px;color:#718096;padding:3px 0;border-bottom:1px dashed #e2e8f0;"><span>需<strong style="color:#e53e3e;">进项税额</strong></span><span style="font-weight:700;color:#e53e3e;">${invFmt(r.inputTaxNeeded)}</span></div>
+                <div style="display:flex;justify-content:space-between;font-size:12px;color:#718096;padding:3px 0;border-bottom:1px dashed #e2e8f0;"><span>进项票不含税金额（÷${inputTaxRate*100}%）</span><span style="font-weight:600;color:#4a5568;">${invFmt(r.vatInvoiceExcl)}</span></div>
+                <div style="display:flex;justify-content:space-between;font-size:12px;color:#718096;padding:3px 0;"><span>进项票<span style="color:#e53e3e;font-weight:600;">含税金额</span></span><span style="font-weight:700;color:#e53e3e;">${invFmt(r.vatInvoiceIncl)} (${vatPctVsSales}%)</span></div>
             `;
 
             // 高亮决定性约束
             const vatBlock = document.getElementById('vatBlock');
             const citBlock = document.getElementById('citBlock');
-            vatBlock.style.boxShadow = '';
-            citBlock.style.boxShadow = '';
-            let badge = vatBlock.querySelector('.dominant-badge') || citBlock.querySelector('.dominant-badge');
-            if (badge) badge.remove();
-            const dominantBlock = vatInvoiceIncl >= citInvoiceIncl ? vatBlock : citBlock;
-            dominantBlock.style.boxShadow = '0 0 0 2px #667eea';
-            badge = document.createElement('div');
-            badge.className = 'dominant-badge';
-            badge.style.cssText = 'position:absolute;top:-10px;right:12px;background:#667eea;color:#fff;font-size:11px;padding:2px 8px;border-radius:10px;font-weight:600;';
-            badge.textContent = '决定性约束';
-            dominantBlock.appendChild(badge);
+            vatBlock.style.boxShadow = r.basis === '增值税' ? '0 0 0 2px #667eea' : '';
+            citBlock.style.boxShadow = r.basis === '所得税' ? '0 0 0 2px #667eea' : '';
 
             // 明细表
+            const pctVsSales = (r.recommend / salesIncl * 100).toFixed(2);
             const rows = [
                 { label: '含税销售额（输入）', value: salesIncl, note: '用户输入' },
-                { label: '不含税销售额', value: salesExcl, note: '÷ 1.13', key: false },
+                { label: '不含税销售额', value: salesExcl, note: '÷ 1.13' },
                 { label: '销项税额', value: outputTax, note: '不含税 × 13%' },
                 null,
-                { label: '── 增值税维度 ──', value: null, header: true },
-                { label: '应交增值税', value: vatPayable, note: `不含税 × ${vatRatePct}%` },
-                { label: '需要进项税额', value: inputTaxNeeded, note: '销项 - 应交', key: true },
-                { label: `需进项票不含税额（${inputTaxRate*100}%票）`, value: vatInvoiceExcl, note: `进项税 ÷ ${inputTaxRate*100}%` },
-                { label: '【增值税维度】需进项票含税额', value: vatInvoiceIncl, note: '', key: true, warn: vatInvoiceIncl >= citInvoiceIncl },
+                { label: `── 增值税维度（目标税负率 ${r.vatRatePct}%）──`, value: null, header: true },
+                { label: '应交增值税', value: r.vatPayable, note: `不含税 × ${r.vatRatePct}%` },
+                { label: '需要进项税额', value: r.inputTaxNeeded, note: `销项(${invFmt(outputTax)}) − 应交`, key: true },
+                { label: `需进项票不含税额（${inputTaxRate*100}%票）`, value: r.vatInvoiceExcl, note: `进项税 ÷ ${inputTaxRate*100}%` },
+                { label: '【增值税维度】需进项票含税额', value: r.vatInvoiceIncl, note: '', key: true },
                 null,
                 { label: '── 企业所得税维度 ──', value: null, header: true },
                 { label: '应交所得税', value: citPayable, note: `不含税 × ${citRatePct}%` },
-                { label: '应税利润', value: taxableProfit, note: '所得税 ÷ 5%' },
-                { label: '需要总成本费用（不含税）', value: totalCostNeeded, note: '不含税销售 - 利润', key: true },
-                { label: '【所得税维度】需成本票含税额', value: citInvoiceIncl, note: '', key: true, warn: citInvoiceIncl > vatInvoiceIncl },
+                { label: '应税利润', value: taxableProfit, note: '所得税 ÷ 5%（小微实际税率）' },
+                { label: '需要总成本费用（不含税）', value: totalCostNeeded, note: '不含税销售 − 利润', key: true },
+                { label: '【所得税维度】需成本票含税额', value: citInvoiceIncl, note: '', key: true },
                 null,
-                { label: '✅ 建议取进项发票含税金额', value: recommend, note: '取两者较大值', final: true },
+                { label: '✅ 推荐取进项发票含税金额', value: r.recommend, note: `取两者较大值（${r.basis}决定）`, final: true },
                 { label: '占含税销售额比例', value: null, note: `${pctVsSales}%`, final: true, isPct: true },
             ];
 
-            let html = `<thead><tr><th>项目</th><th style="text-align:right;">金额（元）</th><th>说明</th></tr></thead><tbody>`;
+            let html = `<thead><tr><th style="padding:10px 12px;">项目</th><th style="padding:10px 12px;text-align:right;">金额（元）</th><th style="padding:10px 12px;">说明</th></tr></thead><tbody>`;
             rows.forEach(row => {
                 if (!row) { html += '<tr><td colspan="3" style="padding:4px 0;border:none;"></td></tr>'; return; }
                 if (row.header) { html += `<tr><td colspan="3" style="padding:8px 12px;background:#f7fafc;font-weight:700;color:#4a5568;font-size:12px;letter-spacing:1px;">${row.label}</td></tr>`; return; }
-                const cls = row.final ? 'key-row' : (row.warn ? 'warn-row' : '');
+                const cls = row.final ? 'key-row' : (row.key ? '' : '');
                 const valStr = row.isPct ? row.note : (row.value !== null ? invFmt(row.value) : '—');
-                html += `<tr class="${cls}"><td>${row.label}</td><td style="text-align:right;font-variant-numeric:tabular-nums;">${valStr}</td><td style="color:#a0aec0;font-size:12px">${row.note || ''}</td></tr>`;
+                html += `<tr class="${cls}" style="${cls==='key-row'?'background:#f0f4ff;':''}">
+                    <td style="padding:9px 12px;">${row.label}</td>
+                    <td style="padding:9px 12px;text-align:right;font-variant-numeric:tabular-nums;font-weight:${row.key?700:400};">${valStr}</td>
+                    <td style="padding:9px 12px;color:#a0aec0;font-size:12px">${row.note || ''}</td>
+                </tr>`;
             });
             html += '</tbody>';
             document.getElementById('detailTable').innerHTML = html;
+        }
 
-            // 显示结果区
-            document.getElementById('invoiceResultSection').style.display = 'block';
-            document.getElementById('invoiceResultSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        /** 渲染企业所得税维度详情 */
+        function renderCitDetail(citRatePct, citPayable, taxableProfit, totalCostNeeded, citInvoiceIncl, citInvoiceExcl, salesExcl) {
+            const citPctVsSales = (citInvoiceIncl / salesExcl / 1.13 * 100).toFixed(2);
+            document.getElementById('citNeedInvoice').textContent = invFmt(citInvoiceIncl) + `（占销额 ${parseFloat(citPctVsSales)>0?citPctVsSales:'—'}%）`;
+            document.getElementById('citDetails').innerHTML = `
+                <div style="display:flex;justify-content:space-between;font-size:12px;color:#718096;padding:3px 0;border-bottom:1px dashed #e2e8f0;"><span>应交所得税（税负${citRatePct}%）</span><span style="font-weight:600;color:#4a5568;">${invFmt(citPayable)}</span></div>
+                <div style="display:flex;justify-content:space-between;font-size:12px;color:#718096;padding:3px 0;border-bottom:1px dashed #e2e8f0;"><span>应税利润（÷5%）</span><span style="font-weight:600;color:#4a5568;">${invFmt(taxableProfit)}</span></div>
+                <div style="display:flex;justify-content:space-between;font-size:12px;color:#718096;padding:3px 0;border-bottom:1px dashed #e2e8f0;"><span>需要总成本费用（不含税）</span><span style="font-weight:600;color:#e53e3e;">${invFmt(totalCostNeeded)}</span></div>
+                <div style="display:flex;justify-content:space-between;font-size:12px;color:#718096;padding:3px 0;"><span>对应含税成本票</span><span style="font-weight:600;color:#e53e3e;">${invFmt(citInvoiceIncl)}</span></div>
+            `;
+        }
+
+        // ========== 税务计算器 - 快速示例功能 ==========
+        function fillTaxExample(amount) {
+            // 自动填充含税销售额
+            document.getElementById('salesAmount').value = amount;
+            calculateTax();
+
+            // 显示对比表格
+            document.getElementById('taxCompareSection').style.display = 'block';
+            renderTaxCompareTable(amount);
+        }
+
+        function renderTaxCompareTable(salesAmount) {
+            const taxRate = 0.13; // 一般纳税人默认13%税率
+            // 附加税减半征收：城建3.5%、教育1.5%、地方教育1%
+            const cityTaxRate = 0.035;
+            const eduTaxRate = 0.015;
+            const localEduRate = 0.01;
+            // 小微企业，企业所得税实际税负率5%
+            const citRate = 0.05;
+            const grossProfit = 0.30; // 默认毛利率
+
+            const rates = [0.02, 0.03, 0.04, 0.05]; // 税负率档次：2%,3%,4%,5%
+            const tbody = document.getElementById('taxCompareBody');
+            let html = '';
+
+            rates.forEach(r => {
+                // ===== 增值税维度（含减半附加） =====
+                // 目标综合增值税额（含减半附加）= 含税销售额 × 税负率r
+                // 设需要加税点为 p，则：
+                // 不含税价 = salesAmount / (1 + p)
+                // 销项税 = 不含税价 × taxRate
+                // 应纳增值税 ≈ 销项税（无进项时）
+                // 减半附加 = 应纳增值税 × (city+edu+local) = 应纳增值税 × 0.06
+                // 综合增值税 = 应纳增值税 × (1 + 0.06) = 应纳增值税 × 1.06
+                // 要求：综合增值税 / salesAmount = r
+                // → 销项税 × 1.06 / salesAmount = r
+                // → (salesAmount/(1+p)) × taxRate × 1.06 / salesAmount = r
+                // → taxRate × 1.06 / (1+p) = r
+                // → 1+p = taxRate × 1.06 / r
+                // → p = taxRate × 1.06 / r - 1   ← 这个公式在r较大时可能为负
+
+                // 换个更直观的思路——加税点的含义是"在原不含税价基础上加几个点卖出去"
+                // 客户常说的"加3个点"意思是：售价 = 成本价 × (1 + 3%)
+                // 增值税加税点 = 需要缴纳的增值税及附加 / 不含税销售收入
+                // 为达到综合税负率 r：
+                // 综合税费 = salesAmount × r
+                // 其中增值税部分(含附加)占比大，所得税部分另算
+                //
+                // 采用实务常用算法：
+                // 加税点(%) = 税负率 ÷ (1 - 税负率) × (1 + 附加系数)
+                // 更简化且常用的：加税点 ≈ 税负率 × (1 + 增值税率) 作为含税加价比例
+
+                const surchargeTotal = cityTaxRate + eduTaxRate + localEduRate; // 0.06 (减半后)
+                const vatAddPoint = r * (1 + taxRate) * (1 + surchargeTotal); // 含减半附加的完整加点
+
+                // ===== 企业所得税维度（小微5%） =====
+                // 所得税税负率也是 r → 需要缴所得税 = 利润 × 5% = 销售额(不含税) × 毛利率 × 5%
+                // 但如果目标就是税负率r，则所得税加点 = r 即可（直接占销售额比例）
+                // 更精确：citAddPoint = r（因为所得税税负定义就是 所得税/销售额）
+                const citAddPoint = r;
+
+                // 合计加点
+                const totalAddPoint = vatAddPoint + citAddPoint;
+
+                // 计算实际金额
+                const vatTaxAmt = salesAmount * vatAddPoint;
+                const citTaxAmt = salesAmount * citAddPoint;
+                const totalTaxAmt = salesAmount * totalAddPoint;
+
+                html += `<tr>
+                    <td class="rate-col">${(r * 100).toFixed(0)}%</td>
+                    <td>${(vatAddPoint * 100).toFixed(2)}%<br><small>¥${formatCurrency(vatTaxAmt)}</small></td>
+                    <td>${(citAddPoint * 100).toFixed(2)}%<br><small>¥${formatCurrency(citTaxAmt)}</small></td>
+                    <td style="font-weight:700;color:#c9a962;">${(totalAddPoint * 100).toFixed(2)}%<br><small style="color:#718096;font-weight:400;">¥${formatCurrency(totalTaxAmt)}</small></td>
+                </tr>`;
+            });
+
+            tbody.innerHTML = html;
+
+            // 计算说明
+            const noteEl = document.getElementById('taxComputeNote');
+            noteEl.innerHTML = `📌 <strong>测算依据</strong>：含税销售额 ¥${formatCurrency(salesAmount)}，增值税税率13%（一般纳税人），毛利率${(grossProfit*100).toFixed(0)}%。<br>
+                • <strong>附加税</strong>：城建税3.5% + 教育费附加1.5% + 地方教育附加1%（减半征收），合计6%<br>
+                • <strong>增值税加点</strong> = 税负率 × (1+13%) × 1.06（含减半附加）<br>
+                • <strong>企业所得税</strong>：小微企业实际税负5%（年应纳税所得额≤300万部分）<br>
+                • 💡 点击任意金额可填入上方表单进行详细测算`;
         }
 
         // 税务计算器功能
@@ -11058,6 +11652,585 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
     <div class="notebook-sync-status" id="syncStatus">本地已保存</div>
 </div>
+
+<!-- 新手财务指南弹窗 -->
+<div class="law-modal" id="guideModal">
+    <div class="law-modal-content">
+        <div class="law-modal-header">
+            <button class="law-modal-close" onclick="closeGuideDetail()">
+                <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+            </button>
+            <h2 id="guideModalTitle">新手财务指南</h2>
+            <div class="law-meta" id="guideModalMeta"></div>
+        </div>
+        <div class="law-modal-body">
+            <div class="law-nav" id="guideTabs"></div>
+            <div id="guideTabContent"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // ===================== 新手财务指南 =====================
+    var GUIDE_DATA = [
+        {
+            id: 'zheliban',
+            icon: '<svg viewBox="0 0 24 24"><path d="M12 1L3 4v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V4l-9-3zm-1 6h2v3h3v2h-3v3h-2v-3H8v-2h3V7z"/></svg>',
+            title: '浙里办',
+            subtitle: '社保增减员 · 个体户注册 · 备案变更 · 失业金 · 社保补贴',
+            tag: '政务APP',
+            items: [
+                {
+                    id: 'social_add',
+                    title: '社保增员',
+                    keywords: ['参保', '入职', '新员工', '参保登记', '五险'],
+                    scene: '新员工入职时使用。法律规定用人单位应当自用工之日起30日内为员工办理参保登记，未办理则员工无法正常参保缴费，企业也可能被加收滞纳金。',
+                    prep: ['员工身份证正反面信息与手机号码', '入职日期、试用期工资（用于确定缴费基数）', '劳动合同（需先完成用工备案）', '浙里办法人账号，或法人授权的经办人账号'],
+                    steps: [
+                        '打开「浙里办」APP（或浙江政务服务网 zjzwfw.gov.cn），用法人账号登录（右上角头像 → 切换身份）',
+                        '首页搜索框输入「社保网报」或「企业职工参保登记」，选择对应设区市（如宁波）进入社保网上申报系统',
+                        '选择「参保人员增加（增员）」功能',
+                        '输入新员工身份证号码和姓名，系统自动带出身份校验信息',
+                        '填写参保信息：参保起始日期（入职日期）、参保险种（养老、医疗、工伤、失业、生育）、缴费基数（按员工月平均工资申报，有上下限规定）',
+                        '核对信息无误后提交申报，一般即时生效；如提示需审核，稍后在「申报记录」查看结果',
+                        '查询确认：「单位参保人员查询」中能看到该员工即增员成功；如被退回，按退回原因修改后重新申报'
+                    ],
+                    notes: [
+                        '时限提醒：员工入职后30日内必须办理，逾期可能加收滞纳金',
+                        '每月申报截止日一般为25日（宁波为25日，各市略有差异），25日后办理的次月生效',
+                        '缴费基数下限为省平工资的60%、上限为300%，按实际工资申报即可',
+                        '员工已在其他单位参保的无法重复增员，需原单位先办理减员',
+                        '医保在部分地区（如宁波）需单独在「医保网报」系统同步操作，办理后请核对医保是否同步生效'
+                    ]
+                },
+                {
+                    id: 'social_del',
+                    title: '社保减员',
+                    keywords: ['停保', '离职', '退工', '中断', '减少'],
+                    scene: '员工离职、退休或合同终止时办理。办理减员后企业自减员当月起不再为该员工缴费；员工离职后申领失业金的前提是企业已办理减员且减员原因准确。',
+                    prep: ['离职员工的身份证号码', '离职/终止日期及原因（辞职、辞退、合同终止、退休等）', '浙里办法人账号或经办人账号'],
+                    steps: [
+                        '登录浙里办（法人身份）→ 搜索「社保网报」进入网上申报系统',
+                        '选择「参保人员减少（减员/停保）」',
+                        '输入离职员工身份证号码，系统显示该员工当前参保状态',
+                        '选择减员原因：辞职（个人原因）/ 辞退、合同终止（非本人意愿）/ 退休等——必须如实选择，直接影响员工能否申领失业金',
+                        '选择减员生效日期（一般为在职最后一天），确认提交',
+                        '在「申报记录」中查询办理结果，成功后该员工从单位参保名单中移除'
+                    ],
+                    notes: [
+                        '每月25日前办理当月有效；25日后办理的一般次月生效，会多缴一个月社保',
+                        '「非因本人意愿中断就业」（如辞退、合同到期不续签）的员工，缴费满1年可申领失业金——减员原因务必如实选择',
+                        '减员失败时先确认是否存在欠费，欠费需先补缴再减员',
+                        '员工本人有新单位的，减员后由新单位增员，社保关系自动衔接'
+                    ]
+                },
+                {
+                    id: 'individual_reg',
+                    title: '注册个体户',
+                    keywords: ['个体工商户', '个体执照', '设立登记', '开个体店', '营业执照'],
+                    scene: '需要新注册个体工商户时使用，例如开店、经营副业。个体户设立门槛低、没有注册资本要求，可享受小规模纳税人免税等优惠政策，是最简单的市场经营主体形式。',
+                    prep: ['经营者本人身份证', '经营场所证明（房产证或租赁合同，部分区域可用住所申报承诺制）', '拟定的字号名称（可先想2-3个备选）', '经营范围（可参考同行业执照）'],
+                    steps: [
+                        '打开「浙里办」APP → 搜索「个体工商户开办」，选择「个体工商户设立登记」',
+                        '选择经营场所所在地的管辖市场监管所',
+                        '名称自主申报：按「行政区划 + 字号 + 行业 + 组织形式」录入，系统自动查重，查重通过即完成名称申报（也可不取名，用「经营者姓名 + 行业」代替）',
+                        '填写基本信息：经营者身份信息、经营场所地址、经营范围（菜单化点选）、从业人数、资金数额（自行申报）',
+                        '上传经营场所证明（租赁合同或房产证），或选择承诺制申报',
+                        '经营者实名认证（人脸识别）→ 电子签名 → 提交申请',
+                        '等待市场监管部门审核（一般1-3个工作日），通过后选择营业执照邮寄到家或到登记窗口自取',
+                        '领取执照后30日内完成税务登记（电子税务局实名认证即可），按需开立银行账户、办理涉税事项'
+                    ],
+                    notes: [
+                        '个体户增值税按小规模纳税人管理：月销售额10万元以下（季度30万以下）免征增值税（政策执行至2027年底）',
+                        '个体户不缴企业所得税，经营者所得按「经营所得」缴纳个人所得税（5%-35% 超额累进，可申请核定征收，以当地政策为准）',
+                        '经营范围涉及许可项目（如食品、危险化学品经营）的，需先办理相应许可证',
+                        '也可在「浙江企业在线」（浙里办搜索）全程网办，或到属地行政服务中心窗口办理'
+                    ]
+                },
+                {
+                    id: 'record_change',
+                    title: '企业备案变更',
+                    keywords: ['变更登记', '法人变更', '地址变更', '经营范围变更', '股权变更', '章程备案'],
+                    scene: '公司需要变更已登记的信息时使用：法定代表人变更、注册地址迁移、注册资本增减、经营范围调整、股东/董事/监事变动、章程修改备案等。',
+                    prep: ['变更事项对应的证明材料（新地址租赁合同、股东会决议、章程修正案等）', '需要电子签名的全部人员（股东、新老法人）完成E照通或浙里办实名认证', '原营业执照正副本（涉及换照的需交回）'],
+                    steps: [
+                        '浙里办搜索「市场主体变更登记」（或浙江企业在线 → 变更登记），选择本公司',
+                        '勾选变更事项（可同时勾选多项），系统按所选事项生成填报指引',
+                        '按引导填写新信息，上传配套材料：股东会决议、章程修正案、新住所证明等',
+                        '全部需签名人员通过 E照通 / 浙里办进行人脸识别并电子签名',
+                        '提交后等待市场监管部门审核（一般3-5个工作日）',
+                        '审核通过后：备案类事项直接生效；涉及执照记载事项的（法人、注册资本、地址等）需交回旧照换取新照（可邮寄办理）',
+                        '变更完成后30日内，到电子税务局、开户银行、社保单位信息等渠道同步更新信息（税务一般通过「多证合一」自动同步）'
+                    ],
+                    notes: [
+                        '涉及股权转让的，需先申报印花税（产权转移书据 0.05%）和股权转让所得个税（20%），完税后再办理工商变更',
+                        '经营范围涉及后置许可项目的，变更后需及时办理相应许可证',
+                        '税务信息未同步更新的，可到电子税务局「一照一码信息确认」更新或拨打12366',
+                        '跨区迁移（如慈溪迁往杭州湾新区）涉及税务迁移，建议先咨询主管税务机关再办工商变更'
+                    ]
+                },
+                {
+                    id: 'unemployment',
+                    title: '员工失业金申领',
+                    keywords: ['失业保险', '失业金', '领失业金', '失业登记', '待岗'],
+                    scene: '员工因非本人意愿中断就业（合同到期不续签、被辞退等）且满足条件时可申领失业保险金。财务人员的职责是先办妥减员并准确选择减员原因，申领本身由员工本人操作。',
+                    prep: ['前提条件：①失业保险累计缴费满1年 ②非因本人意愿中断就业 ③已办理失业登记', '员工本人：身份证、社保卡（激活金融功能）', '企业：已办理社保减员且减员原因准确'],
+                    steps: [
+                        '（企业）在浙里办社保网报为该员工办理减员，减员原因如实选择「解除/终止合同」等非本人意愿选项',
+                        '（企业）向员工出具解除或终止劳动合同证明，注明离职原因',
+                        '（员工）打开浙里办 → 搜索「失业保险金申领」',
+                        '先完成失业登记：填写就业状态、求职意向等信息',
+                        '填写申领信息：系统自动带出缴费记录，核对缴费月数、失业原因',
+                        '提交申请，社保经办机构一般7-10个工作日内完成审核',
+                        '审核通过后失业金按月发放至社保卡银行账户；领取期间每月需在浙里办做领取资格签到（失业状态申报）'
+                    ],
+                    notes: [
+                        '领取期限：缴费满1年不满5年的最长12个月，满5年不满10年最长18个月，10年以上最长24个月',
+                        '浙江省失业金标准约为当地最低工资的90%（以参保地政策为准）',
+                        '如因企业减员原因选错导致员工无法申领，企业可到社保经办窗口申请更正减员原因',
+                        '领取失业金期间还可享受医保缴费补贴、职业培训补贴等配套待遇',
+                        '员工重新就业后应主动停止领取，否则多领部分需退回并影响信用'
+                    ]
+                },
+                {
+                    id: 'subsidy',
+                    title: '企业社保补贴',
+                    keywords: ['社保补贴', '稳岗补贴', '吸纳就业', '就业困难人员', '补贴申领'],
+                    scene: '企业招用就业困难人员、毕业年度高校毕业生、登记失业半年以上人员等重点群体并依法缴纳社保的，可申请用人单位社保补贴，直接降低企业用工成本。',
+                    prep: ['前提条件：①与重点群体人员签订1年以上劳动合同并备案 ②足额缴纳社保 ③人员属于政策扶持范围', '补贴人员名单、劳动合同', '工资发放凭证（银行代发流水）', '人员的身份证明材料（身份证、毕业证、就业困难认定等）'],
+                    steps: [
+                        '（员工侧）先确认身份：就业困难人员需本人先到户籍地街道（镇）人力社保站所办理失业登记和就业困难认定',
+                        '打开浙里办（法人账号）→ 搜索「用人单位吸纳就业社保补贴」',
+                        '确认补贴类型：招用就业困难人员社保补贴 / 招用高校毕业生社保补贴等',
+                        '填写企业基本信息，选择补贴所属期（按季度或年度申报）',
+                        '录入享受补贴的员工名单，系统自动核验人员身份和扶持资格',
+                        '上传材料：劳动合同、工资发放凭证等',
+                        '提交申请 → 公示（一般7个工作日）→ 审核 → 补贴资金拨付至企业对公基本账户'
+                    ],
+                    notes: [
+                        '补贴标准：一般按企业为补贴对象实际缴纳社保费的单位部分给予补贴（各市标准不同，可拨12333咨询当地细则）',
+                        '申请有时限：一般应当年或次年规定期限内申报，逾期视同放弃',
+                        '期间社保不能断缴、欠缴，工资必须通过银行代发并留痕',
+                        '补贴期限一般不超过3年（距退休不足5年的可延长至退休）'
+                    ]
+                }
+            ]
+        },
+        {
+            id: 'ezhao',
+            icon: '<svg viewBox="0 0 24 24"><path d="M12 1L3 4v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V4l-9-3zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-2.33v9.02z"/></svg>',
+            title: 'E照通',
+            subtitle: '下载注册实名 · 绑定增加企业 · 授权管理',
+            tag: '电子营业执照',
+            items: [
+                {
+                    id: 'e_reg',
+                    title: '下载注册与实名认证',
+                    keywords: ['E照通注册', '电子营业执照下载', '实名认证', '人脸识别'],
+                    scene: 'E照通是国家市场监管总局官方的电子营业执照APP。法定代表人、财务人员、办事人员都要先完成注册实名，才能用电子执照扫码登录政务系统、电子签名、出示执照。',
+                    prep: ['本人大陆二代身份证', '本人实名登记的手机号', '（法定代表人）企业统一社会信用代码'],
+                    steps: [
+                        '手机应用商店搜索「E照通」，认准开发者为国家市场监管总局（谨防山寨软件）',
+                        '打开APP → 输入手机号 + 验证码注册',
+                        '实名认证：录入姓名、身份证号，系统发起人脸识别活体检测',
+                        '认证通过后账号即激活，进入首页「我的证照」',
+                        '（法定代表人专用）首次使用需下载电子执照：首页 → 下载执照 → 人脸识别 → 电子营业执照自动关联到账号',
+                        '验证：点击执照可查看副本样式、出示二维码、扫码登录政务系统'
+                    ],
+                    notes: [
+                        '电子营业执照与纸质执照具有同等法律效力，可用于网上身份认证、电子签名、亮照经营',
+                        '一个身份证（一个E照通账号）可同时绑定多家企业的执照',
+                        '人脸识别不通过时：检查身份证信息是否输入正确、光线是否充足；多次失败需到登记机关窗口处理',
+                        '微信/支付宝小程序搜「电子营业执照」也能下载出示，功能与APP一致'
+                    ]
+                },
+                {
+                    id: 'e_bind',
+                    title: '绑定/增加企业',
+                    keywords: ['添加企业', '授权', '证照管理员', '办事人员', '绑定公司'],
+                    scene: '财务人员、办事员需要使用企业电子执照办税、开户、登录政务系统时，需由法定代表人授权后，在自己的E照通里绑定该企业。',
+                    prep: ['企业统一社会信用代码（或准确的企业名称）', '法定代表人配合发起授权', '办事人员本人已完成E照通实名认证'],
+                    steps: [
+                        '（法定代表人）打开E照通 → 我的证照 → 选择企业 → 「证照管理」→「新增证照管理员/办事人员」',
+                        '录入办事人员的姓名和身份证号，选择授权权限（出示、扫码、签名等）',
+                        '（办事人员）用自己的身份注册E照通并完成实名认证',
+                        '办事人员通过两种方式之一完成绑定：①「扫一扫」扫描法定代表人出示的授权二维码 ②在「添加企业」中输入授权码',
+                        '绑定成功后，「我的证照」出现该企业执照，点击即可使用（扫码登录、出示、签名）',
+                        '如需绑定第二家企业：重复上述流程，或首页「切换企业」→「添加企业」',
+                        '（法定代表人可随时收回权限）证照管理 → 选中人员 → 取消授权'
+                    ],
+                    notes: [
+                        '授权权限分为出示、扫码、签名等，按最小必要原则授权',
+                        '证照管理员可以再添加其他办事人员（分级管理），适合大企业',
+                        '人员离职时务必及时取消授权，避免电子执照被冒用',
+                        '绑定失败最常见原因：法定代表人录入的身份证号有误，或办事人员未完成实名认证'
+                    ]
+                }
+            ]
+        },
+        {
+            id: 'etax',
+            icon: '<svg viewBox="0 0 24 24"><path d="M20 6h-8l-2-2H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-1 8h-2v2h-2v-2h-2v-2h2v-2h2v2h2v2z"/></svg>',
+            title: '电子税务局 · 诺企服',
+            subtitle: '办税员资格 · 个税密码重置 · 诺企服开票绑定',
+            tag: '办税开票',
+            items: [
+                {
+                    id: 'tax_clerk',
+                    title: '办税员开通办税资格',
+                    keywords: ['办税员', '实名认证', '人员权限', '授权', '新企业办税'],
+                    scene: '新企业设立后（或财务人员新入职），办税人员要先完成实名认证并获得企业授权，才能在电子税务局代表企业申报税款、领用发票、办理涉税事项。',
+                    prep: ['办税员本人身份证和手机', '法定代表人或财务负责人配合添加授权', '企业统一社会信用代码'],
+                    steps: [
+                        '下载「电子税务局」APP，或电脑访问 etax.zhejiang.chinatax.gov.cn（浙江电子税务局）',
+                        '办税员注册个人账号：手机号 → 录入身份证信息 → 人脸识别实名认证',
+                        '（法定代表人或财务负责人）以「企业业务」登录电子税务局 → 右上角头像「账户中心」→「人员权限管理」→「添加办税人员」',
+                        '录入办税员姓名、身份证号，选择身份类型（办税员/财务负责人/开票员）和功能权限（申报、发票、退税等）',
+                        '（办税员）登录电子税务局 → 身份切换选择该企业 → 弹出授权确认提示 → 点击「确认授权」',
+                        '授权完成后，办税员登录时选择该企业的统一社会信用代码，即可代表企业办理业务'
+                    ],
+                    notes: [
+                        '身份类型：法定代表人、财务负责人、办税员、开票员，一人可兼任多个身份',
+                        '办税员必须先完成个人实名认证，否则法定代表人搜索不到该人员无法添加',
+                        '人员离职后由法定代表人及时删除权限，避免离职人员仍可操作企业税务',
+                        '「自然人业务」和「企业业务」是两个登录入口：办税用企业业务；个税密码重置等个人事项用自然人业务或个税APP'
+                    ]
+                },
+                {
+                    id: 'pit_password',
+                    title: '法人重置个税申报密码',
+                    keywords: ['个税密码', '申报密码', '扣缴端登录', '重置密码', '密码忘了'],
+                    scene: '个税扣缴端（自然人电子税务局扣缴客户端）用「申报密码」登录。新企业首次使用、密码遗忘或交接时，需要法定代表人重置申报密码，财务再用新密码登录扣缴端申报个税。',
+                    prep: ['法定代表人手机安装「个人所得税」APP并完成人脸识别认证', '（或）财务负责人有电子税务局企业业务权限'],
+                    steps: [
+                        '（法定代表人）打开「个人所得税」APP → 登录并完成实名认证',
+                        '点击右下角「个人中心」→「企业权限」',
+                        '系统列出法人名下企业，选择目标企业',
+                        '点击「重置申报密码」',
+                        '输入新密码两次（一般为8-20位，含字母和数字）→ 选择验证方式（已实名用户人脸识别或短信验证）→ 确认重置',
+                        '（财务）用新申报密码登录「自然人电子税务局扣缴客户端」：选择「申报密码登录」→ 输入企业税号和新密码',
+                        '（备用渠道）电子税务局企业业务 →「个人所得税业务」也可重置；或携带身份证到办税服务厅窗口重置'
+                    ],
+                    notes: [
+                        '重置后新密码立即生效，旧密码同步作废',
+                        '申报密码是企业级共享密码，只有法定代表人和财务负责人有权限重置',
+                        '扣缴端首次登录会提示「扣缴单位信息确认」，按向导核对登记信息即可',
+                        '交接工作时记得一并交接申报密码，新任财务登录后可再次重置'
+                    ]
+                },
+                {
+                    id: 'nuoqi_bind',
+                    title: '绑定诺企服开票软件',
+                    keywords: ['诺企服', '诺诺开票', '数电发票', '开票软件', '51云开票', '绑定企业'],
+                    scene: '诺企服（诺诺发票/51云开票）是企业开具数电发票的平台。绑定企业和开票员身份后，即可在电脑端或手机端开具、交付、查询全流程数电发票。',
+                    prep: ['企业统一社会信用代码', '开票员本人实名账号', '（开票员非法人时）需法人先在电子税务局授权开票员身份', '企业已具备数电票用票资质（新办企业自动授予）'],
+                    steps: [
+                        '确认数电票资质：登录电子税务局 →「发票使用」→「发票用票需求申请/赋额调整」，查看蓝字数电票种类和额度',
+                        '下载安装：官网下载诺企服PC端（或应用市场安装「诺诺发票」APP）',
+                        '新用户注册：手机号 + 验证码 → 录入姓名、身份证号 → 人脸识别实名认证',
+                        '登录后进入「企业中心」→「添加企业」→ 输入企业统一社会信用代码，系统自动带出企业信息',
+                        '选择绑定身份：法定代表人可直接绑定；其他人员（开票员）需先由法人在电子税务局「人员权限管理」中授权开票员身份',
+                        '绑定成功后选择开票员身份进入开票界面，即可开具数电发票',
+                        '验证：在「发票查询」中查看历史发票，或试开一张草稿确认功能正常'
+                    ],
+                    notes: [
+                        '开票员身份必须与电子税务局的人员权限一致：先税务授权、再诺企服绑定',
+                        '数电发票无需税控设备和纸质发票，开具后通过邮箱/短信交付，对方可自行下载XML/PDF/OFD',
+                        '开票额度受纳税信用级别管理，新办企业额度较低，业务量上来后可在电子税务局申请调增',
+                        '绑定或开票异常可拨打诺诺客服 95105198，或联系主管税务机关税企联络群'
+                    ]
+                }
+            ]
+        },
+        {
+            id: 'refund',
+            icon: '<svg viewBox="0 0 24 24"><path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/></svg>',
+            title: '退税办理',
+            subtitle: '出口退税 · 增值税留抵退税',
+            tag: '退税专区',
+            items: [
+                {
+                    id: 'export_refund',
+                    title: '出口退税办理',
+                    keywords: ['出口退税', '外贸企业', '免抵退', '报关单', '出口发票'],
+                    scene: '出口企业（外贸企业出口和生产企业自营出口）出口货物后，可申请退还对应进项税额。这是出口企业的核心政策红利，必须备案、按期申报。',
+                    prep: ['前提：①已办理进出口经营备案（海关、外汇）②已办理出口退（免）税备案 ③增值税一般纳税人', '出口报关单（出口退税联）', '出口发票（形式发票/商业发票）', '采购进项发票（专用发票，已勾选认证）', '出口合同、运输单据'],
+                    steps: [
+                        '（首次）备案：电子税务局 →「出口退税管理」→「出口退（免）税备案」→ 填写备案表提交',
+                        '单证收集：报关出口后30日内取得出口报关单退税联；取得供应商增值税专用发票并完成勾选认证',
+                        '申报录入：电子税务局 →「出口退税管理」→「出口退税申报」',
+                        '外贸企业：录入出口报关单数据，配对应的进货发票数据（智能配单或手工配单）',
+                        '生产企业：免抵退税申报，录入出口销售收入、进项税额转出等数据',
+                        '系统自动计算退税额，核对无误后生成申报数据',
+                        '提交正式申报（每期申报期内，系统提示疑点先自查处理）',
+                        '税务机关审核（一、二类出口企业优先退税），审核通过后退税款退入银行账户',
+                        '在「退（免）税进度查询」跟踪办理状态'
+                    ],
+                    notes: [
+                        '申报期限：报关出口之日至次年4月30日前的各期申报期内申报，逾期不退视同内销征税',
+                        '外贸企业退税额 = 购进发票金额 × 退税率；生产企业适用免抵退税办法',
+                        '「报关单、发票、合同」三单信息必须一致，否则比对不通过',
+                        '新备案12个月内的出口企业退审核查较严，退税到账时间较长，属正常现象',
+                        '退税单证（合同、运输单、报关单等）需留存备查5年'
+                    ]
+                },
+                {
+                    id: 'credit_refund',
+                    title: '增值税留抵退税',
+                    keywords: ['留抵退税', '存量留抵', '增量留抵', '退税申请', '进项留抵'],
+                    scene: '企业进项税额大于销项税额形成留抵税额时，符合条件的可申请部分或全部退还，盘活资金。小微企业、制造业等行业可享受全额退还政策。',
+                    prep: ['需同时满足：①纳税信用等级为A级或B级 ②申请前无欠税 ③申请前36个月未骗取留抵退税、出口退税或虚开专票 ④申请前24个月未因偷税被处罚两次以上 ⑤未被列入异常纳税人名录'],
+                    steps: [
+                        '登录电子税务局（企业业务）→「我要办税」→「一般退（免）税管理」',
+                        '选择「增值税留抵税额退税」',
+                        '系统自动带出当期留抵税额，选择退税类型：增量留抵退税 / 存量留抵全额退税（符合行业条件的）',
+                        '填写《退（抵）税申请表》：退税金额、银行账户信息',
+                        '系统自动校验适用条件（信用等级、欠税情况等），确认承诺事项',
+                        '提交申请，税务机关审核（一般10个工作日内，特殊情况可延长）',
+                        '审核通过后退库至企业银行账户；在「退税进度查询」跟踪状态'
+                    ],
+                    notes: [
+                        '小微企业（年销售额500万以下）可一次性申请存量留抵全额退还，并按月申请增量留抵退税',
+                        '一般企业增量留抵退税比例为60%（制造业等重点行业100%），系统自动计算',
+                        '退税前必须先结清欠税，退税款项退至企业备案的基本存款账户',
+                        '取得留抵退税后，后续申报时相应调减留抵税额，注意账务处理（冲减进项）'
+                    ]
+                }
+            ]
+        },
+        {
+            id: 'pitax',
+            icon: '<svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>',
+            title: '个人所得税',
+            subtitle: '工资申报 · 专项附加扣除 · 汇算清缴',
+            tag: '个税专区',
+            items: [
+                {
+                    id: 'pit_declare',
+                    title: '个税申报流程（扣缴端）',
+                    keywords: ['工资申报', '个税申报', '扣缴客户端', '代扣代缴', '自然人电子税务局'],
+                    scene: '企业作为扣缴义务人，每月为员工代扣代缴工资薪金个人所得税并在次月申报期内申报。这是财务的每月固定工作，逾期申报会产生罚款和滞纳金。',
+                    prep: ['电脑下载安装「自然人电子税务局扣缴客户端」（电子税务局 → 下载服务 获取）', '申报密码（法人通过个税APP设置，见电子税务局指南）', '员工花名册：姓名、身份证号、手机号、入职时间', '当月工资表：收入、三险一金个人部分、专项附加扣除数据'],
+                    steps: [
+                        '打开扣缴客户端 → 输入企业税号 → 选择「申报密码登录」',
+                        '人员信息采集：「人员信息采集」→ 添加 → 录入姓名、身份证号、手机号 → 点击「报送验证」，验证通过后方可申报',
+                        '下载专项附加扣除：「专项附加扣除信息采集」→「下载更新」（获取员工通过扣缴义务人申报的扣除信息）',
+                        '每月申报路径：「综合所得申报」→「正常工资薪金所得」→ 填写',
+                        '逐个员工录入本期收入（应发工资）、三险一金（养老、医疗、失业个人部分+住房公积金个人部分）、其他扣除',
+                        '专项附加扣除自动预填，核对金额是否正确',
+                        '点击「税款计算」，系统按累计预扣法自动计算本期应扣缴税额',
+                        '「申报表报送」→ 申报成功后点击「税款缴纳」：推荐三方协议缴款（自动划款），或打印银行端凭证去银行柜台缴款',
+                        '申报完成后可在「查询统计」中打印完税证明和申报表备查'
+                    ],
+                    notes: [
+                        '申报期限：次月15日前（节假日顺延，以税务局公告为准）',
+                        '累计预扣法：累计收入 − 累计免税收入 − 累计扣除（5000/月起 + 三险一金 + 专项附加）× 预扣率 − 已预扣税额',
+                        '新员工必须先完成人员采集验证，否则无法填写收入',
+                        '申报错误可用「更正申报」修改；多扣的税款可申请退税或在后期抵减',
+                        '离职员工当月正常申报后，次月做「人员信息」非正常标记即可'
+                    ]
+                },
+                {
+                    id: 'pit_deduction',
+                    title: '专项附加扣除填报',
+                    keywords: ['专项附加扣除', '子女教育', '赡养老人', '房贷利息', '住房租金', '婴幼儿照护'],
+                    scene: '员工享受个税七项专项附加扣除（子女教育、继续教育、大病医疗、住房贷款利息、住房租金、赡养老人、3岁以下婴幼儿照护）需要先填报信息。员工填报并选择「通过扣缴义务人申报」后，财务在扣缴端下载即可在每月工资中预扣。',
+                    prep: ['员工本人个税APP账号（完成人脸认证）', '扣除项目的基础信息（子女、老人、房贷合同等，一般无需上传材料，留存备查即可）', '财务端：扣缴客户端可正常登录'],
+                    steps: [
+                        '（员工）打开「个人所得税」APP → 登录',
+                        '首页 →「专项附加扣除」→「填报」',
+                        '选择扣除年度（如2026年）→ 选择扣除项目',
+                        '按向导填写项目信息：',
+                        '子女教育：子女信息、受教育阶段，2000元/月/孩（满3岁至博士均可）',
+                        '继续教育：学历继续教育400元/月；职业资格证书3600元/年（取得当年）',
+                        '大病医疗：年度医保目录内自付超1.5万元部分，限额8万元/年',
+                        '住房贷款利息：首套住房贷款，1000元/月（最长240个月）',
+                        '住房租金：按城市标准800/1100/1500元/月（与房贷利息二选一）',
+                        '赡养老人：3000元/月（兄弟姐妹分摊或约定由一人扣除）',
+                        '3岁以下婴幼儿照护：2000元/月/孩（出生当月至满3岁前一个月）',
+                        '选择申报方式：「通过扣缴义务人申报」→ 选择任职单位 → 提交',
+                        '（财务）扣缴端 →「专项附加扣除信息采集」→「下载更新」→ 数据自动带入工资申报表'
+                    ],
+                    notes: [
+                        '住房贷款利息和住房租金不能同时享受，只能二选一',
+                        '财务每月申报前都应「下载更新」，确保新入职员工的扣除信息不遗漏',
+                        '员工信息变化（如子女毕业、换租房）需在APP中「修改」，并重新推送给扣缴单位',
+                        '填报信息须真实，税务部门后期核验，虚假填报影响个人信用，材料留存5年',
+                        '选了「综合所得年度汇算清缴时扣除」的员工，每月工资不预扣，统一在次年汇算时扣除——财务需提前知晓'
+                    ]
+                },
+                {
+                    id: 'pit_settlement',
+                    title: '个税年度汇算清缴',
+                    keywords: ['汇算清缴', '年度汇算', '退税', '补税', '个税APP汇算'],
+                    scene: '次年3月1日至6月30日，居民个人需汇总上一年度综合所得（工资、劳务报酬、稿酬、特许权使用费），减除全部扣除后重新计算全年应纳税额，与已预缴税款比较，多退少补。由员工本人办理，财务负责协助核对数据、答疑。',
+                    prep: ['员工本人个税APP（完成实名认证）', '全年收入数据完整（含其他单位收入、劳务报酬等）', '财务提前核对全年工资、年终奖数据无误'],
+                    steps: [
+                        '（员工）打开「个人所得税」APP → 首页',
+                        '点击「综合所得年度汇算」专区入口（每年3月1日开放）',
+                        '选择申报年度 → 点「使用已申报数据填写」开始',
+                        '核对收入：逐项检查工资薪金、劳务报酬、稿酬、特许权使用费；有错误或遗漏的记录可点击「申诉」或「新增」',
+                        '核对扣除：基本减除费用（6万/年）、三险一金、专项附加扣除、其他扣除（企业年金、个人养老金等）',
+                        '点击「下一步」系统自动计算：全年应纳税额 vs 已预缴税额',
+                        '退税的：确认本人银行账户（建议用社保卡金融账户）→「申请退税」',
+                        '补税的：点击「缴款」，线上支付即可（补税金额小的也可选择银行端凭证缴款）',
+                        '提交完成，留存申报记录截图',
+                        '（财务）协助员工核对全年工资数据、年终奖计税方式，收入有出入时指导员工申诉'
+                    ],
+                    notes: [
+                        '办理期限：每年3月1日至6月30日，逾期补税按日加收万分之五滞纳金',
+                        '免予办理的情形：年综合所得≤12万元；或补税金额≤400元；或已预缴税额与应纳税额一致',
+                        '退税是权利可以放弃，补税是义务必须办理（除免予办理情形外）',
+                        '在多家单位取得收入的，汇算时合并计算，可能出现补税',
+                        '退税一般7-14个工作日到账；长时间未到账可检查银行账户状态或拨打12366'
+                    ]
+                }
+            ]
+        }
+    ];
+
+    var GUIDE_PROGRESS_KEY = 'yunxu_guide_progress';
+
+    function getGuideProgress() {
+        try {
+            return JSON.parse(localStorage.getItem(GUIDE_PROGRESS_KEY)) || {};
+        } catch (e) { return {}; }
+    }
+
+    function saveGuideProgress(data) {
+        localStorage.setItem(GUIDE_PROGRESS_KEY, JSON.stringify(data));
+    }
+
+    function isGuideItemDone(catId, itemId) {
+        var p = getGuideProgress();
+        return !!(p[catId] && p[catId][itemId]);
+    }
+
+    function getGuideCatProgress(cat) {
+        var done = 0;
+        cat.items.forEach(function(it) { if (isGuideItemDone(cat.id, it.id)) done++; });
+        return done;
+    }
+
+    function renderGuideCards() {
+        var grid = document.getElementById('guideGrid');
+        if (!grid) return;
+        var html = '';
+        GUIDE_DATA.forEach(function(cat) {
+            var done = getGuideCatProgress(cat);
+            var total = cat.items.length;
+            var allDone = done === total;
+            html += '<div class="law-card" onclick="openGuideDetail(\'' + cat.id + '\')">' +
+                '<div class="law-icon">' + cat.icon + '</div>' +
+                '<div class="law-title">' + cat.title + '</div>' +
+                '<div class="law-subtitle">' + cat.subtitle + '</div>' +
+                '<div class="law-tag tax">' + cat.tag + '</div>' +
+                '<div class="guide-progress-badge' + (allDone ? ' done' : '') + '">' +
+                (allDone ? '✓ 已全部掌握' : '已掌握 ' + done + '/' + total) +
+                '</div>' +
+                '</div>';
+        });
+        grid.innerHTML = html;
+    }
+
+    function openGuideDetail(catId, itemId) {
+        var cat = null;
+        GUIDE_DATA.forEach(function(c) { if (c.id === catId) cat = c; });
+        if (!cat) return;
+        document.getElementById('guideModalTitle').textContent = cat.title + ' · 操作指南';
+        document.getElementById('guideModalMeta').textContent = '共 ' + cat.items.length + ' 个事项 · 点击标签页切换';
+        var tabsHtml = '';
+        cat.items.forEach(function(it, idx) {
+            tabsHtml += '<button class="law-nav-btn' + (idx === 0 ? ' active' : '') + '" id="guideTabBtn-' + it.id + '" onclick="switchGuideTab(\'' + catId + '\', \'' + it.id + '\')">' + it.title + '</button>';
+        });
+        document.getElementById('guideTabs').innerHTML = tabsHtml;
+        document.getElementById('guideModal').classList.add('active');
+        document.body.style.overflow = 'hidden';
+        switchGuideTab(catId, itemId || cat.items[0].id);
+        closeGuideSearch();
+    }
+
+    function closeGuideDetail() {
+        document.getElementById('guideModal').classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    function switchGuideTab(catId, itemId) {
+        var cat = null;
+        GUIDE_DATA.forEach(function(c) { if (c.id === catId) cat = c; });
+        if (!cat) return;
+        cat.items.forEach(function(it) {
+            var btn = document.getElementById('guideTabBtn-' + it.id);
+            if (btn) btn.classList.toggle('active', it.id === itemId);
+        });
+        var item = null;
+        cat.items.forEach(function(it) { if (it.id === itemId) item = it; });
+        if (!item) return;
+
+        var done = isGuideItemDone(catId, itemId);
+        var prepHtml = item.prep.map(function(p) { return '<li>' + p + '</li>'; }).join('');
+        var stepsHtml = item.steps.map(function(s) { return '<li>' + s + '</li>'; }).join('');
+        var notesHtml = item.notes.map(function(n) { return '<li>' + n + '</li>'; }).join('');
+
+        document.getElementById('guideTabContent').innerHTML =
+            '<div class="g-scene"><h4>📌 适用场景</h4><p>' + item.scene + '</p></div>' +
+            '<div class="g-block"><h4>📋 前置准备</h4><ul class="g-prep-list">' + prepHtml + '</ul></div>' +
+            '<div class="g-block"><h4>🖐 分步操作</h4><ol class="g-steps">' + stepsHtml + '</ol></div>' +
+            '<div class="g-block"><h4>⚠ 注意事项</h4><ul class="g-note-list">' + notesHtml + '</ul></div>' +
+            '<div class="g-mastered-bar"><button class="g-mastered-btn' + (done ? ' mastered' : '') + '" onclick="toggleGuideMastered(\'' + catId + '\', \'' + itemId + '\')">' +
+            (done ? '✓ 已掌握（点击取消）' : '标记为已掌握') + '</button></div>';
+    }
+
+    function toggleGuideMastered(catId, itemId) {
+        var p = getGuideProgress();
+        if (!p[catId]) p[catId] = {};
+        p[catId][itemId] = !p[catId][itemId];
+        if (!p[catId][itemId]) delete p[catId][itemId];
+        saveGuideProgress(p);
+        switchGuideTab(catId, itemId);
+        renderGuideCards();
+    }
+
+    function handleGuideSearch(keyword) {
+        var box = document.getElementById('guideSearchResults');
+        if (!box) return;
+        keyword = (keyword || '').trim().toLowerCase();
+        if (!keyword) { closeGuideSearch(); return; }
+        var results = [];
+        GUIDE_DATA.forEach(function(cat) {
+            cat.items.forEach(function(it) {
+                var hay = (it.title + ' ' + it.keywords.join(' ') + ' ' + cat.title).toLowerCase();
+                if (hay.indexOf(keyword) !== -1) {
+                    results.push({ cat: cat, item: it });
+                }
+            });
+        });
+        if (results.length === 0) {
+            box.innerHTML = '<div class="guide-search-item"><div class="gs-title">未找到「' + keyword + '」相关指南</div><div class="gs-cat">试试：失业金、增员、密码、留抵、汇算</div></div>';
+        } else {
+            var html = '';
+            results.slice(0, 8).forEach(function(r) {
+                html += '<div class="guide-search-item" onclick="openGuideDetail(\'' + r.cat.id + '\', \'' + r.item.id + '\')">' +
+                    '<div class="gs-title">' + r.item.title + '</div>' +
+                    '<div class="gs-cat">' + r.cat.title + ' · 点击查看分步指南</div></div>';
+            });
+            box.innerHTML = html;
+        }
+        box.classList.add('active');
+    }
+
+    function closeGuideSearch() {
+        var box = document.getElementById('guideSearchResults');
+        if (box) box.classList.remove('active');
+    }
+
+    document.addEventListener('click', function(e) {
+        var search = document.querySelector('.guide-search');
+        if (search && !search.contains(e.target)) closeGuideSearch();
+    });
+
+    renderGuideCards();
+</script>
 </body>
 </html>
 
